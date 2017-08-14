@@ -1,18 +1,16 @@
 CC=clang++
-STANDARD=c++1y
+STANDARD=c++14
 FLAGS=-Weverything -O2 -Wno-c++98-compat -std=$(STANDARD)
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: zoe dft matrix
+all: fourier
 
-zoe: zoe.o
-dft: dft.o
-matrix: matrix.o
+fourier: fourier.o
 
 clean:
-	rm -f zoe dft matrix *.o
+	rm -f fourier *.o
 
 run:
-	watch -t -n .01 -c "arecord -f cd | ./dft"
+	watch -t -n .01 "arecord -f cd | ./fourier"
