@@ -16,8 +16,8 @@ namespace riff {
 		unsigned int channels : 16;
 		unsigned int sample_rate;
 		unsigned int bytes_per_second;
-		unsigned int tbd : 16;
 		unsigned int block_align : 16;
+		unsigned int bit_depth : 16;
 		unsigned int data_id;
 		unsigned int data_size;
 	};
@@ -39,22 +39,27 @@ int main(int argc, char* argv[]) {
 	wav.channels = 1;
 	wav.sample_rate = 44100;
 	wav.bytes_per_second = 44100;
-	wav.tbd = 0x1;
-	wav.block_align = 0x8;
+	wav.bit_depth = 8;
+	wav.block_align = 1;
 	wav.data_id = 1635017060;
 	wav.data_size = 2147483648;
 
 	cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
-	const unsigned int samplesPerCycle = (argc > 1 ? atoi(argv[1]) : 100);
-	const int amplitude = 10;
+	const unsigned int frequency
+		= (argc > 1 ? static_cast<unsigned int>(atoi(argv[1])) : 440);
 
-	for (unsigned int i = 0; i < samplesPerCycle * 2000; ++i) {
+	const unsigned int samplesPerCycle = wav.sample_rate / frequency;
 
-		const double phase = i * 2 * M_PI / samplesPerCycle;
-		short sample = numeric_limits<short>::max() + round(amplitude * sin(phase));
+	for (unsigned int i = 0; i < 1470*4; ++i) {
+
+		const double phase = 2.0 * M_PI * i/samplesPerCycle;
+		unsigned short sample = static_cast<short>(sin(phase) * 0xffff/2);
+
+		sample = ~sample + 1;
 
 		cout.write(reinterpret_cast<char *>(&sample), sizeof(sample));
+
 		// cerr << sample << endl;
 	}
 
