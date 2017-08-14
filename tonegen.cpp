@@ -24,23 +24,26 @@ int main(int argc, char* argv[]) {
 	wav.data_id = 1635017060;
 	wav.data_size = 2147483648;
 
-	cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
+	// Parse command line
 	const unsigned int frequency
 		= (argc > 1 ? static_cast<unsigned int>(atoi(argv[1])) : 440);
 
+	// Calculate samples required for a full cycle at the target frequency
 	const unsigned int samplesPerCycle = wav.sample_rate / frequency;
 
+	// Write the WAV header
+	cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
+
+	// Write the samples
 	for (unsigned int i = 0; i < 1470*4; ++i) {
 
 		const double phase = 2.0 * M_PI * i/samplesPerCycle;
-		unsigned short sample = static_cast<short>(sin(phase) * 0xffff/2);
+		auto sample = static_cast<unsigned short>(sin(phase) * 0xffff/2);
 
 		sample = ~sample + 1;
 
 		cout.write(reinterpret_cast<char *>(&sample), sizeof(sample));
-
-		// cerr << sample << endl;
 	}
 
 	return 0;
