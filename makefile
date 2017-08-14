@@ -14,10 +14,10 @@ clean:
 	rm -f tonegen fourier *.o
 
 live: fourier
-	watch -t -n .01 "arecord -f S16_LE -c1 -r44100 | ./fourier"
+	watch -c -t -n .01 "arecord -f S16_LE -c1 -r44100 | ./fourier"
 
 analyse: tonegen fourier
-	./tonegen | ./fourier | head -50
+	./tonegen 440 | ./fourier | head -55
 
 wait:
-	while :; do inotifywait -qe modify *.cpp; make; done
+	$(shell while :; do inotifywait -qe modify *.cpp; make; done)

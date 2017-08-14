@@ -1,3 +1,4 @@
 *.o
+*.wav
 fourier
 tonegen

@@ -24,3 +24,6 @@ for f in 261.6 277.2 293.7 311.1 329.6 349.2 370.0 392.0 415.3 440.0 466.2 493.9
 ```bash
 for f in 261.6 293.7 329.6 349.2 392.0 440.0 493.9 523.3; do ./tonegen $f | aplay -q; done
 ```
+
+# Pretty printing
+* http://misc.flogisoft.com/bash/tip_colors_and_formatting

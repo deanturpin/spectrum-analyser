@@ -13,7 +13,7 @@ int main() {
 	cin.read(reinterpret_cast<char*>(&wav), sizeof wav);
 
 	// Number of samples to read, size of matrix and resulting Fourier transform
-	const unsigned int bins = 1470 / 4;
+	const unsigned int bins = 1000;
 
 	// Read samples from stdin
 	vector<short> X(bins);
@@ -44,10 +44,19 @@ int main() {
 	// Bin resolution
 	const double resolution = wav.sample_rate / bins;
 
+	// Find the peak value. But only search the first half of the results. The
+	// rest are essentially mirrored but may have a higher peak.
+	const auto max = max_element(fourier.cbegin(), fourier.cbegin() + fourier.size()/2,
+		[](const auto &a, const auto &b){ return abs(a) < abs(b); });
+
+	// And the peak bin is the distance from the start to the max iterator
+	const auto peakBin = static_cast<unsigned int>(distance(fourier.cbegin(), max));
+
 	// Let's print the results
 	cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
 	cout << "Resolution " << resolution << " Hz" << endl;
 	cout << "Bins " << fourier.size() << endl;
+	cout << "Peak " << peakBin << endl;
 	cout << endl;
 	cout << "Hertz" << endl;
 
@@ -56,16 +65,25 @@ int main() {
 
 		static unsigned int bin = 0;
 
-		cout << static_cast<unsigned int>(bin * resolution) << "\t";
+		// cout << static_cast<unsigned int>(bin * resolution) << "\t";
 
 		const double fullScale = 0xffff;
-		const auto length = static_cast<unsigned int>(1 + round(160 * (fullScale/4 + abs(f))/fullScale));
-		cout << string(length, ' ') << "|" << endl;
+		const auto length
+			= static_cast<unsigned int>(1 + round(160 * (fullScale/4 + abs(f))/fullScale));
+
+		// Print the line
+		cout << "\033[33m" << string(length, '-') << "\033[0m|";
+
+		// If we're on the peak bin top with a marker and the current bin frequency
+		if (bin == peakBin) {
+
+			cout << "> \033[41m:)\033[0m ";
+			cout << static_cast<unsigned int>(bin * resolution);
+		}
+
+		cout << endl;
 
 		++bin;
-
-		if (bin > 52)
-			break;
 	}
 
 	return 0;
