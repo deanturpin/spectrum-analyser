@@ -1,1 +1,1 @@
-![](fourier)
+![](fourier.png)
