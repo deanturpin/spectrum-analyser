@@ -21,3 +21,6 @@ analyse: tonegen fourier
 
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
+
+cppcheck:
+	cppcheck --enable=all .

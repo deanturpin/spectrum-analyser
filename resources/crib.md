@@ -13,6 +13,10 @@ for freq in {100..22050..30}; do echo Freq $freq Hz; ./tonegen $freq > tone.wav;
 while :; do inotifywait -q -e modify tone.wav >& /dev/null; ./fourier < tone.wav | head -58; done
 ```
 
+```bash
+for freq in {200..1000..10}; do ./tonegen $freq | ./fourier | head -48; done
+```
+
 # Generate some tones
 ## Middle C
 ```
