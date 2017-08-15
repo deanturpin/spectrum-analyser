@@ -53,11 +53,13 @@ int main() {
   cout << "Bins " << fourier.size() << endl;
   cout << "\nHertz" << endl;
 
-  // Print the Fourier transform as an ascii art histrogram. Each value (bin)
-  // is converted into a bar.
+  // Print the Fourier transform as an ASCII art histogram. Each bin is
+  // converted into a bar.
   for (const auto &f : fourier) {
 
     static unsigned int bin = 0;
+    const unsigned int bin_freq = static_cast<unsigned int>(
+      round(bin * resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. Note: the absolute value of the (complex) Fourier result is
@@ -68,14 +70,13 @@ int main() {
     const auto length = static_cast<unsigned int>(
         round(max_bar * (full_scale / 4 + abs(f)) / full_scale) - bar_offset);
 
-    // Print the bar, make it colourful
+    // Print the bar and make it colourful
     cout << "\033[33m" << string(length, '-') << "\033[0m|";
 
-    // Mark the line if it's looking interesting
+    // Mark the line if it's interesting
     const double peak_threshold = 3000.0;
     if (abs(f) > peak_threshold)
-      cout << " \033[41m"
-        << static_cast<unsigned int>(bin * resolution) << "\033[0m";
+      cout << " \033[41m" << bin_freq << "\033[0m";
 
     cout << endl;
 
