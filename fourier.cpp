@@ -16,7 +16,7 @@ int main() {
   // size of the twiddle matrix and the resulting Fourier transform.
   const unsigned int bins = 1000;
 
-  // Read samples from stdin
+  // Read a batch of samples
   vector<short> samples(bins);
   cin.read(reinterpret_cast<char *>(samples.data()), bins * sizeof(short));
 
@@ -47,24 +47,14 @@ int main() {
   // Bin resolution
   const double resolution = wav.sample_rate / bins;
 
-  // Find the peak value. But only search through the first half of the
-  // container as the second is a mirror.
-  const auto max =
-    max_element(fourier.cbegin(), fourier.cbegin() + fourier.size() / 2,
-                [](const auto &a, const auto &b) { return abs(a) < abs(b); });
-
-  // The peak bin is the distance from the beginning of the Fourier transform
-  // to the max iterator
-  const auto peakBin =
-    static_cast<unsigned int>(distance(fourier.cbegin(), max));
-
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Resolution " << resolution << " Hz" << endl;
   cout << "Bins " << fourier.size() << endl;
   cout << "\nHertz" << endl;
 
-  // Print resultant Fourier transform
+  // Print the Fourier transform as an ascii art histrogram. Each value (bin)
+  // is converted into a bar.
   for (const auto &f : fourier) {
 
     static unsigned int bin = 0;
@@ -72,18 +62,18 @@ int main() {
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. Note: the absolute value of the (complex) Fourier result is
     // used to calculate the bar length.
-    const double fullScale = 0xffff;
-    const double maxBar = 160;
-    const double barOffset = 30;
+    const double full_scale = 0xffff;
+    const double max_bar = 160;
+    const double bar_offset = 30;
     const auto length = static_cast<unsigned int>(
-        round(maxBar * (fullScale / 4 + abs(f)) / fullScale) - barOffset);
+        round(max_bar * (full_scale / 4 + abs(f)) / full_scale) - bar_offset);
 
     // Print the bar, make it colourful
     cout << "\033[33m" << string(length, '-') << "\033[0m|";
 
-    // If we're at the peak, top the line with a marker and current bin
-    // frequency
-    if (bin == peakBin)
+    // Mark the line if it's looking interesting
+    const double peak_threshold = 3000.0;
+    if (abs(f) > 3000)
       cout << " \033[41m"
         << static_cast<unsigned int>(bin * resolution) << "\033[0m";
 
