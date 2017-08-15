@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   // Parse command line
   vector<int> frequencies = {
 
-      argc > 1 ? atoi(argv[1]) : 440, argc > 2 ? atoi(argv[2]) : 0,
+      argc > 1 ? atoi(argv[1]) : 220, argc > 2 ? atoi(argv[2]) : 0,
       argc > 3 ? atoi(argv[3]) : 0};
 
   // Write the WAV header

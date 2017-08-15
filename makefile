@@ -17,7 +17,7 @@ live: fourier
 	watch -c -t -n .01 "arecord -f S16_LE -c1 -r44100 | ./fourier"
 
 analyse: tonegen fourier
-	./tonegen 440 | ./fourier | head -55
+	./tonegen | ./fourier | head -40
 
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
