@@ -2,6 +2,7 @@
 #include <iostream>
 #include <limits>
 #include <math.h>
+#include <vector>
 
 int main(int argc, char *argv[]) {
 
@@ -17,32 +18,36 @@ int main(int argc, char *argv[]) {
   wav.format_size = 16;
   wav.format_tag = 1;
   wav.channels = 1;
-  wav.sample_rate = 44100;
-  wav.bytes_per_second = 44100;
+  wav.sample_rate = 8000;
   wav.bit_depth = 16;
+  wav.bytes_per_second = wav.sample_rate * wav.bit_depth / 8;
   wav.block_align = 1;
   wav.data_id = 1635017060;
   wav.data_size = 2147483648;
 
   // Parse command line
-  const unsigned int frequency =
-      (argc > 1 ? static_cast<unsigned int>(atoi(argv[1])) : 440);
+  vector<int> frequencies = {
 
-  wav.sample_rate =
-      (argc > 2 ? static_cast<unsigned int>(atoi(argv[2])) : 44100);
-
-  // Calculate samples required for a full cycle at the target frequency
-  const unsigned int samplesPerCycle = wav.sample_rate / frequency;
+      argc > 1 ? atoi(argv[1]) : 440, argc > 2 ? atoi(argv[2]) : 0,
+      argc > 3 ? atoi(argv[3]) : 0};
 
   // Write the WAV header
   cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
   // Create a second's worth of samples
-  for (unsigned int i = 0; i < wav.sample_rate; ++i) {
+  for (unsigned int i = 0; i < wav.sample_rate / 2; ++i) {
 
-    // Calculate sample and convert to 2's compliment
-    const double phase = 2.0 * M_PI * i / samplesPerCycle;
-    auto sample = static_cast<unsigned short>(sin(phase) * 0xffff / 2);
+    const double phase = 2.0 * M_PI * i;
+
+    // Add all the frequencies into the mix
+    unsigned short sample = 0;
+    for (const auto &f : frequencies)
+      if (f > 0)
+        sample += static_cast<unsigned short>(
+            sin(phase / (static_cast<double>(wav.sample_rate) / f)) * 0xffff /
+            6);
+
+    // 2's comp
     sample = ~sample + 1;
 
     cout.write(reinterpret_cast<char *>(&sample), sizeof(sample));
