@@ -20,4 +20,4 @@ analyse: tonegen fourier
 	./tonegen 440 | ./fourier | head -55
 
 wait:
-	$(shell while :; do inotifywait -qe modify *.cpp; make; done)
+	while :; do inotifywait -qe modify *.cpp; make; done

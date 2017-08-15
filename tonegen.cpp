@@ -2,6 +2,7 @@
 #include <math.h>
 #include <limits>
 #include <iostream>
+#include <byteswap.h>
 
 int main(int argc, char* argv[]) {
 
@@ -19,7 +20,7 @@ int main(int argc, char* argv[]) {
 	wav.channels = 1;
 	wav.sample_rate = 44100;
 	wav.bytes_per_second = 44100;
-	wav.bit_depth = 8;
+	wav.bit_depth = 16;
 	wav.block_align = 1;
 	wav.data_id = 1635017060;
 	wav.data_size = 2147483648;
@@ -35,11 +36,11 @@ int main(int argc, char* argv[]) {
 	cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
 	// Write the samples
-	for (unsigned int i = 0; i < 1470*4; ++i) {
+	for (unsigned int i = 0; i < 4096; ++i) {
 
+		// Calculate sample and convert to 2's compliment
 		const double phase = 2.0 * M_PI * i/samplesPerCycle;
 		auto sample = static_cast<unsigned short>(sin(phase) * 0xffff/2);
-
 		sample = ~sample + 1;
 
 		cout.write(reinterpret_cast<char *>(&sample), sizeof(sample));
