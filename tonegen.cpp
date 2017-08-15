@@ -28,14 +28,17 @@ int main(int argc, char *argv[]) {
   const unsigned int frequency =
       (argc > 1 ? static_cast<unsigned int>(atoi(argv[1])) : 440);
 
+  wav.sample_rate =
+      (argc > 2 ? static_cast<unsigned int>(atoi(argv[2])) : 44100);
+
   // Calculate samples required for a full cycle at the target frequency
   const unsigned int samplesPerCycle = wav.sample_rate / frequency;
 
   // Write the WAV header
   cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
-  // Write the samples
-  for (unsigned int i = 0; i < 4096; ++i) {
+  // Create a second's worth of samples
+  for (unsigned int i = 0; i < wav.sample_rate; ++i) {
 
     // Calculate sample and convert to 2's compliment
     const double phase = 2.0 * M_PI * i / samplesPerCycle;
