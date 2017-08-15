@@ -47,16 +47,16 @@ int main() {
   // Bin resolution
   const double resolution = wav.sample_rate / bins;
 
-  // Find the peak value. But search backwards so the earliest occurance of the
-  // peak is reported.
+  // Find the peak value. But only search through the first half of the
+  // container as the second is a mirror.
   const auto max =
-    max_element(fourier.crbegin(), fourier.crend(),
+    max_element(fourier.cbegin(), fourier.cbegin() + fourier.size() / 2,
                 [](const auto &a, const auto &b) { return abs(a) < abs(b); });
 
   // The peak bin is the distance from the beginning of the Fourier transform
   // to the max iterator
   const auto peakBin =
-    static_cast<unsigned int>(distance(fourier.crbegin(), max)) + 1;
+    static_cast<unsigned int>(distance(fourier.cbegin(), max));
 
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
