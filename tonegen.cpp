@@ -24,7 +24,6 @@ int main(int argc, char* argv[]) {
 	wav.data_id = 1635017060;
 	wav.data_size = 2147483648;
 
-
 	// Parse command line
 	const unsigned int frequency
 		= (argc > 1 ? static_cast<unsigned int>(atoi(argv[1])) : 440);

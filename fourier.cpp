@@ -23,14 +23,13 @@ int main() {
 	// Initialise twiddle matrix
 	auto *twiddle = new complex<double>[bins][bins]();
 
-	// Populate twiddle matrix: the "exp" is the important bit
-	for (double k = 0.0; k < bins; ++k)
-		for (double n = 0.0; n < bins; ++n)
-			twiddle[static_cast<int>(n)][static_cast<int>(k)]
-				= exp(-2i * M_PI * k * n / static_cast<double>(bins));
+	// Populate twiddle matrix. The "exp" is the important bit.
+	for (unsigned int k = 0; k < bins; ++k)
+		for (unsigned int n = 0; n < bins; ++n)
+			twiddle[n][k] = exp(-2i * M_PI * static_cast<double>(k) * static_cast<double>(n) / static_cast<double>(bins));
 
-	// The resultant Fourier transform is the dot product of the twiddle matrix
-	// and the original samples
+	// The Fourier transform is the dot product of the twiddle matrix and the
+	// original samples
 	vector<complex<double>> fourier;
 	for (unsigned int k = 0; k < bins; ++k) {
 
@@ -75,7 +74,7 @@ int main() {
 		const double barOffset = 30;
 		const auto length = static_cast<unsigned int>(round(maxBar * (fullScale/4 + abs(f))/fullScale) - barOffset);
 
-		// Print the bar
+		// Print the bar, make it colourful
 		cout << "\033[33m" << string(length, '-') << "\033[0m|";
 
 		// If we're at the peak, top the line with a marker and current bin frequency
