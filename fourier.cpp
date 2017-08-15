@@ -8,8 +8,6 @@ int main() {
 
   using namespace std;
 
-  int blah;
-
   // Read the WAV header
   riff::wav wav;
   cin.read(reinterpret_cast<char *>(&wav), sizeof wav);
