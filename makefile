@@ -14,7 +14,7 @@ clean:
 	rm -f tonegen fourier *.o
 
 live: fourier
-	watch -c -t -n .01 "arecord -f S16_LE -c1 -r44100 | ./fourier"
+	watch -c -t -n .01 "arecord -f S16_LE -c1 -r8000 | ./fourier"
 
 analyse: tonegen fourier
 	./tonegen | ./fourier | head -40

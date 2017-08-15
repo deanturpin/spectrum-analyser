@@ -73,7 +73,7 @@ int main() {
 
     // Mark the line if it's looking interesting
     const double peak_threshold = 3000.0;
-    if (abs(f) > 3000)
+    if (abs(f) > peak_threshold)
       cout << " \033[41m"
         << static_cast<unsigned int>(bin * resolution) << "\033[0m";
 
