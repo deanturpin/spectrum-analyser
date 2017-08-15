@@ -2,6 +2,8 @@ Command line Fourier analysis and tone generator.
 
 See [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo) for a demo.
 
+![](fourier.png)
+
 # Run things when they're rebuilt
 ```bash
 while :; do inotifywait -qe modify tonegen; sleep .1; ./tonegen 27 | aplay; done
