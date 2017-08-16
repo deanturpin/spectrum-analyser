@@ -6,6 +6,16 @@ range-based for loops and then C++14 for imaginary constants.
 # WAV header
 There's a common include file [riff.h](riff.h) to define the WAV header.
 
+# Coding standard and linter
+I've added a make rule to run ```cppcheck```. And I periodically run
+```clang-format``` with the defaults and apply the results. I'm not sure where
+this fits in the workflow yet but I like that I don't have to think about it!
+And swapping in IWYU to weed out any left over includes can be useful. But I
+don't really like the output so it's used purely as a reference.
+```bash
+make CC=iwyu
+```
+
 # Command line examples
 The animated GIF was generated with a bash script.
 ```bash
