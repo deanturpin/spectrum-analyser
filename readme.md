@@ -1,6 +1,6 @@
-Command line Fourier analysis and tone generator. See
-[YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo) for a demo. The code is
-written in pure C++ and the STL. See the [details](details.md).
+Command line DFT and tone generator. See live demo on
+[YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo). The code is written in
+pure C++ and the STL. See the [details](details.md).
 
 # Example of three tones interacting
 ![](fourier.gif)
