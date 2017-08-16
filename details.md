@@ -3,6 +3,21 @@ The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
 [tonegen.cpp](tonegen.cpp) and a common include file [riff.h](riff.h) which
 defines the WAV header.
 
+```fourier.cpp``` - takes a WAV on std in a prints the Fourier transform as ASCII
+art.
+
+```tonegen.cpp``` - takes up to three frequencies in Hertz as parameters and
+writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
+```fourier```.
+
+```bash
+# Generate major chord and send it to the speaker
+$ ./tonegen 440 550 660 | aplay
+
+# Generate chord, analyse it and display the first 100 bins
+$ ./tonegen 440 550 660 | ./fourier | head -100
+```
+
 # C++ standards
 Initially I used the default for clang (C++03) and then bumped the standard as
 I used newer features. I moved to C++11 to make use of ```auto``` and
