@@ -37,15 +37,23 @@ int main(int argc, char *argv[]) {
   // Create a second's worth of samples
   for (unsigned int i = 0; i < wav.sample_rate / 2; ++i) {
 
-    const double phase = 2.0 * M_PI * i;
 
     // Add all the frequencies into the mix
     unsigned short sample = 0;
-    for (const auto &f : frequencies)
+    for (const auto &f : frequencies) {
+
+      // Scale amplitude as more frequencies are added
+      const double scale = frequencies.size() * 2;
+      const double phase = 2.0 * M_PI * i;
+      const double full_scale = 0xffff;
+
+      // Samples per complete cycle
+      const double interval = static_cast<double>(wav.sample_rate) / f;
+
       if (f > 0)
         sample += static_cast<unsigned short>(
-            sin(phase / (static_cast<double>(wav.sample_rate) / f)) * 0xffff /
-            6);
+            sin(phase / interval) * full_scale / scale);
+    }
 
     // 2's comp
     sample = ~sample + 1;

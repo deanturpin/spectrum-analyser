@@ -36,7 +36,8 @@ Pipe WAV to Fourier.
 $ ./tonegen 100 200 300 | ./fourier 
 ```
 
-# Resources
+# See also
 * [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
 * [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
 * [Piano frequencies](https://en.wikipedia.org/wiki/Piano_key_frequencies)
+* [Just intonation](https://en.wikipedia.org/wiki/Just_intonation)
