@@ -3,10 +3,10 @@ The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
 [tonegen.cpp](tonegen.cpp) and a common include file [riff.h](riff.h) which
 defines the WAV header.
 
-```fourier.cpp``` - takes a WAV on stdin and prints the Fourier transform as
+```fourier.cpp``` takes a WAV on stdin and prints the Fourier transform as
 ASCII art.
 
-```tonegen.cpp``` - takes up to three frequencies in Hertz as parameters and
+```tonegen.cpp``` takes up to three frequencies in Hertz as parameters and
 writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 ```fourier``` for analysis.
 
@@ -43,8 +43,13 @@ for freq in {200..1000..1}; do ./tonegen $freq | ./fourier | head -48; done
 for f in 261.6 293.7 329.6 349.2 392.0 440.0 493.9 523.3; do ./tonegen $f | aplay -q; done
 ```
 
-Screen recording and GIF conversion.
+The screen was captured during the test and converted to animated GIF.
 ```bash
 recordmydesktop
 ffmpeg -i out.ogv -loop 0 fourier.gif
 ```
+# See also
+* [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
+* [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
+* [Piano frequencies](https://en.wikipedia.org/wiki/Piano_key_frequencies)
+* [Just intonation](https://en.wikipedia.org/wiki/Just_intonation)

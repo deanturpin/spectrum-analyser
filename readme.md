@@ -1,6 +1,8 @@
 Command line DFT and tone generator. See live demo on
 [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo). The code is written in
-pure C++ and the STL. See the [details](details.md).
+C++ and the STL.
+
+See the [details](details.md).
 
 # Example of three tones interacting
 ![](fourier.gif)
@@ -23,9 +25,3 @@ clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o fourier.o -c fourier.cp
 clang++   fourier.o   -o fourier
 ./tonegen | ./fourier | head -40
 ```
-
-# See also
-* [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
-* [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
-* [Piano frequencies](https://en.wikipedia.org/wiki/Piano_key_frequencies)
-* [Just intonation](https://en.wikipedia.org/wiki/Just_intonation)
