@@ -5,7 +5,7 @@ range-based for loops and then C++14 for complex number support with the "i"
 suffix.
 
 # WAV header
-There's a common include file [riff.h](riff.sh) to define the WAV header.
+There's a common include file [riff.h](riff.h) to define the WAV header.
 
 # Command line examples
 The animated GIF was generated with a bash script.
