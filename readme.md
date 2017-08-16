@@ -24,18 +24,6 @@ clang++   fourier.o   -o fourier
 ./tonegen | ./fourier | head -40
 ```
 
-# Tone generator
-Takes up to three frequencies and generates a WAV on stdout.
-```bash
-$ ./tonegen 100 200 300 | aplay
-Lecture WAVE 'stdin' : Signed 16 bit Little Endian, Fréquence 8000 Hz, Mono
-```
-
-Pipe WAV to Fourier.
-```bash
-$ ./tonegen 100 200 300 | ./fourier 
-```
-
 # See also
 * [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
 * [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)

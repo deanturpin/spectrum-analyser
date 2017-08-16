@@ -12,10 +12,10 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 
 ```bash
 # Generate major chord and send it to the speaker
-$ ./tonegen 440 550 660 | aplay
+./tonegen 440 550 660 | aplay
 
 # Generate chord, analyse it and display the first 100 bins
-$ ./tonegen 440 550 660 | ./fourier | head -100
+./tonegen 440 550 660 | ./fourier | head -100
 ```
 
 # C++ standards
