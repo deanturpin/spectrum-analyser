@@ -1,10 +1,12 @@
+# Files
+The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
+[tonegen.cpp](tonegen.cpp) and a common include file [riff.h](riff.h) which
+defines the WAV header.
+
 # C++ standards
 Initially I used the default for clang (C++03) and then bumped the standard as
 I used newer features. I moved to C++11 to make use of ```auto``` and
 range-based ```for``` loops and then C++14 for imaginary constants.
-
-# WAV header
-There's a common include file [riff.h](riff.h) to define the WAV header.
 
 # Coding standard and linter
 I've added a make rule to run ```cppcheck```. And I periodically run
