@@ -2,6 +2,10 @@ Command line Fourier analysis and tone generator. See
 [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo) for a demo. The code is
 written in pure C++ using no third-party libraries (bar the STL :)). 
 
+# Example of three tones interacting
+![](resources/fourier.gif)
+
+# Build
 ```bash
 $ git clone https://github.com/deanturpin/fourier
 Clonage dans 'fourier'...
@@ -19,9 +23,6 @@ clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o fourier.o -c fourier.cp
 clang++   fourier.o   -o fourier
 ./tonegen | ./fourier | head -40
 ```
-
-# Example of three tones interacting
-![](resources/fourier.gif)
 
 # Tone generator
 Takes up to three frequencies
@@ -42,3 +43,4 @@ $ ./tonegen 100 200 300 | ./fourier
 # Resources
 * [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
 * [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
+* [Piano frequencies](https://en.wikipedia.org/wiki/Piano_key_frequencies)
