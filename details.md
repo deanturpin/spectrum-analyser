@@ -8,10 +8,10 @@ There's a common include file [riff.h](riff.h) to define the WAV header.
 
 # Coding standard and linter
 I've added a make rule to run ```cppcheck```. And I periodically run
-```clang-format``` with the defaults and apply the results. I'm not sure where
-this fits in the workflow yet but I like that I don't have to think about it!
-And swapping in IWYU to weed out any left over includes can be useful. But I
-don't really like the output so it's used purely as a reference.
+```clang-format``` with the default settings and apply the results. I'm not
+sure where this fits in the workflow yet but I like that I don't have to think
+about it. And it can be useful to swap in IWYU to weed out any left over
+includes. But I don't really like the output so it's used purely as a guide.
 ```bash
 make CC=iwyu
 ```
