@@ -14,7 +14,7 @@ int main() {
 
   // The number of bins is fundamental. It's the number of samples to read,
   // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 2000;
+  const unsigned int bins = 1000;
 
   // Read a batch of samples
   vector<short> samples(bins);
