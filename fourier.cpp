@@ -73,7 +73,7 @@ int main() {
     // Print the bar and make it colourful
     cout << "\033[33m" << string(length, '-') << "\033[0m|";
 
-    // Mark the line if it's interesting
+    // Add a marker if it's interesting
     const double peak_threshold = 3000.0;
     if (abs(f) > peak_threshold)
       cout << " \033[41m" << bin_freq << "\033[0m";

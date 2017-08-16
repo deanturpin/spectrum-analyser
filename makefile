@@ -30,7 +30,7 @@ wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
 # Comparison of just intonation and equal temperament
-just:
+just: tonegen fourier
 	./tonegen 440 554 659 | aplay; ./tonegen 440 550 660 | aplay
 
 cppcheck:
