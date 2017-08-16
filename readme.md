@@ -36,10 +36,6 @@ Pipe WAV to Fourier.
 $ ./tonegen 100 200 300 | ./fourier 
 ```
 
-# C++ standards
-* 11 - ranger-based loops
-* 14 - extended complex number support
-
 # Resources
 * [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
 * [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
