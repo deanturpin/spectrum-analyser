@@ -3,12 +3,12 @@ The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
 [tonegen.cpp](tonegen.cpp) and a common include file [riff.h](riff.h) which
 defines the WAV header.
 
-```fourier.cpp``` - takes a WAV on std in a prints the Fourier transform as ASCII
-art.
+```fourier.cpp``` - takes a WAV on stdin and prints the Fourier transform as
+ASCII art.
 
 ```tonegen.cpp``` - takes up to three frequencies in Hertz as parameters and
 writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
-```fourier```.
+```fourier``` for analysis.
 
 ```bash
 # Generate major chord and send it to the speaker
