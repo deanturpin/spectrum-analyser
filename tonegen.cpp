@@ -35,8 +35,7 @@ int main(int argc, char *argv[]) {
   cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
   // Create a second's worth of samples
-  for (unsigned int i = 0; i < wav.sample_rate / 2; ++i) {
-
+  for (unsigned int i = 0; i < wav.sample_rate; ++i) {
 
     // Add all the frequencies into the mix
     unsigned short sample = 0;

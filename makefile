@@ -21,7 +21,7 @@ live: fourier
 analyse: tonegen fourier
 	./tonegen | ./fourier | head -40
 
-# Play a major scale
+# Play a major scale (equal temperament)
 major: tonegen
 	./tonegen 440 550 660 | aplay
 
