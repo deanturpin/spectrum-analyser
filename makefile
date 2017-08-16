@@ -29,5 +29,9 @@ major: tonegen
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
+# Comparison of just intonation and equal temperament
+just:
+	./tonegen 440 554 659 | aplay; ./tonegen 440 550 660 | aplay
+
 cppcheck:
 	cppcheck --enable=all .
