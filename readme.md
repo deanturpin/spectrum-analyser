@@ -1,6 +1,6 @@
 Command line Fourier analysis and tone generator. See
 [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo) for a demo. The code is
-written in pure C++ using no third-party libraries (bar the STL :)). 
+written in pure C++ using no third-party libraries (bar the STL :)).
 
 # Example of three tones interacting
 ![](resources/fourier.gif)
@@ -16,7 +16,7 @@ Réception d'objets: 100% (130/130), 1.34 MiB | 1.87 MiB/s, fait.
 Résolution des deltas: 100% (68/68), fait.
 Vérification de la connectivité... fait.
 $ cd fourier/
-$ make analyse 
+$ make analyse
 clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o tonegen.o -c tonegen.cpp
 clang++   tonegen.o   -o tonegen
 clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o fourier.o -c fourier.cpp
@@ -25,13 +25,13 @@ clang++   fourier.o   -o fourier
 ```
 
 # Tone generator
-Takes up to three frequencies
+Takes up to three frequencies and generates a WAV on stdout.
 ```bash
 $ ./tonegen 100 200 300 | aplay
 Lecture WAVE 'stdin' : Signed 16 bit Little Endian, Fréquence 8000 Hz, Mono
 ```
 
-Pipe to Fourier
+Pipe WAV to Fourier.
 ```bash
 $ ./tonegen 100 200 300 | ./fourier 
 ```
