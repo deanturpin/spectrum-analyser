@@ -53,7 +53,6 @@ int main() {
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
-  cout << "Bins " << fourier.size() << endl;
   cout << "\nHertz" << endl;
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
