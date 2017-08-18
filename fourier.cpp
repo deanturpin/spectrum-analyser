@@ -31,26 +31,28 @@ int main() {
                           static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
-  // original samples
+  // original samples. Only run over the first half of the matrix as the other
+  // half is a mirror image.
   vector<complex<double>> fourier;
-  for (unsigned int k = 0; k < bins; ++k) {
+  for (unsigned int k = 0; k < bins / 2; ++k) {
 
     complex<double> sum;
     for (unsigned int n = 0; n < bins; ++n)
       sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
 
-    fourier.push_back(sum / static_cast<double>(bins));
+    // Zero the first few bins (very low frequencies)
+    fourier.push_back(k > 10 ? sum / static_cast<double>(bins) : 0.0);
   }
 
   // Free up the twiddles
   delete[] twiddle;
 
   // Bin resolution
-  const double resolution = wav.sample_rate / bins;
+  const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
 
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
-  cout << "Resolution " << resolution << " Hz" << endl;
+  cout << "Bin resolution " << bin_resolution << " Hz" << endl;
   cout << "Bins " << fourier.size() << endl;
   cout << "\nHertz" << endl;
 
@@ -60,7 +62,7 @@ int main() {
 
     static unsigned int bin = 0;
     const unsigned int bin_freq =
-        static_cast<unsigned int>(round(bin * resolution));
+        static_cast<unsigned int>(round(bin * bin_resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. Note: the absolute value of the (complex) Fourier result is
@@ -82,9 +84,9 @@ int main() {
     if (abs(f) > peak_threshold) {
 
       // Calculate the note of this bin. Search for the current bin frequency
-      // in the known map, We need the note preceding the insertion point
-      // returned by lower bound. Also nudge the bin frequency a microtone,
-      // otherwise exact frequencies will be mapped to the previous note.
+      // in the map but print the note preceding the insertion point returned
+      // by lower bound. Also nudge the bin frequency a microtone, otherwise
+      // exact frequencies will be mapped to the previous note.
       const auto note = --riff::notes.lower_bound(bin_freq + .01);
       cout << red << bin_freq << white << " " << note->second;
     }
