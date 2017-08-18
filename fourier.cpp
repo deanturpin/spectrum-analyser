@@ -1,3 +1,4 @@
+#include "notes.h"
 #include "riff.h"
 #include <algorithm>
 #include <complex>
@@ -30,14 +31,16 @@ int main() {
                           static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
-  // original samples
+  // original samples. Only run over the first half of the matrix as the other
+  // half is a mirror image.
   vector<complex<double>> fourier;
-  for (unsigned int k = 0; k < bins; ++k) {
+  for (unsigned int k = 0; k < bins / 2; ++k) {
 
     complex<double> sum;
     for (unsigned int n = 0; n < bins; ++n)
       sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
 
+    // Store the average
     fourier.push_back(sum / static_cast<double>(bins));
   }
 
@@ -45,21 +48,20 @@ int main() {
   delete[] twiddle;
 
   // Bin resolution
-  const double resolution = wav.sample_rate / bins;
+  const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
 
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
-  cout << "Resolution " << resolution << " Hz" << endl;
+  cout << "Bin resolution " << bin_resolution << " Hz" << endl;
   cout << "Bins " << fourier.size() << endl;
   cout << "\nHertz" << endl;
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
-  for (const auto &f : fourier) {
+  for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
-    static unsigned int bin = 0;
-    const unsigned int bin_freq = static_cast<unsigned int>(
-      round(bin * resolution));
+    const unsigned int bin_freq =
+        static_cast<unsigned int>(round(bin * bin_resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. Note: the absolute value of the (complex) Fourier result is
@@ -68,19 +70,29 @@ int main() {
     const double max_bar = 160;
     const double bar_offset = 30;
     const auto length = static_cast<unsigned int>(
-        round(max_bar * (full_scale / 4 + abs(f)) / full_scale) - bar_offset);
+        round(max_bar * (full_scale / 4 + abs(fourier.at(bin))) / full_scale) -
+        bar_offset);
 
     // Print the bar and make it colourful
-    cout << "\033[33m" << string(length, '-') << "\033[0m|";
+    const auto red = "\033[41m";
+    const auto white = "\033[0m";
+    const auto yellow = "\033[33m";
+    cout << yellow << string(length, '-') << white << "| ";
 
     // Add a marker if it's interesting
-    const double peak_threshold = 3000.0;
-    if (abs(f) > peak_threshold)
-      cout << " \033[41m" << bin_freq << "\033[0m";
+    const double peak_threshold = 3500.0;
+    if (abs(fourier.at(bin)) > peak_threshold) {
+
+      // Calculate the note of this bin by searching for the current bin
+      // frequency in the notes map. But use the note *preceding* the insertion
+      // point returned by lower bound. Also nudge the bin frequency a
+      // microtone, otherwise exact frequencies will be mapped to the previous
+      // note.
+      const auto note = --riff::notes.lower_bound(bin_freq + .01);
+      cout << red << bin_freq << white << " " << note->second;
+    }
 
     cout << endl;
-
-    ++bin;
   }
 
   return 0;

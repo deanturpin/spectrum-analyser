@@ -15,23 +15,15 @@ clean:
 
 # Analyse mic input
 live: fourier
-	watch -c -t -n .01 "arecord -f S16_LE -c1 -r8000 | ./fourier"
+	watch -c -t -n .01 "arecord -f S16_LE -c1 -r 2000 | ./fourier"
 
 # Analyse generated tone
-analyse: tonegen fourier
-	./tonegen | ./fourier | head -40
-
-# Play a major scale (equal temperament)
-major: tonegen
-	./tonegen 440 550 660 | aplay
+demo: tonegen fourier
+	./tonegen 20 30 40 | ./fourier | head -40
 
 # Wait for a cpp to be updated and build
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
-
-# Comparison of just intonation and equal temperament
-just: tonegen fourier
-	./tonegen 440 554 659 | aplay; ./tonegen 440 550 660 | aplay
 
 cppcheck:
 	cppcheck --enable=all .
