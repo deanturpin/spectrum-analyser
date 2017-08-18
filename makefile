@@ -18,12 +18,12 @@ live: fourier
 	watch -c -t -n .01 "arecord -f S16_LE -c1 -r 2000 | ./fourier"
 
 # Analyse generated tone
-analyse: tonegen fourier
-	./tonegen | ./fourier | head -40
+demo: tonegen fourier
+	./tonegen 118 | ./fourier | head -40
 
-# Play a major scale (equal temperament)
+# Analyse a major chord
 major: tonegen
-	./tonegen 440 550 660 | aplay
+	./tonegen 440 554 659 | ./fourier
 
 # Wait for a cpp to be updated and build
 wait:

@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
   wav.format_size = 16;
   wav.format_tag = 1;
   wav.channels = 1;
-  wav.sample_rate = 8000;
+  wav.sample_rate = 4000;
   wav.bit_depth = 16;
   wav.bytes_per_second = wav.sample_rate * wav.bit_depth / 8;
   wav.block_align = 1;

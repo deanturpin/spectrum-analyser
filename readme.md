@@ -18,7 +18,7 @@ Réception d'objets: 100% (130/130), 1.34 MiB | 1.87 MiB/s, fait.
 Résolution des deltas: 100% (68/68), fait.
 Vérification de la connectivité... fait.
 $ cd fourier/
-$ make analyse
+$ make demo
 clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o tonegen.o -c tonegen.cpp
 clang++   tonegen.o   -o tonegen
 clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o fourier.o -c fourier.cpp

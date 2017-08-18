@@ -48,17 +48,6 @@ int main() {
   // Bin resolution
   const double resolution = wav.sample_rate / bins;
 
-  // Create the note lookup
-  std::map<unsigned int, std::string> note_lookup;
-
-  for (const auto &n : riff::notes) {
-
-    const auto b = static_cast<unsigned int>(n.first / resolution);
-    note_lookup[b] += n.second + " ";
-  }
-
-  cout << "Lookup size " << note_lookup.size() << endl;
-
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Resolution " << resolution << " Hz" << endl;
@@ -85,14 +74,14 @@ int main() {
     // Print the bar and make it colourful
     cout << "\033[33m" << string(length, '-') << "\033[0m|";
 
-    auto n = note_lookup.find(bin);
-    if (n != note_lookup.end())
-      cout << " " << n->second;
-
     // Add a marker if it's interesting
-    const double peak_threshold = 4000.0;
-    if (abs(f) > peak_threshold)
-      cout << " \033[41m" << bin_freq << "\033[0m ";
+    const double peak_threshold = 3500.0;
+    if (abs(f) > peak_threshold) {
+
+      // We want the note preceding the insertion point returned by lower bound
+      const auto note = --riff::notes.lower_bound(bin_freq + .01);
+      cout << " \033[41m" << bin_freq << "\033[0m "<< note->second;
+    }
 
     cout << endl;
 
