@@ -19,22 +19,11 @@ live: fourier
 
 # Analyse generated tone
 demo: tonegen fourier
-	./tonegen 118 | ./fourier | head -40
-
-# Analyse a major chord
-major: tonegen
-	./tonegen 440 554 659 | ./fourier
+	./tonegen 20 30 40 | ./fourier | head -40
 
 # Wait for a cpp to be updated and build
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
-
-# Comparison of just intonation and equal temperament
-just: tonegen fourier
-	./tonegen 440 554 659 | aplay
-	./tonegen 440 550 660 | aplay
-	./tonegen 440 488 660 | aplay
-	./tonegen 550 660 825 | aplay
 
 cppcheck:
 	cppcheck --enable=all .

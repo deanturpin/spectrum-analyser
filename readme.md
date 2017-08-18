@@ -25,3 +25,8 @@ clang++ -Weverything -O3 -Wno-c++98-compat -std=c++14 -o fourier.o -c fourier.cp
 clang++   fourier.o   -o fourier
 ./tonegen | ./fourier | head -40
 ```
+
+# Analyse mic
+```bash
+make live
+```
