@@ -72,15 +72,21 @@ int main() {
         round(max_bar * (full_scale / 4 + abs(f)) / full_scale) - bar_offset);
 
     // Print the bar and make it colourful
-    cout << "\033[33m" << string(length, '-') << "\033[0m|";
+    const auto red = "\033[41m";
+    const auto white = "\033[0m";
+    const auto yellow = "\033[33m";
+    cout << yellow << string(length, '-') << white << "| ";
 
     // Add a marker if it's interesting
     const double peak_threshold = 3500.0;
     if (abs(f) > peak_threshold) {
 
-      // We want the note preceding the insertion point returned by lower bound
+      // Calculate the note of this bin. Search for the current bin frequency
+      // in the known map, We need the note preceding the insertion point
+      // returned by lower bound. Also nudge the bin frequency a microtone,
+      // otherwise exact frequencies will be mapped to the previous note.
       const auto note = --riff::notes.lower_bound(bin_freq + .01);
-      cout << " \033[41m" << bin_freq << "\033[0m " << note->second;
+      cout << red << bin_freq << white << " " << note->second;
     }
 
     cout << endl;
