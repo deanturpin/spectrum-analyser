@@ -1,7 +1,8 @@
 # Files
 The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
-[tonegen.cpp](tonegen.cpp) and a common include file [riff.h](riff.h) which
-defines the WAV header.
+[tonegen.cpp](tonegen.cpp), a common include file [riff.h](riff.h) which
+defines the WAV header and [notes.h](notes.h) which is an associative array of
+frequencies to note letters.
 
 ```fourier.cpp``` takes a WAV on stdin and prints the Fourier transform as
 ASCII art.
