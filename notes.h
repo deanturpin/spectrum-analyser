@@ -1,7 +1,7 @@
 #include <map>
 
 namespace riff {
-  const std::map<double, std::string> notes = {
+const std::map<double, std::string> notes = {
 
     // Catch all for lower bound search
     {0.0, ""},
@@ -117,5 +117,5 @@ namespace riff {
     {7040.00, "A8"},
     {7458.62, "A#8"},
     {7902.13, "B8"},
-  };
+};
 }

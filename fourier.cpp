@@ -1,5 +1,5 @@
-#include "riff.h"
 #include "notes.h"
+#include "riff.h"
 #include <algorithm>
 #include <complex>
 #include <iostream>
@@ -59,8 +59,8 @@ int main() {
   for (const auto &f : fourier) {
 
     static unsigned int bin = 0;
-    const unsigned int bin_freq = static_cast<unsigned int>(
-      round(bin * resolution));
+    const unsigned int bin_freq =
+        static_cast<unsigned int>(round(bin * resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. Note: the absolute value of the (complex) Fourier result is
@@ -80,7 +80,7 @@ int main() {
 
       // We want the note preceding the insertion point returned by lower bound
       const auto note = --riff::notes.lower_bound(bin_freq + .01);
-      cout << " \033[41m" << bin_freq << "\033[0m "<< note->second;
+      cout << " \033[41m" << bin_freq << "\033[0m " << note->second;
     }
 
     cout << endl;

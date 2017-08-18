@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
       const double interval = static_cast<double>(wav.sample_rate) / f;
 
       if (f > 0)
-        sample += static_cast<unsigned short>(
-            sin(phase / interval) * full_scale / scale);
+        sample += static_cast<unsigned short>(sin(phase / interval) *
+                                              full_scale / scale);
     }
 
     // 2's comp
