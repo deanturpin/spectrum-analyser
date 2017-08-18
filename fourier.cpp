@@ -1,4 +1,5 @@
 #include "riff.h"
+#include "notes.h"
 #include <algorithm>
 #include <complex>
 #include <iostream>
@@ -47,6 +48,17 @@ int main() {
   // Bin resolution
   const double resolution = wav.sample_rate / bins;
 
+  // Create the note lookup
+  std::map<unsigned int, std::string> note_lookup;
+
+  for (const auto &n : riff::notes) {
+
+    const auto b = static_cast<unsigned int>(n.first / resolution);
+    note_lookup[b] += n.second + " ";
+  }
+
+  cout << "Lookup size " << note_lookup.size() << endl;
+
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Resolution " << resolution << " Hz" << endl;
@@ -73,10 +85,14 @@ int main() {
     // Print the bar and make it colourful
     cout << "\033[33m" << string(length, '-') << "\033[0m|";
 
+    auto n = note_lookup.find(bin);
+    if (n != note_lookup.end())
+      cout << " " << n->second;
+
     // Add a marker if it's interesting
-    const double peak_threshold = 3000.0;
+    const double peak_threshold = 4000.0;
     if (abs(f) > peak_threshold)
-      cout << " \033[41m" << bin_freq << "\033[0m";
+      cout << " \033[41m" << bin_freq << "\033[0m ";
 
     cout << endl;
 

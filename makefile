@@ -15,7 +15,7 @@ clean:
 
 # Analyse mic input
 live: fourier
-	watch -c -t -n .01 "arecord -f S16_LE -c1 -r8000 | ./fourier"
+	watch -c -t -n .01 "arecord -f S16_LE -c1 -r 2000 | ./fourier"
 
 # Analyse generated tone
 analyse: tonegen fourier
@@ -31,7 +31,10 @@ wait:
 
 # Comparison of just intonation and equal temperament
 just: tonegen fourier
-	./tonegen 440 554 659 | aplay; ./tonegen 440 550 660 | aplay
+	./tonegen 440 554 659 | aplay
+	./tonegen 440 550 660 | aplay
+	./tonegen 440 488 660 | aplay
+	./tonegen 550 660 825 | aplay
 
 cppcheck:
 	cppcheck --enable=all .
