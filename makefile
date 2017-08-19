@@ -15,7 +15,7 @@ clean:
 
 # Analyse mic input
 live: fourier
-	watch -c -t -n .01 "arecord -f S16_LE -c1 -r 2000 | ./fourier"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./fourier"
 
 # Analyse generated tone
 demo: tonegen fourier
@@ -24,6 +24,11 @@ demo: tonegen fourier
 # Wait for a cpp to be updated and build
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
+
+progress:
+	./tonegen 196.00 246.94 293.66 | ./fourier
+	./tonegen 261.63 329.63 392.00 | ./fourier
+	./tonegen 261.63 311.13 392.00 | ./fourier
 
 cppcheck:
 	cppcheck --enable=all .
