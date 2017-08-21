@@ -5,13 +5,14 @@ FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: fourier tonegen
+all: fourier tonegen generate
 
 fourier: fourier.o
 tonegen: tonegen.o
+generate: generate.o
 
 clean:
-	rm -f tonegen fourier *.o
+	rm -f fourier tonegen generate *.o
 
 # Analyse mic input
 live: fourier

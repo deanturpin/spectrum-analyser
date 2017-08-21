@@ -1,5 +1,6 @@
 #include "notes.h"
 #include "riff.h"
+#include "fourier.h"
 #include <algorithm>
 #include <complex>
 #include <iostream>
@@ -15,43 +16,44 @@ int main() {
 
   // The number of bins is fundamental. It's the number of samples to read,
   // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 1000;
+  const unsigned int bins = fft_1000.size();
 
   // Read a batch of samples
   vector<short> samples(bins);
   cin.read(reinterpret_cast<char *>(samples.data()), bins * sizeof(short));
 
   // Initialise twiddle matrix
-  auto *twiddle = new complex<double>[bins][bins]();
+  // auto *twiddle = new complex<double>[bins][bins]();
 
   // Populate twiddle matrix. The "exp" is the important bit.
-  for (unsigned int k = 0; k < bins; ++k)
-    for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] = exp(-2i * M_PI * static_cast<double>(k) *
-                          static_cast<double>(n) / static_cast<double>(bins));
+  // for (unsigned int k = 0; k < bins; ++k)
+    // for (unsigned int n = 0; n < bins; ++n)
+      // twiddle[n][k] = exp(-2i * M_PI * static_cast<double>(k) *
+                          // static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
   vector<complex<double>> fourier;
-  for (unsigned int k = 0; k < bins / 2; ++k) {
+  for (unsigned int k = 0; k < bins; ++k) {
 
     complex<double> sum;
     for (unsigned int n = 0; n < bins; ++n)
-      sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
+      sum += fft_1000[n][k] * complex<double>(samples.at(n), 0);
 
     // Store the average
     fourier.push_back(sum / static_cast<double>(bins));
   }
 
   // Free up the twiddles
-  delete[] twiddle;
+  // delete[] twiddle;
 
   // Bin resolution
   const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
 
   // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
+  cout << "Bins " << bins << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
   cout << "\nHertz" << endl;
 
