@@ -1,11 +1,14 @@
 #include "notes.h"
 #include "riff.h"
 #include <algorithm>
+#include <exception>
 #include <complex>
 #include <iostream>
 #include <vector>
 
-int main() {
+void fourier();
+
+void fourier() try {
 
   using namespace std;
 
@@ -60,7 +63,7 @@ int main() {
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
     const unsigned int bin_freq =
-        static_cast<unsigned int>(round(bin * bin_resolution));
+      static_cast<unsigned int>(round(bin * bin_resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. Note: the absolute value of the (complex) Fourier result is
@@ -69,8 +72,8 @@ int main() {
     const double max_bar = 160;
     const double bar_offset = 30;
     const auto length = static_cast<unsigned int>(
-        round(max_bar * (full_scale / 4 + abs(fourier.at(bin))) / full_scale) -
-        bar_offset);
+      round(max_bar * (full_scale / 4 + abs(fourier.at(bin))) / full_scale) -
+      bar_offset);
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
@@ -93,6 +96,13 @@ int main() {
 
     cout << endl;
   }
+}
+catch(const std::exception &e) {
+  std::cout << "Caught " << e.what() << std::endl;
+}
 
+int main() {
+
+  fourier();
   return 0;
 }
