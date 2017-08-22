@@ -30,7 +30,7 @@ void fourier() try {
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] = exp(-2i * M_PI * static_cast<double>(k) *
+      twiddle[n][k] = exp(complex<double>(0, -2) * M_PI * static_cast<double>(k) *
                           static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
