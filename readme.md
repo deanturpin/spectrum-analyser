@@ -36,15 +36,15 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 ./tonegen 440 550 660 | ./fourier | head -100
 ```
 # C++ standards
-Initially I used the default for clang (C++03) and then bumped the standard as
-I used newer features. I moved to C++11 to make use of ```auto``` and
-range-based ```for``` loops. (I did use C++14's imaginary constants in the
-first implementation - see the ```exp``` calculation - but as there's only a
-single instance I've made do with a regular complex constructor and reverted
-the standard to C++11.)
+Initially I used the default C++ standard for ```clang``` (C++03) and then
+bumped the standard as I used newer features. I moved to C++11 to make use of
+```auto``` and range-based ```for``` loops. (I did use C++14's imaginary
+constants in the first implementation - see the ```exp``` calculation - but as
+there's only a single instance I've made do with a regular complex constructor
+and reverted the standard to C++11.)
 
 # Coding standard and linter
-I've added a make rule to run ```cppcheck```. And I periodically run
+There's a make rule to run ```cppcheck```. And I periodically run
 ```clang-format``` with the default settings and apply the results. I'm not
 sure where this fits in the workflow yet but I like that I don't have to think
 about it. And it can be useful to swap in IWYU to weed out any left over
