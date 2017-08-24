@@ -53,7 +53,6 @@ void fourier() try {
   // Bin resolution
   const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
 
-  // Print analysis summary
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
   cout << "\nHertz" << endl;
@@ -66,8 +65,8 @@ void fourier() try {
       static_cast<unsigned int>(round(bin * bin_resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
-    // terminal. Note: the absolute value of the (complex) Fourier result is
-    // used to calculate the bar length.
+    // terminal. The absolute value of the (complex) Fourier result is used to
+    // calculate the bar length.
     const double full_scale = 0xffff;
     const double max_bar = 160;
     const double bar_offset = 30;
