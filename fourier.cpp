@@ -57,6 +57,12 @@ void fourier() try {
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
   cout << "\nHertz" << endl;
 
+  // Find the max element so we know how to scale the results
+  const auto max_bin = abs(*max_element(fourier.cbegin(), fourier.cend(),
+    [](const complex<double> &a, const complex<double> &b)
+    { return (abs(a) < abs(b)); }
+  ));
+
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
@@ -67,12 +73,9 @@ void fourier() try {
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
-    const double full_scale = 0xffff;
-    const double max_bar = 160;
-    const double bar_offset = 30;
+    const double full_bar = 75.0;
     const auto length = static_cast<unsigned int>(
-      round(max_bar * (full_scale / 4 + abs(fourier.at(bin))) / full_scale) -
-      bar_offset);
+      round(full_bar * abs(fourier.at(bin)) / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
