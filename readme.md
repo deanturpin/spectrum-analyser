@@ -17,8 +17,8 @@ make live
 ```
 # Files
 The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
-[tonegen.cpp](tonegen.cpp), a common include file [riff.h](riff.h) which
-defines the WAV header and [notes.h](notes.h) which is an associative array of
+[tonegen.cpp](tonegen.cpp), a common include file [riff.h](riff.h) where the
+WAV header is defined and [notes.h](notes.h) which is an associative array of
 frequencies to note letters.
 
 ```fourier.cpp``` takes a WAV on stdin and prints the Fourier transform as
@@ -47,7 +47,7 @@ and reverted the standard to C++11.)
 There's a make rule to run ```cppcheck```. And I periodically run
 ```clang-format``` with the default settings and apply the results. I'm not
 sure where this fits in the workflow yet but I like that I don't have to think
-about it. And it can be useful to swap in IWYU to weed out any left over
+about it. And it can be useful to swap in ```iwyu``` to weed out any left over
 includes. But I don't really like the output so it's used purely as a guide.
 ```bash
 make CC=iwyu
