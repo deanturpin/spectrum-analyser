@@ -32,8 +32,8 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 # Generate major chord and send it to the speaker
 ./tonegen 440 550 660 | aplay
 
-# Generate chord, analyse it and display the first 100 bins
-./tonegen 440 550 660 | ./fourier | head -100
+# Generate chord and analyse it
+./tonegen 440 550 660 | ./fourier | less -r
 ```
 # C++ standards
 Initially I used the default C++ standard for ```clang``` (C++03) and then
