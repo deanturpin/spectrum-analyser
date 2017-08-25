@@ -37,9 +37,8 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 ```
 # C++ standards
 Initially I used the default C++ standard for ```clang``` (C++03) and then
-bumped the standard as I used newer features. I moved to C++11 to make use of
-```auto``` and range-based ```for``` loops. And then C++14 for imaginary
-constants and lambdas with ```auto``` types.
+bumped the standard as I used newer features. I then moved to C++11 to make use
+of ```auto``` and range-based ```for``` loops.
 
 ```bash
 $ clang++ --version

@@ -29,21 +29,22 @@ void fourier() try {
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] = exp(-2i * M_PI * static_cast<double>(k) *
-                          static_cast<double>(n) / static_cast<double>(bins));
+      twiddle[n][k] =
+          exp(complex<double>(0, 2) * M_PI * static_cast<double>(k) *
+              static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
-  vector<complex<double>> fourier;
+  vector<double> fourier;
   for (unsigned int k = 0; k < bins / 2; ++k) {
 
     complex<double> sum;
     for (unsigned int n = 0; n < bins; ++n)
       sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
 
-    // Store the average
-    fourier.push_back(sum / static_cast<double>(bins));
+    // Store the average and calculate absolute value of complex
+    fourier.push_back(abs(sum / static_cast<double>(bins)));
   }
 
   // Free up the twiddles
@@ -56,9 +57,7 @@ void fourier() try {
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   // Find the max element so we know how much to scale the results
-  const auto max_bin = abs(*max_element(
-      fourier.cbegin(), fourier.cend(),
-      [](const auto &a, const auto &b) { return abs(a) < abs(b); }));
+  const auto max_bin = *max_element(fourier.cbegin(), fourier.cend());
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
@@ -70,7 +69,7 @@ void fourier() try {
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
-    const double current_bin = abs(fourier.at(bin));
+    const double current_bin = fourier.at(bin);
     const auto bar_length =
         static_cast<unsigned int>(round(full_bar * current_bin / max_bin));
 

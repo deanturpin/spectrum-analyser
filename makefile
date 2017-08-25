@@ -1,5 +1,5 @@
 CC=clang++
-STANDARD=c++14
+STANDARD=c++11
 FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
 
 %.o:%.cpp
