@@ -54,7 +54,6 @@ void fourier() try {
 
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
-  cout << "\nHertz" << endl;
 
   // Find the max element so we know how much to scale the results
   const auto max_bin = abs(*max_element(
@@ -65,8 +64,7 @@ void fourier() try {
   // converted into a bar.
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
-    const unsigned int bin_freq =
-        static_cast<unsigned int>(round(bin * bin_resolution));
+    const double bin_freq = bin * bin_resolution;
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. The absolute value of the (complex) Fourier result is used to
@@ -82,9 +80,8 @@ void fourier() try {
     const auto yellow = "\033[33m";
     cout << yellow << string(bar_length, '-') << white << "| ";
 
-    // Add a marker if it's interesting
-    const double peak_threshold = 3500.0;
-    if (abs(fourier.at(bin)) > peak_threshold) {
+    // Add a marker if the current bin has strong reponse
+    if (current_bin > max_bin / 2) {
 
       // Calculate the note of this bin by searching for the current bin
       // frequency in the notes map. But use the note *preceding* the insertion
