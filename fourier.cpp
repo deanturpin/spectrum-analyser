@@ -2,7 +2,6 @@
 #include "riff.h"
 #include <algorithm>
 #include <complex>
-#include <exception>
 #include <iostream>
 #include <vector>
 
