@@ -1,7 +1,7 @@
 #include "riff.h"
+#include <cmath>
 #include <iostream>
 #include <limits>
-#include <math.h>
 #include <vector>
 
 int main(int argc, char *argv[]) {
