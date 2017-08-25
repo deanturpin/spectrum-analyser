@@ -60,7 +60,7 @@ void fourier() try {
   // Find the max element so we know how much to scale the results
   const auto max_bin = abs(*max_element(
       fourier.cbegin(), fourier.cend(),
-      [](const auto &a, const auto &b) { return (abs(a) < abs(b)); }));
+      [](const auto &a, const auto &b) { return abs(a) < abs(b); }));
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
