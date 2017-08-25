@@ -41,6 +41,14 @@ bumped the standard as I used newer features. I moved to C++11 to make use of
 ```auto``` and range-based ```for``` loops. And then C++14 for imaginary
 constants and lambdas with ```auto``` types.
 
+```bash
+$ clang++ --version
+clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+```
+
 # Coding standard and linter
 There's a make rule to run ```cppcheck```. And I periodically run
 ```clang-format``` with the default settings and apply the results. I'm not
