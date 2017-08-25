@@ -38,10 +38,8 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 # C++ standards
 Initially I used the default C++ standard for ```clang``` (C++03) and then
 bumped the standard as I used newer features. I moved to C++11 to make use of
-```auto``` and range-based ```for``` loops. (I did use C++14's imaginary
-constants in the first implementation - see the ```exp``` calculation - but as
-there's only a single instance I've made do with a regular complex constructor
-and reverted the standard to C++11.)
+```auto``` and range-based ```for``` loops. And then C++14 for imaginary
+constants and lambdas with ```auto``` types.
 
 # Coding standard and linter
 There's a make rule to run ```cppcheck```. And I periodically run

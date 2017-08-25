@@ -1,8 +1,8 @@
 #include "notes.h"
 #include "riff.h"
 #include <algorithm>
-#include <exception>
 #include <complex>
+#include <exception>
 #include <iostream>
 #include <vector>
 
@@ -30,8 +30,9 @@ void fourier() try {
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] = exp(complex<double>(0, -2) * M_PI * static_cast<double>(k) *
-                          static_cast<double>(n) / static_cast<double>(bins));
+      twiddle[n][k] =
+          exp(-2i * M_PI * static_cast<double>(k) *
+              static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
@@ -58,24 +59,23 @@ void fourier() try {
   cout << "\nHertz" << endl;
 
   // Find the max element so we know how to scale the results
-  const auto max_bin = abs(*max_element(fourier.cbegin(), fourier.cend(),
-    [](const complex<double> &a, const complex<double> &b)
-    { return (abs(a) < abs(b)); }
-  ));
+  const auto max_bin = abs(*max_element(
+      fourier.cbegin(), fourier.cend(),
+      [](const auto &a, const auto &b) { return (abs(a) < abs(b)); }));
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
     const unsigned int bin_freq =
-      static_cast<unsigned int>(round(bin * bin_resolution));
+        static_cast<unsigned int>(round(bin * bin_resolution));
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
     const auto length = static_cast<unsigned int>(
-      round(full_bar * abs(fourier.at(bin)) / max_bin));
+        round(full_bar * abs(fourier.at(bin)) / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
@@ -98,8 +98,7 @@ void fourier() try {
 
     cout << endl;
   }
-}
-catch(const std::exception &e) {
+} catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;
 }
 
