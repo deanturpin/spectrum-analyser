@@ -29,9 +29,8 @@ void fourier() try {
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] =
-          exp(-2i * M_PI * static_cast<double>(k) *
-              static_cast<double>(n) / static_cast<double>(bins));
+      twiddle[n][k] = exp(-2i * M_PI * static_cast<double>(k) *
+                          static_cast<double>(n) / static_cast<double>(bins));
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
@@ -73,8 +72,9 @@ void fourier() try {
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
-    const auto bar_length = static_cast<unsigned int>(
-        round(full_bar * abs(fourier.at(bin)) / max_bin));
+    const double current_bin = abs(fourier.at(bin));
+    const auto bar_length =
+        static_cast<unsigned int>(round(full_bar * current_bin / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
