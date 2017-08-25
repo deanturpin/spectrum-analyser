@@ -1,7 +1,7 @@
 Command line DFT and tone generator. See live demo on
 [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo).
 
-# Example of three tones interacting
+# Three tones interacting
 ![](fourier.gif)
 
 # Build
