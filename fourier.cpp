@@ -58,7 +58,7 @@ void fourier() try {
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
   cout << "\nHertz" << endl;
 
-  // Find the max element so we know how to scale the results
+  // Find the max element so we know how much to scale the results
   const auto max_bin = abs(*max_element(
       fourier.cbegin(), fourier.cend(),
       [](const auto &a, const auto &b) { return (abs(a) < abs(b)); }));
@@ -74,14 +74,14 @@ void fourier() try {
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
-    const auto length = static_cast<unsigned int>(
+    const auto bar_length = static_cast<unsigned int>(
         round(full_bar * abs(fourier.at(bin)) / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
     const auto white = "\033[0m";
     const auto yellow = "\033[33m";
-    cout << yellow << string(length, '-') << white << "| ";
+    cout << yellow << string(bar_length, '-') << white << "| ";
 
     // Add a marker if it's interesting
     const double peak_threshold = 3500.0;
