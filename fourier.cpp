@@ -17,7 +17,7 @@ void fourier() try {
 
   // The number of bins is fundamental. It's the number of samples to read,
   // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 1000;
+  const unsigned int bins = 1024;
 
   // Read a batch of samples
   vector<short> samples(bins);
@@ -43,7 +43,7 @@ void fourier() try {
     for (unsigned int n = 0; n < bins; ++n)
       sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
 
-    // Store the average and calculate absolute value of complex
+    // Store the absolute value of the complex average
     fourier.push_back(abs(sum / static_cast<double>(bins)));
   }
 
