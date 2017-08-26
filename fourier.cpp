@@ -89,7 +89,7 @@ int main() {
         // point returned by lower bound. Also nudge the bin frequency a
         // microtone, otherwise exact frequencies will be mapped to the previous
         // note.
-        const auto note = --riff::notes.lower_bound(bin_freq + 2);
+        const auto note = riff::notes.lower_bound(bin_freq);
         static const auto first_note = distance(riff::notes.cbegin(), note);
         if (key_note == "")
           key_note = note->second;
