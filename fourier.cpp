@@ -17,7 +17,7 @@ void fourier() try {
 
   // The number of bins is fundamental. It's the number of samples to read,
   // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 2048;
+  const unsigned int bins = 2000;
 
   // Read a batch of samples
   vector<short> samples(bins);
@@ -54,6 +54,7 @@ void fourier() try {
   const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
 
   cout << "CHORD LORD" << endl;
+  cout << "Bins " << bins << endl;
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
@@ -77,7 +78,7 @@ void fourier() try {
   // Find the max element so we know how large the peaks will be
   const auto max_bin = *max_element(fourier.cbegin(), fourier.cend());
 
-  // Pass over the results and calculate corresponding piano key
+  // Pass over the results and calculate corresponding piano keys
   string key_strikes = string(key_count, ' ');
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
@@ -87,7 +88,7 @@ void fourier() try {
     // Store this bin if its value is over the threshold
     if (current_bin > max_bin / 2) {
 
-      // Find insertion point for this note and calculate corresponding key
+      // Find insertion point and key index for this note
       const auto note = riff::notes.lower_bound(bin_freq);
       const unsigned int key = distance(riff::notes.cbegin(), note) % key_count;
 
