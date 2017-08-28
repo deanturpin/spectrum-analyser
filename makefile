@@ -15,7 +15,7 @@ clean:
 
 # Analyse mic input
 live: fourier
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 4000 | ./fourier"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./fourier"
 
 # Analyse generated tone
 demo: tonegen fourier

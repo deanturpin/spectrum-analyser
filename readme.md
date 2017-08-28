@@ -54,10 +54,7 @@ bumped the standard as I used newer features. I then moved to C++11 to make use
 of ```auto``` and range-based ```for``` loops.
 
 # Sample rate
-A sample rate of 4000 allows frequencies up to 2000 Hz to be measured. 1975.53
-Hz corresponds to B6 on the piano which is all but the top octave on an 88 key
-piano. The ASCII keyboard actually goes down to C0 which is an extra octave at
-the bottom end of a standard piano.
+A sample rate of 2000 and a bin count of 2048 allows frequencies up to 1000 Hz to be measured at a sub-1 Hz resolution. This gives a key range of C0 to B5.
 
 ```bash
 $ clang++ --version

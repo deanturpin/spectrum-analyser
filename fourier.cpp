@@ -17,7 +17,7 @@ void fourier() try {
 
   // The number of bins is fundamental. It's the number of samples to read,
   // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 2000;
+  const unsigned int bins = 2048;
 
   // Read a batch of samples
   vector<short> samples(bins);
@@ -62,7 +62,7 @@ void fourier() try {
       " ", " ", "|", " ", "|", " ", " ", "|", " ", "|", " ", "|",
   };
 
-  const unsigned int key_count = 72;
+  const unsigned int key_count = 74;
   const unsigned int notes_in_an_octave = 12;
 
   // Construct ASCII keyboard
