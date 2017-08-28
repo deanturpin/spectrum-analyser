@@ -98,3 +98,4 @@ ffmpeg -i out.ogv -loop 0 fourier.gif
 * [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
 * [Piano frequencies](https://en.wikipedia.org/wiki/Piano_key_frequencies)
 * [Just intonation](https://en.wikipedia.org/wiki/Just_intonation)
+* [Stringed instrument tuning](https://en.wikipedia.org/wiki/Stringed_instrument_tunings)
