@@ -1,7 +1,7 @@
 Command line DFT and tone generator. See live demo on
 [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo).
 
-# Build
+# Build and run demo
 ```bash
 $ git clone https://github.com/deanturpin/fourier
 $ cd fourier/
