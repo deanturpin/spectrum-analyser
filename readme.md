@@ -1,15 +1,28 @@
 Command line DFT and tone generator. See live demo on
 [YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo).
 
-# Three tones interacting
-![](fourier.gif)
-
 # Build
 ```bash
 git clone https://github.com/deanturpin/fourier
 cd fourier/
 make demo
+./tonegen 220 275 330 | ./fourier
+CHORD LORD
+Sample rate 4000 Hz
+Bin resolution 2 Hz
+________________________________________________________________________
+  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |
+  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |
+________________________________________________________________________
+                                              O   O   O                 
+----
+A3
+C#4
+F4
 ```
+
+# Three tones interacting
+![](fourier.gif)
 
 # Analyse mic
 ```bash

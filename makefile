@@ -19,8 +19,7 @@ live: fourier
 
 # Analyse generated tone
 demo: tonegen fourier
-	@echo Analyse generated chord
-	./tonegen 79 100 123 | ./fourier | head -40
+	./tonegen 220 275 330 | ./fourier
 
 # Wait for a cpp to be updated and build
 wait:
