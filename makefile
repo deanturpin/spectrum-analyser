@@ -22,18 +22,15 @@ live2: spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./spectrum"
 
 # Analyse generated tone
-demo: tonegen chord
+demo: tonegen chord spectrum
 	./tonegen 220 275 330 | ./chord
-
-# Analyse generated tone
-spec: tonegen spectrum
-	./tonegen 10 20 30 | ./spectrum | head -40
+	./tonegen 11 21 32 | ./spectrum | head -40
 
 # Wait for a cpp to be updated and build
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
-progress: tonegen
+progress: tonegen chord
 	./tonegen 196.00 246.94 293.66 | aplay -q
 	./tonegen 196.00 246.94 293.66 | ./chord
 	./tonegen 261.63 329.63 392.00 | aplay -q

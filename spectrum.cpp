@@ -10,22 +10,16 @@ void spectrum() try {
 
   using namespace std;
 
-  // Read the WAV header
-  riff::wav wav;
-  cin.read(reinterpret_cast<char *>(&wav), sizeof wav);
-
-  // Read a batch of samples
-  vector<short> samples(jos::bins);
-  cin.read(reinterpret_cast<char *>(samples.data()), jos::bins * sizeof(short));
-
-  const vector<double> fourier = jos::fourier(samples);
+  const auto samples = rif::read_samples(jos::bins);
+  const auto fourier = jos::fourier(samples);
 
   // Bin resolution
-  const double bin_resolution = wav.sample_rate / static_cast<double>(jos::bins);
+  const double bin_resolution = rif::header.sample_rate /
+    static_cast<double>(jos::bins);
 
   cout << "SPECTRUM" << endl;
   cout << "Bins " << jos::bins << endl;
-  cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
+  cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   // Find the max element so we know how much to scale the results
