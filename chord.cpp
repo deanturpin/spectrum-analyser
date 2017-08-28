@@ -1,13 +1,14 @@
 #include "notes.h"
 #include "riff.h"
+#include "fourier.h"
+
 #include <algorithm>
-#include <complex>
 #include <iostream>
-#include <vector>
 
-void fourier();
+void chord();
+void calculate_fourier(const std::vector<short> &, std::vector<double> &);
 
-void fourier() try {
+void chord() try {
 
   using namespace std;
 
@@ -23,32 +24,8 @@ void fourier() try {
   vector<short> samples(bins);
   cin.read(reinterpret_cast<char *>(samples.data()), bins * sizeof(short));
 
-  // Initialise twiddle matrix
-  auto *twiddle = new complex<double>[bins][bins]();
-
-  // Populate twiddle matrix. The "exp" is the important bit.
-  for (unsigned int k = 0; k < bins; ++k)
-    for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] =
-          exp(complex<double>(0, 2) * M_PI * static_cast<double>(k) *
-              static_cast<double>(n) / static_cast<double>(bins));
-
-  // The Fourier transform is the dot product of the twiddle matrix and the
-  // original samples. Only run over the first half of the matrix as the other
-  // half is a mirror image.
   vector<double> fourier;
-  for (unsigned int k = 0; k < bins / 2; ++k) {
-
-    complex<double> sum;
-    for (unsigned int n = 0; n < bins; ++n)
-      sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
-
-    // Store the absolute value of the complex average
-    fourier.push_back(abs(sum / static_cast<double>(bins)));
-  }
-
-  // Free up the twiddles
-  delete[] twiddle;
+  calculate_fourier(samples, fourier);
 
   // Bin resolution
   const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
@@ -105,6 +82,6 @@ void fourier() try {
 
 int main() {
 
-  fourier();
+  chord();
   return 0;
 }
