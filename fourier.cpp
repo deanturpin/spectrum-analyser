@@ -79,7 +79,6 @@ void fourier() try {
 
   // Pass over the results and calculate corresponding piano key
   string key_strikes = string(key_count, ' ');
-  map<string, bool> key_list;
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
     const double current_bin = fourier.at(bin);
@@ -88,21 +87,16 @@ void fourier() try {
     // Store this bin if its value is over the threshold
     if (current_bin > max_bin / 2) {
 
+      // Find insertion point for this note and calculate corresponding key
       const auto note = riff::notes.lower_bound(bin_freq);
       const unsigned int key = distance(riff::notes.cbegin(), note) % key_count;
 
-      key_strikes.at(key) = 'O';
-      key_list[note->second] = true;
+      key_strikes.at(key) = '^';
     }
   }
 
   cout << string(key_count, '_') << endl;
   cout << key_strikes << endl;
-
-  // Dump the list of keys
-  cout << "----" << endl;
-  for (const auto &i : key_list)
-    cout << i.first << endl;
 
 } catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;
