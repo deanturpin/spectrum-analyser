@@ -3,9 +3,9 @@ Command line DFT and tone generator. See live demo on
 
 # Build
 ```bash
-git clone https://github.com/deanturpin/fourier
-cd fourier/
-make demo
+$ git clone https://github.com/deanturpin/fourier
+$ cd fourier/
+$ make demo
 ./tonegen 220 275 330 | ./fourier
 CHORD LORD
 Sample rate 4000 Hz
