@@ -1,6 +1,6 @@
-#include "fourier.h"
 #include "notes.h"
 #include "riff.h"
+#include "fourier.h"
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -14,22 +14,17 @@ void spectrum() try {
   riff::wav wav;
   cin.read(reinterpret_cast<char *>(&wav), sizeof wav);
 
-  // The number of bins is fundamental. It's the number of samples to read,
-  // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 2000;
-
   // Read a batch of samples
-  vector<short> samples(bins);
-  cin.read(reinterpret_cast<char *>(samples.data()), bins * sizeof(short));
+  vector<short> samples(jos::bins);
+  cin.read(reinterpret_cast<char *>(samples.data()), jos::bins * sizeof(short));
 
-  vector<double> fourier;
-  calculate_fourier(samples, fourier);
+  const vector<double> fourier = jos::fourier(samples);
 
   // Bin resolution
-  const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
+  const double bin_resolution = wav.sample_rate / static_cast<double>(jos::bins);
 
   cout << "SPECTRUM" << endl;
-  cout << "Bins " << bins << endl;
+  cout << "Bins " << jos::bins << endl;
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 

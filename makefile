@@ -7,8 +7,8 @@ FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
 
 all: chord spectrum tonegen
 
-chord: chord.o
-spectrum: spectrum.o
+chord: chord.o fourier.o
+spectrum: spectrum.o fourier.o
 tonegen: tonegen.o
 
 clean:
