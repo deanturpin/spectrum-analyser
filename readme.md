@@ -77,22 +77,12 @@ make CC=iwyu
 # Command line examples
 ```bash
 # Analyse a series of frequencies
-for freq in {200..1000..1}; do ./tonegen $freq | ./fourier; done
+for freq in {40..1000..1}; do ./tonegen $freq | ./fourier; done
 
 # Play C Major scale
 for f in 261.6 293.7 329.6 349.2 392.0 440.0 493.9 523.3; do ./tonegen $f | aplay -q; done
 ```
 
-The animated GIF was created with a bash script.
-```bash
-for freq in {1..200..5}; do ./tonegen $(( 50 + freq )) 100 $(( 350 - freq ))| ./fourier | head -48; done
-```
-
-The screen was captured using the window ID and converted to an animated GIF.
-```bash
-recordmydesktop
-ffmpeg -i out.ogv -loop 0 fourier.gif
-```
 # See also
 * [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
 * [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
