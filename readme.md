@@ -40,6 +40,12 @@ Initially I used the default C++ standard for ```clang``` (C++03) and then
 bumped the standard as I used newer features. I then moved to C++11 to make use
 of ```auto``` and range-based ```for``` loops.
 
+# Sample rate
+A sample rate of 4000 allows frequencies up to 2000 Hz to be measured. 1975.53
+Hz corresponds to B6 on the piano which is all but the top octave on an 88 key
+piano. The ASCII keyboard actually goes down to C0 which is an extra octave at
+the bottom end of a standard piano.
+
 ```bash
 $ clang++ --version
 clang version 3.8.0-2ubuntu4 (tags/RELEASE_380/final)
