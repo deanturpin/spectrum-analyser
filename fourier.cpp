@@ -85,6 +85,7 @@ void fourier() try {
     const double current_bin = fourier.at(bin);
     const double bin_freq = bin * bin_resolution;
 
+    // Store this bin if its value is over the threshold
     if (current_bin > max_bin / 2) {
 
       const auto note = riff::notes.lower_bound(bin_freq);
