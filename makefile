@@ -19,18 +19,19 @@ live: fourier
 
 # Analyse generated tone
 demo: tonegen fourier
-	@echo Analyse generated chord
-	./tonegen 79 100 123 | ./fourier | head -40
+	./tonegen 220 275 330 | ./fourier
 
 # Wait for a cpp to be updated and build
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
 progress: tonegen
-	@echo Major to Minor
-	./tonegen 196.00 246.94 293.66 | aplay
-	./tonegen 261.63 329.63 392.00 | aplay
-	./tonegen 261.63 311.13 392.00 | aplay
+	./tonegen 196.00 246.94 293.66 | aplay -q
+	./tonegen 196.00 246.94 293.66 | ./fourier
+	./tonegen 261.63 329.63 392.00 | aplay -q
+	./tonegen 261.63 329.63 392.00 | ./fourier
+	./tonegen 261.63 311.13 392.00 | aplay -q
+	./tonegen 261.63 311.13 392.00 | ./fourier
 
 cppcheck:
 	cppcheck --enable=all .

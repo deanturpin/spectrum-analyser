@@ -17,7 +17,7 @@ void fourier() try {
 
   // The number of bins is fundamental. It's the number of samples to read,
   // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 1024;
+  const unsigned int bins = 2048;
 
   // Read a batch of samples
   vector<short> samples(bins);
@@ -53,46 +53,51 @@ void fourier() try {
   // Bin resolution
   const double bin_resolution = wav.sample_rate / static_cast<double>(bins);
 
+  cout << "CHORD LORD" << endl;
   cout << "Sample rate " << wav.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
-  // Find the max element so we know how much to scale the results
+  // ASCII representation of an octave on the piano
+  vector<string> keys = {
+      " ", " ", "|", " ", "|", " ", " ", "|", " ", "|", " ", "|",
+  };
+
+  const unsigned int key_count = 74;
+  const unsigned int notes_in_an_octave = 12;
+
+  // Construct ASCII keyboard
+  string keyboard;
+  for (unsigned int i = 0; i < key_count; ++i)
+    keyboard += keys.at(i % notes_in_an_octave);
+
+  cout << string(key_count, '_') << endl;
+  cout << keyboard << endl;
+  cout << keyboard << endl;
+
+  // Find the max element so we know how large the peaks will be
   const auto max_bin = *max_element(fourier.cbegin(), fourier.cend());
 
-  // Print the Fourier transform as an ASCII art histogram. Each bin is
-  // converted into a bar.
+  // Pass over the results and calculate corresponding piano key
+  string key_strikes = string(key_count, ' ');
   for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
 
+    const double current_bin = fourier.at(bin);
     const double bin_freq = bin * bin_resolution;
 
-    // Normalise the results and scale to make the graph fit nicely into the
-    // terminal. The absolute value of the (complex) Fourier result is used to
-    // calculate the bar length.
-    const double full_bar = 75.0;
-    const double current_bin = fourier.at(bin);
-    const auto bar_length =
-        static_cast<unsigned int>(round(full_bar * current_bin / max_bin));
-
-    // Print the bar and make it colourful
-    const auto red = "\033[41m";
-    const auto white = "\033[0m";
-    const auto yellow = "\033[33m";
-    cout << yellow << string(bar_length, '-') << white << "| ";
-
-    // Add a marker if the current bin has strong reponse
+    // Store this bin if its value is over the threshold
     if (current_bin > max_bin / 2) {
 
-      // Calculate the note of this bin by searching for the current bin
-      // frequency in the notes map. But use the note *preceding* the insertion
-      // point returned by lower bound. Also nudge the bin frequency a
-      // microtone, otherwise exact frequencies will be mapped to the previous
-      // note.
-      const auto note = --riff::notes.lower_bound(bin_freq + .01);
-      cout << red << bin_freq << white << " " << note->second;
-    }
+      // Find insertion point for this note and calculate corresponding key
+      const auto note = riff::notes.lower_bound(bin_freq);
+      const unsigned int key = distance(riff::notes.cbegin(), note) % key_count;
 
-    cout << endl;
+      key_strikes.at(key) = '^';
+    }
   }
+
+  cout << string(key_count, '_') << endl;
+  cout << key_strikes << endl;
+
 } catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;
 }
