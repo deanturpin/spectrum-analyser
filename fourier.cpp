@@ -88,7 +88,7 @@ void fourier() try {
     if (current_bin > max_bin / 2) {
 
       const auto note = riff::notes.lower_bound(bin_freq);
-      const auto key = distance(riff::notes.cbegin(), note) % key_count;
+      const unsigned int key = distance(riff::notes.cbegin(), note) % key_count;
 
       key_strikes.at(key) = 'O';
       key_list[note->second] = true;

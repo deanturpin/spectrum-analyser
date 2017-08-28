@@ -34,8 +34,8 @@ The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
 WAV header is defined and [notes.h](notes.h) which is an associative array of
 frequencies to note letters.
 
-```fourier.cpp``` takes a WAV on stdin and prints the Fourier transform as
-ASCII art.
+```fourier.cpp``` takes a WAV on stdin and prints an ASCII art keyboard showing
+the peaks as key presses.
 
 ```tonegen.cpp``` takes up to three frequencies in Hertz as parameters and
 writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
@@ -46,7 +46,7 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 ./tonegen 440 550 660 | aplay
 
 # Generate chord and analyse it
-./tonegen 440 550 660 | ./fourier | less -r
+./tonegen 440 550 660 | ./fourier
 ```
 # C++ standards
 Initially I used the default C++ standard for ```clang``` (C++03) and then
@@ -80,7 +80,7 @@ make CC=iwyu
 # Command line examples
 ```bash
 # Analyse a series of frequencies
-for freq in {200..1000..1}; do ./tonegen $freq | ./fourier | head -48; done
+for freq in {200..1000..1}; do ./tonegen $freq | ./fourier; done
 
 # Play C Major scale
 for f in 261.6 293.7 329.6 349.2 392.0 440.0 493.9 523.3; do ./tonegen $f | aplay -q; done
