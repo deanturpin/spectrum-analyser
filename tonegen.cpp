@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 
   // Parse command line
   vector<double> frequencies;
-  for (unsigned int i = 1; i < argc; ++i)
+  for (int i = 1; i < argc; ++i)
     frequencies.push_back(atof(argv[i]));
 
   // Add a default frequency if none given

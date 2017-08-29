@@ -66,11 +66,11 @@ InstalledDir: /usr/bin
 ```
 
 # Coding standard and linter
-There's a make rule to run ```cppcheck```. And I periodically run
-```clang-format``` with the default settings and apply the results. I'm not
-sure where this fits in the workflow yet but I like that I don't have to think
-about it. And it can be useful to swap in ```iwyu``` to weed out any left over
-includes. But I don't really like the output so it's used purely as a guide.
+There's a make rule to run ```cppcheck``` and one to run ```clang-format```
+over all cpp and h files with the default settings and apply the results. It
+would be nice if this were more integrated into the workflow. And it can be
+useful to swap in ```iwyu``` to weed out any left over includes. But I don't
+really like the output so it's used purely as a guide.
 ```bash
 make CC=iwyu
 ```

@@ -1,15 +1,22 @@
-CC=clang++
+CC=g++
 STANDARD=c++11
-FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
+# FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
+FLAGS=-Wall -O3 -Wno-c++98-compat -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
 all: chord spectrum tonegen tempo
 
-chord: chord.o fourier.o
-spectrum: spectrum.o fourier.o
-tempo: tempo.o fourier.o
+chord_objects = chord.o fourier.o
+chord: $(chord_objects)
+	$(CC) -o $@ $(chord_objects) -lgomp
+
+spectrum_objects = spectrum.o fourier.o
+spectrum: $(spectrum_objects)
+	$(CC) -o $@ $(spectrum_objects) -lgomp
+
+tempo: tempo.o
 tonegen: tonegen.o
 
 clean:
