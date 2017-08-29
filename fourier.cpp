@@ -21,7 +21,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
   vector<double> results;
-  for (unsigned int k = 0; k < bins / 2; ++k) {
+  for (unsigned int k = 0; k < bins; ++k) {
 
     complex<double> sum;
     for (unsigned int n = 0; n < bins; ++n)

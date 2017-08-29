@@ -24,6 +24,7 @@ struct _header {
   unsigned int data_size;
 } header;
 
+std::vector<short> read_samples(const unsigned int);
 std::vector<short> read_samples(const unsigned int size) {
 
   // Read the WAV header
@@ -32,6 +33,9 @@ std::vector<short> read_samples(const unsigned int size) {
   // Read a batch of samples
   std::vector<short> samples(size);
   std::cin.read(reinterpret_cast<char *>(samples.data()), size * sizeof(short));
+
+  // for (auto &i : samples)
+    // samples = ~samples + 1;
 
   return samples;
 }

@@ -5,10 +5,11 @@ FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: chord spectrum tonegen
+all: chord spectrum tonegen tempo
 
 chord: chord.o fourier.o
 spectrum: spectrum.o fourier.o
+tempo: tempo.o fourier.o
 tonegen: tonegen.o
 
 clean:
@@ -20,6 +21,9 @@ live: chord
 
 live2: spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./spectrum"
+
+live3: tempo
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"
 
 # Analyse generated tone
 demo: tonegen chord spectrum
