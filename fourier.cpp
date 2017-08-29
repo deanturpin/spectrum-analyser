@@ -1,5 +1,5 @@
-#include "omp.h"
 #include "fourier.h"
+#include "omp.h"
 #include <complex>
 #include <vector>
 
@@ -9,10 +9,10 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   using namespace std;
 
   // Initialise twiddle matrix
-  complex<double> *twiddle[8000] = new complex<double>[bins][bins] {{0}};
-  // auto twiddle = new complex<double>[bins][bins]();
+  auto twiddle = new complex<double>[bins][bins]();
 
 #pragma omp parallel for
+
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned long k = 0; k < bins; ++k)
     for (unsigned long n = 0; n < bins; ++n)
