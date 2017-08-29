@@ -12,28 +12,28 @@ void tempo() try {
   cout << "TEMPO" << endl;
   cout << "Collecting ... " << endl;
 
-  const unsigned int batch_size = 4000;
-  auto samples = rif::read_samples(batch_size);
+  const unsigned long batch_size = 4000;
+  const auto samples = rif::read_samples(batch_size);
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Samples " << samples.size() << endl;
 
   const auto minmax = minmax_element(samples.cbegin(), samples.cend());
 
-  map<unsigned int, short> histogram;
+  map<unsigned long, short> histogram;
 
-  const unsigned int bins = 100;
-  const unsigned int scale = batch_size  / bins;
-  for (unsigned int i = 0; i < batch_size; ++i)
+  const unsigned long bins = 100;
+  const unsigned long scale = batch_size  / bins;
+  for (unsigned long i = 0; i < batch_size; ++i)
     ++histogram[i / scale] += samples.at(i);
 
   // for (const auto &i : histogram)
     // cout << i.first << "\t" << i.second << endl;
 
   // Peak detector
-  const unsigned int window = 1;
+  const unsigned long window = 1;
   const auto threshold = *minmax.second / 5;
 
-  for (unsigned int i = window; i < histogram.size() - window; ++i) {
+  for (unsigned long i = window; i < histogram.size() - window; ++i) {
 
     const auto previous = histogram.at(i - window);
     const auto current = histogram.at(i);

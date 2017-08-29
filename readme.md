@@ -44,6 +44,11 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 # Generate chord and analyse it
 ./tonegen 440 550 660 | ./fourier
 ```
+
+# Spectrum
+Frequency spectrum analyser. The results are normalised against the largest
+bin, so for quiet environments the noise floor will jump up.
+
 # C++ standards
 Initially I used the default C++ standard for ```clang``` (C++03) and then
 bumped the standard as I used newer features. I then moved to C++11 to make use

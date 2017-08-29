@@ -4,7 +4,7 @@ namespace riff {
 const std::map<double, std::string> notes = {
 
     // Catch all for lower bound search
-    {0.0, "B-"},
+    {0.0, "?"},
 
     // All the notes we're interested in. At the low end a single Fourier bin
     // will map to multiple notes. And further up multiple bins will be

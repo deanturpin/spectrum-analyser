@@ -26,12 +26,12 @@ void chord() try {
       " ", " ", "|", " ", "|", " ", " ", "|", " ", "|", " ", "|",
   };
 
-  const unsigned int key_count = 74;
-  const unsigned int notes_in_an_octave = 12;
+  const unsigned long key_count = 74;
+  const unsigned long notes_in_an_octave = 12;
 
   // Construct ASCII keyboard
   string keyboard;
-  for (unsigned int i = 0; i < key_count; ++i)
+  for (unsigned long i = 0; i < key_count; ++i)
     keyboard += keys.at(i % notes_in_an_octave);
 
   cout << string(key_count, '_') << endl;
@@ -43,14 +43,14 @@ void chord() try {
 
   // Pass over the results and calculate corresponding piano keys
   string key_strikes = string(key_count, ' ');
-  const unsigned int window = 1;
+  const unsigned long window = 1;
 
   // Peak detector
-  for (unsigned int bin = window; bin < fourier.size() - window; ++bin) {
+  for (unsigned long bin = window; bin < fourier.size() - window; ++bin) {
 
     // const double current_bin = fourier.at(bin);
     const double bin_freq = bin * bin_resolution;
-    const unsigned int threshold = max_bin / 5;
+    const unsigned long threshold = max_bin / 5;
 
     const auto previous = fourier.at(bin - window);
     const auto current = fourier.at(bin);
@@ -63,7 +63,7 @@ void chord() try {
 
       // Find insertion point and key index for this note
       const auto note = riff::notes.lower_bound(bin_freq);
-      const unsigned int key = distance(riff::notes.cbegin(), note) % key_count;
+      const unsigned long key = distance(riff::notes.cbegin(), note) % key_count;
 
       key_strikes.at(key) = '^';
     }

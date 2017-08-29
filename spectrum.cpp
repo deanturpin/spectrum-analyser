@@ -27,8 +27,8 @@ void spectrum() try {
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
-  const unsigned int window = 1;
-  for (unsigned int bin = window; bin < fourier.size() - window; ++bin) {
+  const unsigned long window = 1;
+  for (unsigned long bin = window; bin < fourier.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
 
@@ -42,7 +42,7 @@ void spectrum() try {
     // calculate the bar length.
     const double full_bar = 75.0;
     const auto bar_length =
-        static_cast<unsigned int>(round(full_bar * current / max_bin));
+        static_cast<unsigned long>(round(full_bar * current / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
@@ -51,7 +51,7 @@ void spectrum() try {
     cout << yellow << string(bar_length, '-') << white << "| ";
 
     // Add a marker if the current bin has strong reponse
-    const unsigned int threshold = max_bin / 10;
+    const unsigned long threshold = max_bin / 10;
     if ((current - previous) > threshold
         && (current - next) > threshold) {
 

@@ -13,7 +13,7 @@ tempo: tempo.o fourier.o
 tonegen: tonegen.o
 
 clean:
-	rm -f chord spectrum tonegen *.o
+	rm -f chord spectrum tempo tonegen *.o
 
 # Analyse mic input
 live-chord: chord
@@ -46,3 +46,9 @@ progress: tonegen chord
 
 cppcheck:
 	cppcheck --enable=all .
+
+clang-format:
+	# CPP
+	$(foreach cpp, $(wildcard *.cpp), echo clang-format $(cpp) || true;)
+	# Headers
+	# clang-format $< > /tmp/blah.cpp; mv /tmp/blah.cpp $<
