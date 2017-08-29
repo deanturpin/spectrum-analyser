@@ -34,7 +34,8 @@ void chord() try {
   for (unsigned long i = 0; i < key_count; ++i)
     keyboard += keys.at(i % notes_in_an_octave);
 
-  cout << string(key_count, '_') << endl;
+  const auto hrule = string(key_count, '_');
+  cout << hrule << endl;
   cout << keyboard << endl;
   cout << keyboard << endl;
 
@@ -48,15 +49,14 @@ void chord() try {
   // Peak detector
   for (unsigned long bin = window; bin < fourier.size() - window; ++bin) {
 
-    // const double current_bin = fourier.at(bin);
     const double bin_freq = bin * bin_resolution;
-    const unsigned long threshold = max_bin / 5;
 
     const auto previous = fourier.at(bin - window);
     const auto current = fourier.at(bin);
     const auto next = fourier.at(bin + window);
 
     // Store this bin if its value is over the threshold
+    const unsigned long threshold = max_bin / 5;
     if (current > 0
         && (current - previous) > threshold
         && (current - next) > threshold) {
@@ -69,7 +69,7 @@ void chord() try {
     }
   }
 
-  cout << string(key_count, '_') << endl;
+  cout << hrule << endl;
   cout << key_strikes << endl;
 
 } catch (const std::exception &e) {

@@ -34,7 +34,6 @@ void spectrum() try {
 
     const auto previous = fourier.at(bin - window);
     const auto current = fourier.at(bin);
-    // const double current_bin = fourier.at(bin);
     const auto next = fourier.at(bin + window);
 
     // Normalise the results and scale to make the graph fit nicely into the
@@ -51,7 +50,7 @@ void spectrum() try {
     cout << yellow << string(bar_length, '-') << white << "| ";
 
     // Add a marker if the current bin has strong reponse
-    const unsigned long threshold = max_bin / 10;
+    const unsigned long threshold = max_bin / 5;
     if ((current - previous) > threshold
         && (current - next) > threshold) {
 
@@ -60,7 +59,7 @@ void spectrum() try {
       // point returned by lower bound. Also nudge the bin frequency a
       // microtone, otherwise exact frequencies will be mapped to the previous
       // note.
-      const auto note = --riff::notes.lower_bound(bin_freq + .01);
+      const auto note = riff::notes.lower_bound(bin_freq);
       cout << red << bin_freq << white << " " << note->second;
     }
 
