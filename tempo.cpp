@@ -8,7 +8,6 @@ void tempo() try {
 
   using namespace std;
 
-
   cout << "TEMPO" << endl;
   cout << "Collecting ... " << endl;
 
@@ -22,12 +21,12 @@ void tempo() try {
   map<unsigned long, short> histogram;
 
   const unsigned long bins = 100;
-  const unsigned long scale = batch_size  / bins;
+  const unsigned long scale = batch_size / bins;
   for (unsigned long i = 0; i < batch_size; ++i)
     ++histogram[i / scale] += samples.at(i);
 
   // for (const auto &i : histogram)
-    // cout << i.first << "\t" << i.second << endl;
+  // cout << i.first << "\t" << i.second << endl;
 
   // Peak detector
   const unsigned long window = 1;
@@ -43,7 +42,8 @@ void tempo() try {
     cout << previous << "\t";
     cout << next << "\t";
 
-    if (current > 0 && (current - previous) > threshold && (current - next) > threshold)
+    if (current > 0 && (current - previous) > threshold &&
+        (current - next) > threshold)
       cout << "*";
 
     cout << endl;

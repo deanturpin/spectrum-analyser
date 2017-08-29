@@ -5,11 +5,11 @@
 
 namespace jos {
 
-  // The number of bins is fundamental. It's the number of samples to read,
-  // size of the twiddle matrix and the resulting Fourier transform.
-  const unsigned int bins = 2000;
+// The number of bins is fundamental. It's the number of samples to read,
+// size of the twiddle matrix and the resulting Fourier transform.
+const unsigned int bins = 2000;
 
-  std::vector<double> fourier(const std::vector<short> &);
+std::vector<double> fourier(const std::vector<short> &);
 }
 
 #endif

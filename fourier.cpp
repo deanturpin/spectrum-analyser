@@ -1,6 +1,6 @@
 #include "fourier.h"
-#include <vector>
 #include <complex>
+#include <vector>
 
 namespace jos {
 std::vector<double> fourier(const std::vector<short> &samples) {

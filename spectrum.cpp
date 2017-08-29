@@ -1,6 +1,6 @@
+#include "fourier.h"
 #include "notes.h"
 #include "riff.h"
-#include "fourier.h"
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -14,8 +14,8 @@ void spectrum() try {
   const auto fourier = jos::fourier(samples);
 
   // Bin resolution
-  const double bin_resolution = rif::header.sample_rate /
-    static_cast<double>(jos::bins);
+  const double bin_resolution =
+      rif::header.sample_rate / static_cast<double>(jos::bins);
 
   cout << "SPECTRUM" << endl;
   cout << "Bins " << jos::bins << endl;
@@ -51,8 +51,7 @@ void spectrum() try {
 
     // Add a marker if the current bin has strong reponse
     const unsigned long threshold = max_bin / 5;
-    if ((current - previous) > threshold
-        && (current - next) > threshold) {
+    if ((current - previous) > threshold && (current - next) > threshold) {
 
       // Calculate the note of this bin by searching for the current bin
       // frequency in the notes map. But use the note *preceding* the insertion

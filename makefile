@@ -48,7 +48,5 @@ cppcheck:
 	cppcheck --enable=all .
 
 clang-format:
-	# CPP
-	$(foreach cpp, $(wildcard *.cpp), echo clang-format $(cpp) || true;)
-	# Headers
-	# clang-format $< > /tmp/blah.cpp; mv /tmp/blah.cpp $<
+	$(foreach file, $(wildcard *.cpp), clang-format $(file) > blah; mv blah $(file) || true;)
+	$(foreach file, $(wildcard *.h), clang-format $(file) > blah; mv blah $(file) || true;)

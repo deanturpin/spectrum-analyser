@@ -1,6 +1,6 @@
+#include "fourier.h"
 #include "notes.h"
 #include "riff.h"
-#include "fourier.h"
 #include <algorithm>
 #include <iostream>
 
@@ -13,8 +13,8 @@ void chord() try {
   const vector<double> fourier = jos::fourier(samples);
 
   // Bin resolution
-  const double bin_resolution = rif::header.sample_rate /
-    static_cast<double>(jos::bins);
+  const double bin_resolution =
+      rif::header.sample_rate / static_cast<double>(jos::bins);
 
   cout << "CHORD LORD" << endl;
   cout << "Bins " << jos::bins << endl;
@@ -57,13 +57,13 @@ void chord() try {
 
     // Store this bin if its value is over the threshold
     const unsigned long threshold = max_bin / 5;
-    if (current > 0
-        && (current - previous) > threshold
-        && (current - next) > threshold) {
+    if (current > 0 && (current - previous) > threshold &&
+        (current - next) > threshold) {
 
       // Find insertion point and key index for this note
       const auto note = riff::notes.lower_bound(bin_freq);
-      const unsigned long key = distance(riff::notes.cbegin(), note) % key_count;
+      const unsigned long key =
+          distance(riff::notes.cbegin(), note) % key_count;
 
       key_strikes.at(key) = '^';
     }

@@ -1,8 +1,8 @@
 #ifndef RIFF_H
 #define RIFF_H
 
-#include <vector>
 #include <iostream>
+#include <vector>
 
 // The WAV format
 namespace rif {
