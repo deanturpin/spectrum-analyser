@@ -75,6 +75,26 @@ really like the output so it's used purely as a guide.
 make CC=iwyu
 ```
 
+# Optimisation
+I don't normally advocate using compiler opimisation so early but it's not very
+usable without it at the moment. And I have experimented with OpenMP, but only
+the basic compiler diretives which can be ignored, so in my defence I think
+this still meets the no third-party aspect of the brief.
+
+## 8000 bin - single threaded
+```
+real  0m15.989s
+user  0m13.920s
+sys 0m2.044s
+```
+
+## 8000 bin - OpenMP on dot product
+```
+real  0m11.860s
+user  0m23.968s
+sys 0m3.316s
+```
+
 # Command line examples
 ```bash
 # Analyse a series of frequencies

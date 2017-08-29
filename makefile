@@ -1,6 +1,5 @@
 CC=g++
 STANDARD=c++11
-# FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
 FLAGS=-Wall -O3 -Wno-c++98-compat -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp

@@ -9,8 +9,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   using namespace std;
 
   // Initialise twiddle matrix
-  // complex<double> *twiddle = new complex<double>[bins][bins]();
-  auto twiddle = new complex<double>[bins][bins]();
+  complex<double> *twiddle[8000] = new complex<double>[bins][bins] {{0}};
+  // auto twiddle = new complex<double>[bins][bins]();
 
 #pragma omp parallel for
   // Populate twiddle matrix. The "exp" is the important bit.
