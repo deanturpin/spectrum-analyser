@@ -43,13 +43,23 @@ void chord() try {
 
   // Pass over the results and calculate corresponding piano keys
   string key_strikes = string(key_count, ' ');
-  for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
+  const unsigned int window = 1;
 
-    const double current_bin = fourier.at(bin);
+  // Peak detector
+  for (unsigned int bin = window; bin < fourier.size() - window; ++bin) {
+
+    // const double current_bin = fourier.at(bin);
     const double bin_freq = bin * bin_resolution;
+    const unsigned int threshold = max_bin / 5;
+
+    const auto previous = fourier.at(bin - window);
+    const auto current = fourier.at(bin);
+    const auto next = fourier.at(bin + window);
 
     // Store this bin if its value is over the threshold
-    if (current_bin > max_bin / 2) {
+    if (current > 0
+        && (current - previous) > threshold
+        && (current - next) > threshold) {
 
       // Find insertion point and key index for this note
       const auto note = riff::notes.lower_bound(bin_freq);

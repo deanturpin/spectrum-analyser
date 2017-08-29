@@ -27,17 +27,22 @@ void spectrum() try {
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
-  for (unsigned int bin = 0; bin < fourier.size(); ++bin) {
+  const unsigned int window = 1;
+  for (unsigned int bin = window; bin < fourier.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
+
+    const auto previous = fourier.at(bin - window);
+    const auto current = fourier.at(bin);
+    // const double current_bin = fourier.at(bin);
+    const auto next = fourier.at(bin + window);
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
-    const double current_bin = fourier.at(bin);
     const auto bar_length =
-        static_cast<unsigned int>(round(full_bar * current_bin / max_bin));
+        static_cast<unsigned int>(round(full_bar * current / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
@@ -46,7 +51,9 @@ void spectrum() try {
     cout << yellow << string(bar_length, '-') << white << "| ";
 
     // Add a marker if the current bin has strong reponse
-    if (current_bin > max_bin / 2) {
+    const unsigned int threshold = max_bin / 10;
+    if ((current - previous) > threshold
+        && (current - next) > threshold) {
 
       // Calculate the note of this bin by searching for the current bin
       // frequency in the notes map. But use the note *preceding* the insertion

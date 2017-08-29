@@ -16,14 +16,16 @@ clean:
 	rm -f chord spectrum tonegen *.o
 
 # Analyse mic input
-live: chord
+live-chord: chord
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./chord"
 
-live2: spectrum
+live-spectrum: spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./spectrum"
 
-live3: tempo
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"
+live-tempo: tempo
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./tempo"
+wav:
+	watch -c -t -n .01 "./tempo < ../__fourier/emaj.wav"
 
 # Analyse generated tone
 demo: tonegen chord spectrum
