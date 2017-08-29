@@ -34,8 +34,9 @@ std::vector<short> read_samples(const unsigned int size) {
   std::vector<short> samples(size);
   std::cin.read(reinterpret_cast<char *>(samples.data()), size * sizeof(short));
 
-  // for (auto &i : samples)
-    // samples = ~samples + 1;
+  // Convert to decimal
+  for (auto &i : samples)
+    i = ~(i - 1);
 
   return samples;
 }
