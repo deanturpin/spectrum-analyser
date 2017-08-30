@@ -1,12 +1,17 @@
 #include "fourier.h"
 #include "omp.h"
+#include <chrono>
 #include <complex>
+#include <iostream>
 #include <vector>
 
 namespace jos {
 std::vector<double> fourier(const std::vector<short> &samples) {
 
   using namespace std;
+
+  chrono::time_point<std::chrono::system_clock> start, end;
+  start = chrono::system_clock::now();
 
   // Initialise twiddle matrix
   auto twiddle = new complex<double>[bins][bins]();
@@ -19,6 +24,11 @@ std::vector<double> fourier(const std::vector<short> &samples) {
       twiddle[n][k] =
           exp(complex<double>(0, 2) * M_PI * static_cast<double>(k) *
               static_cast<double>(n) / static_cast<double>(bins));
+
+  end = chrono::system_clock::now();
+  chrono::duration<double> elapsed = end - start;
+  cout << "FT twiddle time " << elapsed.count() << endl;
+  start = chrono::system_clock::now();
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
@@ -33,6 +43,10 @@ std::vector<double> fourier(const std::vector<short> &samples) {
     // Store the absolute value of the complex average
     results.at(k) = abs(sum / static_cast<double>(bins));
   }
+
+  end = chrono::system_clock::now();
+  elapsed = end - start;
+  cout << "FT dot pro time " << elapsed.count() << endl;
 
   // Free up the twiddles
   delete[] twiddle;

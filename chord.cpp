@@ -61,7 +61,7 @@ void chord() try {
         (current - next) > threshold) {
 
       // Find insertion point and key index for this note
-      const auto note = riff::notes.lower_bound(bin_freq);
+      const auto note = --riff::notes.lower_bound(bin_freq);
       const unsigned long key =
           distance(riff::notes.cbegin(), note) % key_count;
 

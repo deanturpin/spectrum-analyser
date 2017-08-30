@@ -81,18 +81,24 @@ usable without it at the moment. And I have experimented with OpenMP, but only
 the basic compiler diretives which can be ignored, so in my defence I think
 this still meets the no third-party aspect of the brief.
 
-## 8000 bin - single threaded
-```
-real  0m15.989s
-user  0m13.920s
-sys 0m2.044s
+With and without OpenMP in ```fourier.cpp```:
+```bash
+$ ./tonegen 416 550 660 | ./spectrum | head
+FT twiddle time 0.582546
+FT dot pro time 0.14558
 ```
 
-## 8000 bin - OpenMP on dot product
+```bash
+$ ./tonegen 416 550 660 | ./spectrum | head
+FT twiddle time 1.39478
+FT dot pro time 0.106157
 ```
-real  0m11.860s
-user  0m23.968s
-sys 0m3.316s
+
+With OpenMP but without compiler optimisation:
+```bash
+$ ./tonegen 416 550 660 | ./spectrum | head
+FT twiddle time 1.02429
+FT dot pro time 0.440575
 ```
 
 # Command line examples
