@@ -5,6 +5,9 @@ FLAGS=-Wall -Wpedantic -pedantic-errors -O4 -std=$(STANDARD) -fopenmp
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
+%.so:%.o
+	$(CC) -shared -o $@ -c $<
+
 all: twiddle.h chord spectrum tonegen tempo
 
 chord_objects = chord.o fourier.o

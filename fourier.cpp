@@ -1,5 +1,5 @@
 #include "fourier.h"
-#include "omp.h"
+// #include "omp.h"
 #include "twiddle.h"
 #include <chrono>
 #include <complex>
