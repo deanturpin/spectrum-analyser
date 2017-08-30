@@ -5,7 +5,7 @@ FLAGS=-Wall -Wpedantic -pedantic-errors -O4 -std=$(STANDARD) -fopenmp
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: chord spectrum tonegen tempo
+all: chord spectrum tonegen tempo generate_twiddle_matrix twiddle.h
 
 chord_objects = chord.o fourier.o
 chord: $(chord_objects)
@@ -17,6 +17,11 @@ spectrum: $(spectrum_objects)
 
 tempo: tempo.o
 tonegen: tonegen.o
+
+generate_twiddle_matrix: generate_twiddle_matrix.o
+
+twiddle.h: generate_twiddle_matrix
+	./generate_twiddle_matrix > twiddle.h
 
 clean:
 	rm -f chord spectrum tempo tonegen *.o
@@ -32,6 +37,9 @@ live-tempo: tempo
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./tempo"
 wav:
 	watch -c -t -n .01 "./tempo < ../__fourier/emaj.wav"
+
+twiddle: generate_twiddle_matrix
+	watch -c -t -n .01 "./generate_twiddle_matrix"
 
 # Analyse generated tone
 demo: tonegen chord spectrum

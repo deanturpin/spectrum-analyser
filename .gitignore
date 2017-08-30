@@ -4,3 +4,5 @@ spectrum
 tonegen
 chord
 tempo
+generate_twiddle_matrix
+twiddle.h
