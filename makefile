@@ -1,6 +1,6 @@
 CC=g++
 STANDARD=c++11
-FLAGS=-Wall -Wpedantic -pedantic-errors -O4 -std=$(STANDARD) -fopenmp
+FLAGS=-Wall -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -51,7 +51,7 @@ demo: tonegen chord spectrum
 ####################
 
 live-chord: chord
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./chord"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 6000 | ./chord"
 
 live-spectrum: spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./spectrum"
