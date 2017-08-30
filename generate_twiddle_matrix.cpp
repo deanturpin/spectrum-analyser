@@ -3,7 +3,7 @@
 
 int main() {
 
-  const unsigned long bins = 2000;
+  const unsigned long bins = 3000;
 
   using namespace std;
 
