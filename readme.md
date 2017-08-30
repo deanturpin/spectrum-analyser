@@ -78,7 +78,7 @@ make CC=iwyu
 # Optimisation
 I don't normally advocate using compiler opimisation so early but it's not very
 usable without it at the moment. And I have experimented with OpenMP, but only
-the basic compiler diretives which can be ignored, so in my defence I think
+the basic compiler directives which can be ignored, so in my defence I think
 this still meets the no third-party aspect of the brief.
 
 With and without OpenMP in ```fourier.cpp```:

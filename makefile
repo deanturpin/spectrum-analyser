@@ -1,6 +1,6 @@
 CC=g++
 STANDARD=c++11
-FLAGS=-Wall -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
+FLAGS=-Wall -Wpedantic -pedantic-errors -O4 -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
