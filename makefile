@@ -54,7 +54,7 @@ live-spectrum: spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./spectrum"
 
 live-tempo: tempo
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./tempo"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"
 
 
 ####################
