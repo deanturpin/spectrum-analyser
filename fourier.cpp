@@ -1,6 +1,6 @@
 #include "fourier.h"
-#include "twiddle.h"
 #include "omp.h"
+#include "twiddle.h"
 #include <chrono>
 #include <complex>
 #include <iostream>
@@ -17,7 +17,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
 
-  chrono::time_point<std::chrono::steady_clock> start = chrono::steady_clock::now();
+  const auto start = chrono::steady_clock::now();
 
   vector<double> results(bins / 2);
 
@@ -41,7 +41,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
     results.at(k) = abs(sum / static_cast<double>(bins));
   }
 
-  chrono::time_point<std::chrono::steady_clock> end = chrono::steady_clock::now();
+  const auto end = chrono::steady_clock::now();
   cout << "FT dot pro time " << (end - start).count() / 1e9 << endl;
 
   return results;
