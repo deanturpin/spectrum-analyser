@@ -1,6 +1,6 @@
 CC=g++
 STANDARD=c++11
-FLAGS=-Wall -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
+FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -43,8 +43,8 @@ wait:
 ####################
 
 demo: tonegen chord spectrum
-	./tonegen 220 275 330 | ./chord
-	./tonegen 11 21 32 | ./spectrum | head -40
+	./tonegen 220 276 330 | ./chord
+	./tonegen 11.5 21 32 | ./spectrum | head -40
 
 ####################
 # Demos using mix input

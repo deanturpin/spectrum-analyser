@@ -10,13 +10,12 @@ void chord() try {
   using namespace std;
 
   const auto samples = rif::read_samples(jos::bins);
-  const vector<double> fourier = jos::fourier(samples);
+  const auto fourier = jos::fourier(samples);
 
   // Bin resolution
   const double bin_resolution =
       rif::header.sample_rate / static_cast<double>(jos::bins);
 
-  cout << "CHORD LORD" << endl;
   cout << "Bins " << jos::bins << endl;
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
@@ -56,9 +55,10 @@ void chord() try {
     const auto next = fourier.at(bin + window);
 
     // Store this bin if its value is over the threshold
-    const unsigned long threshold = max_bin / 5;
+    const double threshold = max_bin / 5;
     if (current > 0 && (current - previous) > threshold &&
         (current - next) > threshold) {
+    // if (current > threshold) {
 
       // Find insertion point and key index for this note
       const auto note = --riff::notes.lower_bound(bin_freq);

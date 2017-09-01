@@ -17,7 +17,6 @@ void spectrum() try {
   const double bin_resolution =
       rif::header.sample_rate / static_cast<double>(jos::bins);
 
-  cout << "SPECTRUM" << endl;
   cout << "Bins " << jos::bins << endl;
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
@@ -58,7 +57,7 @@ void spectrum() try {
       // point returned by lower bound. Also nudge the bin frequency a
       // microtone, otherwise exact frequencies will be mapped to the previous
       // note.
-      const auto note = riff::notes.lower_bound(bin_freq);
+      const auto note = --riff::notes.lower_bound(bin_freq);
       cout << red << bin_freq << white << " " << note->second;
     }
 
