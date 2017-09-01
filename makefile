@@ -1,37 +1,74 @@
-CC=clang++
+CC=g++
 STANDARD=c++11
-FLAGS=-Weverything -O3 -Wno-c++98-compat -std=$(STANDARD)
+FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: fourier tonegen
+%.so:%.o
+	$(CC) -shared -o $@ -c $<
 
-fourier: fourier.o
+all: twiddle.h chord spectrum tonegen tempo
+
+chord_objects = chord.o fourier.o
+chord: $(chord_objects)
+	$(CC) -o $@ $(chord_objects) -lgomp
+
+spectrum_objects = spectrum.o fourier.o
+spectrum: $(spectrum_objects)
+	$(CC) -o $@ $(spectrum_objects) -lgomp
+
+tempo: tempo.o
 tonegen: tonegen.o
 
+fourier.o: generate_twiddle_matrix.o
+
+generate_twiddle_matrix: generate_twiddle_matrix.o
+
+twiddle.h: generate_twiddle_matrix
+	./generate_twiddle_matrix > twiddle.h
+
 clean:
-	rm -f tonegen fourier *.o
+	rm -f chord spectrum tempo tonegen generate_twiddle_matrix twiddle.h *.o
 
-# Analyse mic input
-live: fourier
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./fourier"
-
-# Analyse generated tone
-demo: tonegen fourier
-	./tonegen 220 275 330 | ./fourier
-
+####################
 # Wait for a cpp to be updated and build
+####################
+
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
-progress: tonegen
-	./tonegen 196.00 246.94 293.66 | aplay -q
-	./tonegen 196.00 246.94 293.66 | ./fourier
-	./tonegen 261.63 329.63 392.00 | aplay -q
-	./tonegen 261.63 329.63 392.00 | ./fourier
-	./tonegen 261.63 311.13 392.00 | aplay -q
-	./tonegen 261.63 311.13 392.00 | ./fourier
+####################
+# Demos using generated tones
+####################
+
+demo: tonegen chord spectrum
+	./tonegen 220 276 330 | ./chord
+	./tonegen 11.5 21 32 | ./spectrum | head -40
+
+####################
+# Demos using mix input
+####################
+
+live-chord: chord
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 6000 | ./chord"
+
+live-spectrum: spectrum
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./spectrum"
+
+live-tempo: tempo
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"
+
+
+####################
+# Lint
+####################
 
 cppcheck:
 	cppcheck --enable=all .
+
+clang-format-cpp:
+	$(foreach file, $(wildcard *.cpp), clang-format $(file) > blah; mv blah $(file) || true;)
+
+clang-format-h:
+	$(foreach file, $(wildcard *.h), clang-format $(file) > blah; mv blah $(file) || true;)

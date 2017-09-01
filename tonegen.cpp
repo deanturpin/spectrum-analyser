@@ -1,7 +1,6 @@
 #include "riff.h"
 #include <cmath>
 #include <iostream>
-#include <limits>
 #include <vector>
 
 int main(int argc, char *argv[]) {
@@ -9,7 +8,7 @@ int main(int argc, char *argv[]) {
   using namespace std;
 
   // Populate the WAV header
-  riff::wav wav;
+  rif::_header wav;
 
   wav.riff_id = 1179011410;
   wav.riff_size = 2147483684;
@@ -26,16 +25,19 @@ int main(int argc, char *argv[]) {
   wav.data_size = 2147483648;
 
   // Parse command line
-  vector<int> frequencies = {
+  vector<double> frequencies;
+  for (int i = 1; i < argc; ++i)
+    frequencies.push_back(atof(argv[i]));
 
-      argc > 1 ? atoi(argv[1]) : 220, argc > 2 ? atoi(argv[2]) : 0,
-      argc > 3 ? atoi(argv[3]) : 0};
+  // Add a default frequency if none given
+  if (frequencies.empty())
+    frequencies.push_back(440.0);
 
   // Write the WAV header
   cout.write(reinterpret_cast<char *>(&wav), sizeof(wav));
 
   // Create a second's worth of samples
-  for (unsigned int i = 0; i < wav.sample_rate; ++i) {
+  for (unsigned long i = 0; i < wav.sample_rate * 4; ++i) {
 
     // Add all the frequencies into the mix
     unsigned short sample = 0;

@@ -6,16 +6,57 @@ Command line DFT and tone generator. See live demo on
 $ git clone https://github.com/deanturpin/fourier
 $ cd fourier/
 $ make demo
-./tonegen 220 275 330 | ./fourier
-CHORD LORD
-Bins 2000
+./tonegen 220 276 330 | ./chord
+FT dot pro time 0.122252
+Bins 3000
 Sample rate 2000 Hz
-Bin resolution 1 Hz
+Bin resolution 0.666667 Hz
 __________________________________________________________________________
   | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  
   | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  
 __________________________________________________________________________
-                                              ^   ^   ^                   
+                                                 ^   ^   ^                    
+./tonegen 11.5 21 32 | ./spectrum | head -40
+FT dot pro time 0.090304
+Bins 3000
+Sample rate 2000 Hz
+Bin resolution 0.666667 Hz
+---| 
+---| 
+---| 
+---| 
+---| 
+---| 
+---| 
+---| 
+----| 
+----| 
+----| 
+-----| 
+------| 
+-------| 
+---------| 
+---------------| 
+----------------------------------------------------------------------| 11.3333 ?
+---------------------| 
+--------| 
+-----| 
+----| 
+---| 
+---| 
+---| 
+---| 
+----| 
+-----| 
+-------| 
+---------| 
+----------------| 
+------------------------------------------------| 
+------------------------------------------------| 
+----------------| 
+----------| 
+-------| 
+-----| 
 ```
 
 # Three tones interacting
@@ -45,13 +86,19 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 # Generate chord and analyse it
 ./tonegen 440 550 660 | ./fourier
 ```
+
+# Spectrum
+Frequency spectrum analyser. The results are normalised against the largest
+bin, so for quiet environments the noise floor will jump up.
+
 # C++ standards
 Initially I used the default C++ standard for ```clang``` (C++03) and then
 bumped the standard as I used newer features. I then moved to C++11 to make use
 of ```auto``` and range-based ```for``` loops.
 
 # Sample rate
-A sample rate of 2000 and a bin count of 2048 allows frequencies up to 1000 Hz to be measured at a sub-1 Hz resolution. This gives a key range of C0 to B5.
+A sample rate of 2000 and a bin count of 2048 allows frequencies up to 1000 Hz
+to be measured at a sub-1 Hz resolution. This gives a key range of C0 to B5.
 
 ```bash
 $ clang++ --version
@@ -62,13 +109,39 @@ InstalledDir: /usr/bin
 ```
 
 # Coding standard and linter
-There's a make rule to run ```cppcheck```. And I periodically run
-```clang-format``` with the default settings and apply the results. I'm not
-sure where this fits in the workflow yet but I like that I don't have to think
-about it. And it can be useful to swap in ```iwyu``` to weed out any left over
-includes. But I don't really like the output so it's used purely as a guide.
+There's a make rule to run ```cppcheck``` and one to run ```clang-format```
+over all cpp and h files with the default settings and apply the results. It
+would be nice if this were more integrated into the workflow. And it can be
+useful to swap in ```iwyu``` to weed out any left over includes. But I don't
+really like the output so it's used purely as a guide.
 ```bash
 make CC=iwyu
+```
+
+# Optimisation
+I don't normally advocate using compiler opimisation so early but it's not very
+usable without it at the moment. And I have experimented with OpenMP, but only
+the basic compiler directives which can be ignored, so in my defence I think
+this still meets the no third-party aspect of the brief.
+
+With and without OpenMP in ```fourier.cpp```:
+```bash
+$ ./tonegen 416 550 660 | ./spectrum | head
+FT twiddle time 0.582546
+FT dot pro time 0.14558
+```
+
+```bash
+$ ./tonegen 416 550 660 | ./spectrum | head
+FT twiddle time 1.39478
+FT dot pro time 0.106157
+```
+
+With OpenMP but without compiler optimisation:
+```bash
+$ ./tonegen 416 550 660 | ./spectrum | head
+FT twiddle time 1.02429
+FT dot pro time 0.440575
 ```
 
 # Command line examples

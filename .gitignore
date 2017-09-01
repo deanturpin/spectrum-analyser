@@ -1,4 +1,9 @@
 *.o
 *.wav
-fourier
+spectrum
 tonegen
+chord
+fourier
+tempo
+generate_twiddle_matrix
+twiddle.h
