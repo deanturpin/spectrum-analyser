@@ -8,7 +8,7 @@ FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
 %.so:%.o
 	$(CC) -shared -o $@ -c $<
 
-all: twiddle.h chord spectrum tonegen tempo
+all: chord spectrum tonegen tempo
 
 chord_objects = chord.o fourier.o
 chord: $(chord_objects)
@@ -21,15 +21,8 @@ spectrum: $(spectrum_objects)
 tempo: tempo.o
 tonegen: tonegen.o
 
-fourier.o: generate_twiddle_matrix.o
-
-generate_twiddle_matrix: generate_twiddle_matrix.o
-
-twiddle.h: generate_twiddle_matrix
-	./generate_twiddle_matrix > twiddle.h
-
 clean:
-	rm -f chord spectrum tempo tonegen generate_twiddle_matrix twiddle.h *.o
+	rm -f chord spectrum tempo tonegen *.o
 
 ####################
 # Wait for a cpp to be updated and build
@@ -68,7 +61,7 @@ cppcheck:
 	cppcheck --enable=all .
 
 clang-format-cpp:
-	$(foreach file, $(wildcard *.cpp), clang-format $(file) > blah; mv blah $(file) || true;)
+	$(foreach file, $(wildcard *.cpp), clang-format -i $(file) || true;)
 
 clang-format-h:
-	$(foreach file, $(wildcard *.h), clang-format $(file) > blah; mv blah $(file) || true;)
+	$(foreach file, $(wildcard *.h), clang-format -i $(file) || true;)

@@ -58,7 +58,7 @@ void chord() try {
     const double threshold = max_bin / 5;
     if (current > 0 && (current - previous) > threshold &&
         (current - next) > threshold) {
-    // if (current > threshold) {
+      // if (current > threshold) {
 
       // Find insertion point and key index for this note
       const auto note = --riff::notes.lower_bound(bin_freq);

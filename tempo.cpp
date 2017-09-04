@@ -39,8 +39,8 @@ void tempo() try {
     cout << previous << "\t";
     cout << next << "\t";
 
-    if (current > 0 &&
-        (current - previous) > threshold && (current - next) > threshold)
+    if (current > 0 && (current - previous) > threshold &&
+        (current - next) > threshold)
       cout << " #############";
 
     cout << endl;
