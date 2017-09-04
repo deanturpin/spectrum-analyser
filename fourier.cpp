@@ -6,6 +6,23 @@
 #include <vector>
 
 namespace jos {
+
+auto *twiddle = new std::complex<double>[bins][bins]();
+
+void dot_product(const std::vector<short> &samples, std::vector<double> &results) {
+
+  for (unsigned long k = 0; k < results.size(); ++k) {
+    for (unsigned long n = 0; n < bins; ++n) {
+
+      std::complex<double> sum;
+      for (unsigned int n = 0; n < bins; ++n)
+        sum += twiddle[n][k] * std::complex<double>(samples.at(n), 0);
+
+      results.at(k) = abs(sum);
+    }
+  }
+}
+
 std::vector<double> fourier(const std::vector<short> &samples) {
 
   using namespace std;
@@ -13,10 +30,10 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   auto start = chrono::steady_clock::now();
 
   // Initialise twiddle matrix
-  auto *twiddle = new complex<double>[bins][bins]();
+  // auto *twiddle = new complex<double>[bins][bins]();
 
   // Populate twiddle matrix. The "exp" is the important bit.
-#pragma omp parallel for
+// #pragma omp parallel for
   for (unsigned int k = 0; k < bins; ++k)
 // #pragma omp parallel for
     for (unsigned int n = 0; n < bins; ++n)
@@ -33,21 +50,10 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   start = chrono::steady_clock::now();
 
   vector<double> results(bins / 2);
+  dot_product(samples, results);
 
   // Enabling OMP for either of the first for loops halves the processing time
   // #pragma omp parallel for
-
-  for (unsigned long k = 0; k < results.size(); ++k) {
-
-    for (unsigned long n = 0; n < bins; ++n) {
-
-      complex<double> sum;
-      for (unsigned int n = 0; n < bins; ++n)
-        sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
-
-      results.at(k) = abs(sum);
-    }
-  }
 
   end = chrono::steady_clock::now();
   cout << "FT dot pro time " << (end - start).count() / 1e9 << endl;
