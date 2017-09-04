@@ -18,7 +18,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // Populate twiddle matrix. The "exp" is the important bit.
 #pragma omp parallel for
   for (unsigned int k = 0; k < bins; ++k)
-#pragma omp parallel for
+// #pragma omp parallel for
     for (unsigned int n = 0; n < bins; ++n)
       twiddle[n][k] =
         exp(complex<double>(0, 2) * M_PI * static_cast<double>(k) *
@@ -34,7 +34,9 @@ std::vector<double> fourier(const std::vector<short> &samples) {
 
   vector<double> results(bins / 2);
 
-#pragma omp parallel for
+  // Enabling OMP for either of the first for loops halves the processing time
+  // #pragma omp parallel for
+
   for (unsigned long k = 0; k < results.size(); ++k) {
 
     for (unsigned long n = 0; n < bins; ++n) {
@@ -43,11 +45,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
       for (unsigned int n = 0; n < bins; ++n)
         sum += twiddle[n][k] * complex<double>(samples.at(n), 0);
 
-      results.at(k) = abs(sum / static_cast<double>(bins));
+      results.at(k) = abs(sum);
     }
-
-    // Store the absolute value of the complex average
-    // results.at(k) = abs(sum / static_cast<double>(bins));
   }
 
   end = chrono::steady_clock::now();
