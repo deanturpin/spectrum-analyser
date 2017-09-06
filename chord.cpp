@@ -21,7 +21,7 @@ void chord() try {
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   // ASCII representation of an octave on the piano
-  vector<string> keys = {
+  const vector<string> keys = {
       " ", " ", "|", " ", "|", " ", " ", "|", " ", "|", " ", "|",
   };
 
@@ -49,7 +49,6 @@ void chord() try {
   for (unsigned long bin = window; bin < fourier.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
-
     const auto previous = fourier.at(bin - window);
     const auto current = fourier.at(bin);
     const auto next = fourier.at(bin + window);
@@ -58,7 +57,6 @@ void chord() try {
     const double threshold = max_bin / 5;
     if (current > 0 && (current - previous) > threshold &&
         (current - next) > threshold) {
-    // if (current > threshold) {
 
       // Find insertion point and key index for this note
       const auto note = --riff::notes.lower_bound(bin_freq);

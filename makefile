@@ -1,5 +1,5 @@
 CC=g++
-STANDARD=c++11
+STANDARD=c++1y
 FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
 
 %.o:%.cpp
@@ -68,7 +68,7 @@ cppcheck:
 	cppcheck --enable=all .
 
 clang-format-cpp:
-	$(foreach file, $(wildcard *.cpp), clang-format $(file) > blah; mv blah $(file) || true;)
+	$(foreach file, $(wildcard *.cpp), clang-format -i $(file) || true;)
 
 clang-format-h:
-	$(foreach file, $(wildcard *.h), clang-format $(file) > blah; mv blah $(file) || true;)
+	$(foreach file, $(wildcard *.h), clang-format -i $(file) || true;)
