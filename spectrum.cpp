@@ -10,30 +10,30 @@ void spectrum() try {
 
   using namespace std;
 
-  const auto samples = rif::read_samples(jos::bins);
-  const auto fourier = jos::fourier(samples);
+  const auto samples = rif::read_samples(bins);
+  const auto fou = fourier(samples);
 
   // Bin resolution
   const double bin_resolution =
-      rif::header.sample_rate / static_cast<double>(jos::bins);
+      rif::header.sample_rate / static_cast<double>(bins);
 
-  cout << "Bins " << jos::bins << endl;
+  cout << "Bins " << bins << endl;
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   // Find the max element so we know how much to scale the results
-  const auto max_bin = *max_element(fourier.cbegin(), fourier.cend());
+  const auto max_bin = *max_element(fou.cbegin(), fou.cend());
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
   const unsigned long window = 1;
-  for (unsigned long bin = window; bin < fourier.size() - window; ++bin) {
+  for (unsigned long bin = window; bin < fou.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
 
-    const auto previous = fourier.at(bin - window);
-    const auto current = fourier.at(bin);
-    const auto next = fourier.at(bin + window);
+    const auto previous = fou.at(bin - window);
+    const auto current = fou.at(bin);
+    const auto next = fou.at(bin + window);
 
     // Normalise the results and scale to make the graph fit nicely into the
     // terminal. The absolute value of the (complex) Fourier result is used to

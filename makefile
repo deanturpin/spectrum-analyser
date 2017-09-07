@@ -1,48 +1,29 @@
-CC=g++
+CC=clang++
 STANDARD=c++11
-FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -fopenmp
+FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD)
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-%.so:%.o
-	$(CC) -shared -o $@ -c $<
+all: chord spectrum tonegen
 
-all: chord spectrum tonegen tempo
-
-chord_objects = chord.o fourier.o
-chord: $(chord_objects)
-	$(CC) -o $@ $(chord_objects) -lgomp
-
-spectrum_objects = spectrum.o fourier.o
-spectrum: $(spectrum_objects)
-	$(CC) -o $@ $(spectrum_objects) -lgomp
-
-tempo: tempo.o
+chord: chord.o fourier.o
+spectrum: spectrum.o fourier.o
 tonegen: tonegen.o
 
 clean:
-	rm -f chord spectrum tempo tonegen *.o
+	rm -f chord spectrum tonegen *.o
 
-####################
 # Wait for a cpp to be updated and build
-####################
-
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
-####################
 # Demos using generated tones
-####################
-
 demo: tonegen chord spectrum
 	./tonegen 220 276 330 | ./chord
 	./tonegen 11.5 21 32 | ./spectrum | head -40
 
-####################
 # Demos using mix input
-####################
-
 live-chord: chord
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 6000 | ./chord"
 
@@ -52,16 +33,11 @@ live-spectrum: spectrum
 live-tempo: tempo
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"
 
-
-####################
 # Lint
-####################
-
 cppcheck:
 	cppcheck --enable=all .
 
-clang-format-cpp:
+# In place format
+format:
 	$(foreach file, $(wildcard *.cpp), clang-format -i $(file) || true;)
-
-clang-format-h:
 	$(foreach file, $(wildcard *.h), clang-format -i $(file) || true;)
