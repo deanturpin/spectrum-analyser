@@ -8,7 +8,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
 
   using namespace std;
 
-  const auto timestamp_start = chrono::steady_clock::now();
+  const auto ts_start = chrono::steady_clock::now();
 
   // Initialise twiddle matrix
   auto *twiddle = new complex<double>[bins][bins]();
@@ -19,7 +19,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
       twiddle[n][k] = exp(2i * M_PI * static_cast<double>(k) *
                           static_cast<double>(n) / static_cast<double>(bins));
 
-  const auto timestamp_twiddle = chrono::steady_clock::now();
+  const auto ts_twiddle = chrono::steady_clock::now();
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
@@ -36,11 +36,9 @@ std::vector<double> fourier(const std::vector<short> &samples) {
     }
   }
 
-  const auto timestamp_dot_product = chrono::steady_clock::now();
-  cout << "Twid " << (timestamp_twiddle - timestamp_start).count() / 1e9
-       << endl;
-  cout << "Proc " << (timestamp_dot_product - timestamp_twiddle).count() / 1e9
-       << endl;
+  const auto ts_dot_product = chrono::steady_clock::now();
+  cout << "Twid " << (ts_twiddle - timestamp_start).count() / 1e9 << endl;
+  cout << "Proc " << (ts_dot_product - timestamp_twiddle).count() / 1e9 << endl;
 
   return results;
 }
