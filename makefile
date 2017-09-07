@@ -40,4 +40,3 @@ cppcheck:
 # In place format
 format:
 	$(foreach file, $(wildcard *.cpp), clang-format -i $(file) || true;)
-	$(foreach file, $(wildcard *.h), clang-format -i $(file) || true;)

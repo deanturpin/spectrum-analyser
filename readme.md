@@ -1,5 +1,6 @@
 Command line DFT and tone generator. See live demo on
-[YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo).
+[YouTube](https://www.youtube.com/watch?v=hwsOKpBg6zo). It's also a bit of an
+exuse to use some of the newer features of C++.
 
 # Build and run demo
 ```bash
