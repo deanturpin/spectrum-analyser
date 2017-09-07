@@ -4,60 +4,67 @@ exuse to use some of the newer features of C++.
 
 # Build and run demo
 ```bash
-$ git clone https://github.com/deanturpin/fourier
-$ cd fourier/
 $ make demo
+clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o tonegen.o -c tonegen.cpp
+clang++   tonegen.o   -o tonegen
+clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o chord.o -c chord.cpp
+clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o fourier.o -c fourier.cpp
+clang++   chord.o fourier.o   -o chord
+clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o spectrum.o -c spectrum.cpp
+clang++   spectrum.o fourier.o   -o spectrum
 ./tonegen 220 276 330 | ./chord
-FT dot pro time 0.122252
-Bins 3000
+Twid 0.182997
+Proc 2.88526
+Bins 1000
 Sample rate 2000 Hz
-Bin resolution 0.666667 Hz
+Bin resolution 2 Hz
 __________________________________________________________________________
   | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  
   | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  
 __________________________________________________________________________
-                                                 ^   ^   ^                    
+                                             ^   ^   ^                    
 ./tonegen 11.5 21 32 | ./spectrum | head -40
-FT dot pro time 0.090304
-Bins 3000
+Twid 0.185275
+Proc 2.59592
+Bins 1000
 Sample rate 2000 Hz
-Bin resolution 0.666667 Hz
----| 
----| 
----| 
----| 
----| 
----| 
----| 
----| 
-----| 
-----| 
-----| 
------| 
-------| 
--------| 
+Bin resolution 2 Hz
+---------| 
+---------| 
+-----------| 
+--------------| 
+---------------------------| 
+--------------------------------------------------------------| 12 ?
+----------| 
 ---------| 
 ---------------| 
-----------------------------------------------------------------------| 11.3333 ?
----------------------| 
---------| 
------| 
-----| 
----| 
----| 
----| 
----| 
-----| 
------| 
--------| 
----------| 
-----------------| 
-------------------------------------------------| 
-------------------------------------------------| 
+----------------------------------------------| 
+-----------------------------------------------| 
 ----------------| 
 ----------| 
 -------| 
 -----| 
+---------------------------------------------------------------------------| 32 B0
+----| 
+---| 
+---| 
+--| 
+--| 
+--| 
+--| 
+--| 
+-| 
+-| 
+-| 
+-| 
+-| 
+-| 
+-| 
+-| 
+-| 
+-| 
+-| 
+
 ```
 
 # Three tones interacting
@@ -92,10 +99,6 @@ writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 Frequency spectrum analyser. The results are normalised against the largest
 bin, so for quiet environments the noise floor will jump up.
 
-# C++ standards
-Initially I used the default C++ standard for ```clang``` (C++03) and then
-bumped the standard as I used newer features. I then moved to C++11 to make use
-of ```auto``` and range-based ```for``` loops.
 
 # Sample rate
 A sample rate of 2000 and a bin count of 2048 allows frequencies up to 1000 Hz
