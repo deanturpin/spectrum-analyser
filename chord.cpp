@@ -9,14 +9,14 @@ void chord() try {
 
   using namespace std;
 
-  const auto samples = rif::read_samples(jos::bins);
-  const auto fourier = jos::fourier(samples);
+  const auto samples = rif::read_samples(bins);
+  const auto fou = fourier(samples);
 
   // Bin resolution
   const double bin_resolution =
-      rif::header.sample_rate / static_cast<double>(jos::bins);
+      rif::header.sample_rate / static_cast<double>(samples.size());
 
-  cout << "Bins " << jos::bins << endl;
+  cout << "Bins " << bins << endl;
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
@@ -39,19 +39,20 @@ void chord() try {
   cout << keyboard << endl;
 
   // Find the max element so we know how large the peaks will be
-  const auto max_bin = *max_element(fourier.cbegin(), fourier.cend());
+  const auto max_bin = *max_element(fou.cbegin(), fou.cend());
 
   // Pass over the results and calculate corresponding piano keys
   string key_strikes = string(key_count, ' ');
   const unsigned long window = 1;
 
   // Peak detector
-  for (unsigned long bin = window; bin < fourier.size() - window; ++bin) {
+  for (unsigned long bin = window; bin < fou.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
-    const auto previous = fourier.at(bin - window);
-    const auto current = fourier.at(bin);
-    const auto next = fourier.at(bin + window);
+
+    const auto previous = fou.at(bin - window);
+    const auto current = fou.at(bin);
+    const auto next = fou.at(bin + window);
 
     // Store this bin if its value is over the threshold
     const double threshold = max_bin / 5;

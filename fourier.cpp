@@ -1,49 +1,45 @@
 #include "fourier.h"
-// #include "omp.h"
-#include "twiddle.h"
 #include <chrono>
 #include <complex>
 #include <iostream>
 #include <vector>
 
-namespace jos {
 std::vector<double> fourier(const std::vector<short> &samples) {
 
   using namespace std;
 
-  // The twiddle matrix is generated statically and included above
+  const auto timestamp_start = chrono::steady_clock::now();
+
+  // Initialise twiddle matrix
+  auto *twiddle = new complex<double>[bins][bins]();
+
+  // Populate twiddle matrix. The "exp" is the important bit.
+  for (unsigned int k = 0; k < bins; ++k)
+    for (unsigned int n = 0; n < bins; ++n)
+      twiddle[n][k] =
+        exp(complex<double>(0, 2) * M_PI * static_cast<double>(k) *
+            static_cast<double>(n) / static_cast<double>(bins));
+
+  // cout << "FT twiddle time " << (end - start).count() / 1e9 << endl;
+  const auto timestamp_twiddle = chrono::steady_clock::now();
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
-
-  const auto start = chrono::steady_clock::now();
-
   vector<double> results(bins / 2);
-
-#pragma omp parallel for
   for (unsigned long k = 0; k < results.size(); ++k) {
-
-    complex<double> sum;
-
-#pragma omp parallel for
     for (unsigned long n = 0; n < bins; ++n) {
 
-      const double real = twiddle_static[n][k][0];
-      const double imag = twiddle_static[n][k][1];
+      std::complex<double> sum;
+      for (unsigned int n = 0; n < bins; ++n)
+        sum += twiddle[n][k] * std::complex<double>(samples.at(n), 0);
 
-      const complex<double> t(real, imag);
-
-      sum += t * complex<double>(samples.at(n), 0);
+      results.at(k) = abs(sum);
     }
-
-    // Store the absolute value of the complex average
-    results.at(k) = abs(sum / static_cast<double>(bins));
   }
 
-  const auto end = chrono::steady_clock::now();
-  cout << "FT dot pro time " << (end - start).count() / 1e9 << endl;
+  const auto timestamp_dot_product = chrono::steady_clock::now();
+  // cout << "FT dot pro time " << (end - start).count() / 1e9 << endl;
 
   return results;
-}
 }
