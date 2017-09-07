@@ -16,9 +16,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
-      twiddle[n][k] =
-        exp(2i * M_PI * static_cast<double>(k) *
-            static_cast<double>(n) / static_cast<double>(bins));
+      twiddle[n][k] = exp(2i * M_PI * static_cast<double>(k) *
+                          static_cast<double>(n) / static_cast<double>(bins));
 
   const auto timestamp_twiddle = chrono::steady_clock::now();
 
@@ -38,8 +37,10 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   }
 
   const auto timestamp_dot_product = chrono::steady_clock::now();
-  cout << "Twid " << (timestamp_twiddle - timestamp_start).count() / 1e9 << endl;
-  cout << "Proc " << (timestamp_dot_product - timestamp_twiddle).count() / 1e9 << endl;
+  cout << "Twid " << (timestamp_twiddle - timestamp_start).count() / 1e9
+       << endl;
+  cout << "Proc " << (timestamp_dot_product - timestamp_twiddle).count() / 1e9
+       << endl;
 
   return results;
 }
