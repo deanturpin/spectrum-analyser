@@ -17,10 +17,9 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
       twiddle[n][k] =
-        exp(complex<double>(0, 2) * M_PI * static_cast<double>(k) *
+        exp(2i * M_PI * static_cast<double>(k) *
             static_cast<double>(n) / static_cast<double>(bins));
 
-  // cout << "FT twiddle time " << (end - start).count() / 1e9 << endl;
   const auto timestamp_twiddle = chrono::steady_clock::now();
 
   // The Fourier transform is the dot product of the twiddle matrix and the
@@ -39,7 +38,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   }
 
   const auto timestamp_dot_product = chrono::steady_clock::now();
-  // cout << "FT dot pro time " << (end - start).count() / 1e9 << endl;
+  cout << "Twid " << (timestamp_twiddle - timestamp_start).count() / 1e9 << endl;
+  cout << "Proc " << (timestamp_dot_product - timestamp_twiddle).count() / 1e9 << endl;
 
   return results;
 }
