@@ -5,14 +5,14 @@ exuse to use some of the newer features of C++.
 # Build and run demo
 ```bash
 $ make demo
-clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o tonegen.o -c tonegen.cpp
-clang++   tonegen.o   -o tonegen
+clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o tony.o -c tony.cpp
+clang++   tony.o   -o tony
 clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o chord.o -c chord.cpp
 clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o fourier.o -c fourier.cpp
 clang++   chord.o fourier.o   -o chord
 clang++ -Wall -O3 -Wpedantic -pedantic-errors -std=c++14 -o spectrum.o -c spectrum.cpp
 clang++   spectrum.o fourier.o   -o spectrum
-./tonegen 220 276 330 | ./chord
+./tony 220 276 330 | ./chord
 Twid 0.182997
 Proc 2.88526
 Bins 1000
@@ -23,7 +23,7 @@ __________________________________________________________________________
   | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  | |  | | |  
 __________________________________________________________________________
                                              ^   ^   ^                    
-./tonegen 11.5 21 32 | ./spectrum | head -40
+./tony 11.5 21 32 | ./spectrum | head -40
 Twid 0.185275
 Proc 2.59592
 Bins 1000
@@ -76,23 +76,23 @@ make live
 ```
 # Files
 The main file is [fourier.cpp](fourier.cpp). There's also a tone generator
-[tonegen.cpp](tonegen.cpp), a common include file [riff.h](riff.h) where the
+[tony.cpp](tony.cpp), a common include file [riff.h](riff.h) where the
 WAV header is defined and [notes.h](notes.h) which is an associative array of
 frequencies to note letters.
 
 ```fourier.cpp``` takes a WAV on stdin and prints an ASCII art keyboard showing
 the peaks as key presses.
 
-```tonegen.cpp``` takes up to three frequencies in Hertz as parameters and
+```tony.cpp``` takes up to three frequencies in Hertz as parameters and
 writes a WAV to stdout. This can be piped to a player such as ```aplay``` or to
 ```fourier``` for analysis.
 
 ```bash
 # Generate major chord and send it to the speaker
-./tonegen 440 550 660 | aplay
+./tony 440 550 660 | aplay
 
 # Generate chord and analyse it
-./tonegen 440 550 660 | ./fourier
+./tony 440 550 660 | ./fourier
 ```
 
 # Spectrum
@@ -130,20 +130,20 @@ this still meets the no third-party aspect of the brief.
 
 With and without OpenMP in ```fourier.cpp```:
 ```bash
-$ ./tonegen 416 550 660 | ./spectrum | head
+$ ./tony 416 550 660 | ./spectrum | head
 FT twiddle time 0.582546
 FT dot pro time 0.14558
 ```
 
 ```bash
-$ ./tonegen 416 550 660 | ./spectrum | head
+$ ./tony 416 550 660 | ./spectrum | head
 FT twiddle time 1.39478
 FT dot pro time 0.106157
 ```
 
 With OpenMP but without compiler optimisation:
 ```bash
-$ ./tonegen 416 550 660 | ./spectrum | head
+$ ./tony 416 550 660 | ./spectrum | head
 FT twiddle time 1.02429
 FT dot pro time 0.440575
 ```
@@ -151,10 +151,10 @@ FT dot pro time 0.440575
 # Command line examples
 ```bash
 # Analyse a series of frequencies
-for freq in {40..1000..1}; do ./tonegen $freq | ./fourier; done
+for freq in {40..1000..1}; do ./tony $freq | ./fourier; done
 
 # Play C Major scale
-for f in 261.6 293.7 329.6 349.2 392.0 440.0 493.9 523.3; do ./tonegen $f | aplay -q; done
+for f in 261.6 293.7 329.6 349.2 392.0 440.0 493.9 523.3; do ./tony $f | aplay -q; done
 ```
 
 # See also

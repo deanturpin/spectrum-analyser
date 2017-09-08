@@ -5,23 +5,23 @@ FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD)
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: chord spectrum tonegen
+all: chord spectrum tony
 
 chord: chord.o fourier.o
 spectrum: spectrum.o fourier.o
-tonegen: tonegen.o
+tony: tony.o
 
 clean:
-	rm -f chord spectrum tonegen *.o
+	rm -f chord spectrum tony *.o
 
 # Wait for a cpp to be updated and build
 wait:
 	while :; do inotifywait -qe modify *.cpp; make; done
 
 # Demos using generated tones
-demo: tonegen chord spectrum
-	./tonegen 220 276 330 | ./chord
-	./tonegen 11.5 21 32 | ./spectrum | head -40
+demo: tony chord spectrum
+	./tony 220 276 330 | ./chord
+	./tony 11.5 21 32 | ./spectrum | head -40
 
 # Demos using mix input
 live-chord: chord
