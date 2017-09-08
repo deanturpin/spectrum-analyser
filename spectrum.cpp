@@ -40,8 +40,8 @@ void spectrum() try {
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
-    const auto bar_length =
-        static_cast<unsigned long>(round(full_bar * current / max_bin));
+    const auto bar_length = max_bin > 0 ?
+        static_cast<unsigned long>(round(full_bar * current / max_bin)) : 0;
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
