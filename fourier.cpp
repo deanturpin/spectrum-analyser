@@ -13,13 +13,14 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   const auto bins = samples.size();
 
   // Initialise twiddle matrix
-  auto *twiddle = new complex<double>[bins * bins]();
+  vector<complex<double>> twiddle(bins * bins);
 
   // Populate twiddle matrix. The "exp" is the important bit.
   for (unsigned int k = 0; k < bins; ++k)
     for (unsigned int n = 0; n < bins; ++n)
-      twiddle[(k * bins) + n] = exp(2i * M_PI * static_cast<double>(k) *
-                          static_cast<double>(n) / static_cast<double>(bins));
+      twiddle[(k * bins) + n] =
+          exp(2i * M_PI * static_cast<double>(k) * static_cast<double>(n) /
+              static_cast<double>(bins));
 
   const auto ts_twiddle = chrono::steady_clock::now();
 
