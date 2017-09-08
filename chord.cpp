@@ -9,6 +9,7 @@ void chord() try {
 
   using namespace std;
 
+  const size_t bins = 1000;
   const auto samples = rif::read_samples(bins);
   const auto fou = fourier(samples);
 
