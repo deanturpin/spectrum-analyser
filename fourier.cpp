@@ -37,8 +37,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   }
 
   const auto ts_dot_product = chrono::steady_clock::now();
-  cout << "Twid " << (ts_twiddle - timestamp_start).count() / 1e9 << endl;
-  cout << "Proc " << (ts_dot_product - timestamp_twiddle).count() / 1e9 << endl;
+  cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;
+  cout << "Proc " << (ts_dot_product - ts_twiddle).count() / 1e9 << endl;
 
   return results;
 }
