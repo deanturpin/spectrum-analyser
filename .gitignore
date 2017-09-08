@@ -1,9 +1,6 @@
 *.o
-*.wav
 spectrum
-tonegen
+tony
 chord
 fourier
 tempo
-generate_twiddle_matrix
-twiddle.h
