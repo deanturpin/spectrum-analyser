@@ -1,5 +1,5 @@
 CC=clang++
-STANDARD=c++14
+STANDARD=c++1y
 FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD)
 
 %.o:%.cpp

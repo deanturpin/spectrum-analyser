@@ -9,7 +9,7 @@ void chord() try {
 
   using namespace std;
 
-  const size_t bins = 1000;
+  const size_t bins = 0b0000'0100'0000'0000;
   const auto samples = rif::read_samples(bins);
   const auto fou = fourier(samples);
 
@@ -21,18 +21,22 @@ void chord() try {
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
-  // ASCII representation of an octave on the piano
-  const vector<string> keys = {
-      " ", " ", "|", " ", "|", " ", " ", "|", " ", "|", " ", "|",
-  };
-
+  // Length of the complete keyboard
   const unsigned long key_count = 74;
-  const unsigned long notes_in_an_octave = 12;
 
-  // Construct ASCII keyboard
-  string keyboard;
-  for (unsigned long i = 0; i < key_count; ++i)
-    keyboard += keys.at(i % notes_in_an_octave);
+  // Initialise ASCII keyboard and populate it with a lambda expression. I've
+  // deliberately given the captured variable an unusual name to highlight the
+  // fact that it hasn't been declared beforehand.
+  string keyboard(key_count, '*');
+  for_each(keyboard.begin(), keyboard.end(), [_x = 0ul](auto &key) mutable {
+
+    // ASCII representation of an octave on the piano. Note that it starts on a
+    // B because notes.h does. Also uses the brace initialiser syntax.
+    const string octave {"  | |  | | |"};
+
+    // Write the current key
+    key = octave.at(_x++ % octave.size());
+  });
 
   const auto hrule = string(key_count, '_');
   cout << hrule << endl;
