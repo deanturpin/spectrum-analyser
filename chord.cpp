@@ -31,10 +31,10 @@ void chord() try {
   for_each(keyboard.begin(), keyboard.end(), [_x = 0ul](auto &key) mutable {
 
     // ASCII representation of an octave on the piano. Note that it starts on a
-    // B because notes.h does. Also uses the brace initialiser syntax.
+    // B because notes.h does.
     const string octave {"  | |  | | |"};
 
-    // Write the current key
+    // Write the current key character
     key = octave.at(_x++ % octave.size());
   });
 
