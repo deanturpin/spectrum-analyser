@@ -38,16 +38,17 @@ void chord() try {
     key = octave.at(_x++ % octave.size());
   });
 
+  // Display the keyboard
   const auto hrule = string(key_count, '_');
   cout << hrule << endl;
   cout << keyboard << endl;
   cout << keyboard << endl;
 
-  // Pass over the results and calculate corresponding piano keys
+  // Initialise key strikes
   string key_strikes = string(key_count, ' ');
   const unsigned long window = 1;
 
-  // Peak detector
+  // Peak detector - pass over the results and calculate corresponding keys
   for (unsigned long bin = window; bin < fou.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
