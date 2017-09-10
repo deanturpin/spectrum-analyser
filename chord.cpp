@@ -25,8 +25,8 @@ void chord() try {
   const unsigned long key_count = 74;
 
   // Initialise ASCII keyboard and populate it with a lambda expression. I've
-  // deliberately given the captured variable an unusual name to highlight the
-  // fact that it hasn't been declared beforehand.
+  // given the capture variable an unusual name to highlight the fact that it
+  // hasn't been declared beforehand.
   string keyboard(key_count, '*');
   for_each(keyboard.begin(), keyboard.end(), [_x = 0ul](auto &key) mutable {
 
