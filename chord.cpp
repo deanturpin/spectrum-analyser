@@ -43,9 +43,6 @@ void chord() try {
   cout << keyboard << endl;
   cout << keyboard << endl;
 
-  // Find the max element so we know how large the peaks will be
-  const auto max_bin = *max_element(fou.cbegin(), fou.cend());
-
   // Pass over the results and calculate corresponding piano keys
   string key_strikes = string(key_count, ' ');
   const unsigned long window = 1;
@@ -60,7 +57,9 @@ void chord() try {
     const auto next = fou.at(bin + window);
 
     // Store this bin if its value is over the threshold
+    const auto max_bin = *max_element(fou.cbegin(), fou.cend());
     const double threshold = max_bin / 5;
+
     if (current > 0 && (current - previous) > threshold &&
         (current - next) > threshold) {
 
