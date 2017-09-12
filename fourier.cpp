@@ -29,14 +29,15 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
   vector<double> fou(bins / 2);
-  for (unsigned long k = 0; k < fou.size(); ++k) {
+  generate(fou.begin(), fou.end(), [&samples, &bins, &twiddle, k = 0ul]() mutable {
 
-      std::complex<double> sum;
-      for (unsigned int n = 0; n < bins; ++n)
-        sum += twiddle[(k * bins) + n] * std::complex<double>(samples.at(n), 0);
+    std::complex<double> sum;
+    for (unsigned int n = 0; n < bins; ++n)
+      sum += twiddle[(k * bins) + n] * std::complex<double>(samples.at(n), 0);
 
-      fou.at(k) = abs(sum);
-  }
+    ++k;
+    return abs(sum);
+  });
 
   const auto ts_dot_product = chrono::steady_clock::now();
   cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;

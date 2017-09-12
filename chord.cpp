@@ -9,7 +9,7 @@ void chord() try {
 
   using namespace std;
 
-  const size_t bins = 0b0000'0100'0000'0000;
+  const size_t bins = 0b0000'1000'0000'0000;
   const auto samples = rif::read_samples(bins);
   const auto fou = fourier(samples);
 
@@ -32,7 +32,7 @@ void chord() try {
 
     // ASCII representation of an octave on the piano. Note that it starts on a
     // B because notes.h does.
-    const string octave {"  | |  | | |"};
+    const string octave{"  | |  | | |"};
 
     // Write the current key character
     key = octave.at(_x++ % octave.size());

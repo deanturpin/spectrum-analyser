@@ -27,7 +27,7 @@ void spectrum() try {
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
-  const unsigned long window = 1;
+  const auto window = 1ul;
   for (unsigned long bin = window; bin < fou.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
