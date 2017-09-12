@@ -1,4 +1,5 @@
 #include "fourier.h"
+#include <algorithm>
 #include <chrono>
 #include <complex>
 #include <iostream>
@@ -27,21 +28,19 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
-  vector<double> results(bins / 2);
-  for (unsigned long k = 0; k < results.size(); ++k) {
-    for (unsigned long n = 0; n < bins; ++n) {
+  vector<double> fou(bins / 2);
+  for (unsigned long k = 0; k < fou.size(); ++k) {
 
       std::complex<double> sum;
       for (unsigned int n = 0; n < bins; ++n)
         sum += twiddle[(k * bins) + n] * std::complex<double>(samples.at(n), 0);
 
-      results.at(k) = abs(sum);
-    }
+      fou.at(k) = abs(sum);
   }
 
   const auto ts_dot_product = chrono::steady_clock::now();
   cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;
   cout << "Proc " << (ts_dot_product - ts_twiddle).count() / 1e9 << endl;
 
-  return results;
+  return fou;
 }

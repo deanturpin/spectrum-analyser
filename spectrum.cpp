@@ -10,7 +10,7 @@ void spectrum() try {
 
   using namespace std;
 
-  const unsigned long bins = 1000;
+  const unsigned long bins = 0b0000'1000'0000'0000;
   const auto samples = rif::read_samples(bins);
   const auto fou = fourier(samples);
 
