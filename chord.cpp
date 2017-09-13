@@ -26,9 +26,11 @@ void chord() try {
 
   // Initialise ASCII keyboard and populate it with a lambda expression. I've
   // given the capture variable an unusual name to highlight the fact that it
-  // hasn't been declared beforehand.
+  // hasn't been declared beforehand. I've also used decltype instead of the
+  // much simpler auto.
   string keyboard(key_count, '*');
-  for_each(keyboard.begin(), keyboard.end(), [_x = 0ul](auto &key) mutable {
+  for_each(keyboard.begin(), keyboard.end(),
+           [_x = 0ul](decltype(*keyboard.begin()) &key) mutable {
 
     // ASCII representation of an octave on the piano. Note that it starts on a
     // B because notes.h does.
