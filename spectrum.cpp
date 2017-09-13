@@ -2,6 +2,8 @@
 #include "notes.h"
 #include "riff.h"
 #include <algorithm>
+#include <bitset>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -18,7 +20,8 @@ void spectrum() try {
   const double bin_resolution =
       rif::header.sample_rate / static_cast<double>(bins);
 
-  cout << "Bins " << bins << endl;
+  cout << "Bins " << bins << " ";
+  cout << quoted(bitset<16>(bins).to_string()) << endl;
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
