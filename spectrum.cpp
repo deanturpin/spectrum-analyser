@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <bitset>
 #include <iomanip>
+#include <chrono>
 #include <iostream>
 #include <vector>
 
@@ -12,9 +13,14 @@ void spectrum() try {
 
   using namespace std;
 
-  const unsigned long bins = 0b0000'1000'0000'0000;
+  const unsigned long bins = 0b0000'0100'0000'0000;
+  const auto ts_start = chrono::steady_clock::now();
   const auto samples = rif::read_samples(bins);
+  const auto ts_read = chrono::steady_clock::now();
+  cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
   const auto fou = fourier(samples);
+  const auto ts_fou = chrono::steady_clock::now();
+  cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 
   // Bin resolution
   const double bin_resolution =
@@ -31,6 +37,8 @@ void spectrum() try {
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
   const auto window = 1ul;
+  // vector<unsigned long> bin_list(bins);
+  // iota(bin_list.begin(), bin_list.end(), 0);
   for (unsigned long bin = window; bin < fou.size() - window; ++bin) {
 
     const double bin_freq = bin * bin_resolution;
