@@ -123,30 +123,26 @@ make CC=iwyu
 ```
 
 # Optimisation
-I don't normally advocate using compiler opimisation so early but it's not very
-usable without it at the moment. And I have experimented with OpenMP, but only
-the basic compiler directives which can be ignored, so in my defence I think
-this still meets the no third-party aspect of the brief.
+I've instrumented the code and switch between compiler optimisation settings
+(none or three) during development.
 
-With and without OpenMP in ```fourier.cpp```:
-```bash
-$ ./tony 416 550 660 | ./spectrum | head
-FT twiddle time 0.582546
-FT dot pro time 0.14558
-```
+## Observations
+C arrays are marginally quicker than vectors.
 
-```bash
-$ ./tony 416 550 660 | ./spectrum | head
-FT twiddle time 1.39478
-FT dot pro time 0.106157
-```
+Calling reserve with a vector is quicker than a C array.
 
-With OpenMP but without compiler optimisation:
-```bash
-$ ./tony 416 550 660 | ./spectrum | head
-FT twiddle time 1.02429
-FT dot pro time 0.440575
-```
+The twiddle array is the most computationally expensive procedure.
+
+Only half the twiddle array is needed.
+
+Aim for the compiler to do as much as possible up front: optimise away the
+calculation.
+
+Using floats for all the calculations is slower than doubles.
+
+Creating the array offline results in a very quick twiddle calculation but it
+takes a long time to compile and both clang and gcc cough for large arrays. The
+build procedure is also becoming very complicated.
 
 # Command line examples
 ```bash
