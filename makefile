@@ -1,6 +1,6 @@
 CC=clang++
 STANDARD=c++14
-FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD)
+FLAGS=-Wall -O0 -Wpedantic -pedantic-errors -std=$(STANDARD)
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -25,10 +25,10 @@ demo: tony chord spectrum
 
 # Demos using mix input
 live-chord: chord
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 6000 | ./chord"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./chord"
 
 live-spectrum: spectrum
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | ./spectrum"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 22050 | ./spectrum"
 
 live-tempo: tempo
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"
