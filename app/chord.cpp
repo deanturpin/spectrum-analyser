@@ -2,6 +2,7 @@
 #include "notes.h"
 #include "riff.h"
 #include <algorithm>
+#include <chrono>
 #include <iostream>
 
 void chord();
@@ -9,9 +10,17 @@ void chord() try {
 
   using namespace std;
 
-  const size_t bins = 0b0000'0111'1101'0000;
+  const size_t bins = 2000;
+
+  const auto ts_start = chrono::steady_clock::now();
   const auto samples = rif::read_samples(bins);
+  const auto ts_read = chrono::steady_clock::now();
+  cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
+
+  // Fourier analysis
   const auto fou = fourier(samples);
+  const auto ts_fou = chrono::steady_clock::now();
+  cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 
   // Bin resolution
   const double bin_resolution =
@@ -67,7 +76,7 @@ void chord() try {
         (current - next) > threshold) {
 
       // Find insertion point and key index for this note
-      const auto note = --riff::notes.lower_bound(bin_freq);
+      const auto note = riff::notes.lower_bound(bin_freq);
       const unsigned long key =
           distance(riff::notes.cbegin(), note) % key_count;
 

@@ -34,19 +34,18 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
   vector<double> fou(bins / 2);
-  generate(fou.begin(), fou.end(),
-           [&samples, &bins, &twiddle, k = 0ul]() mutable {
+  generate(
+      fou.begin(), fou.end(), [&samples, &bins, &twiddle, k = 0ul ]() mutable {
 
-             // Use transform/accumulate here?
+        // Use transform/accumulate here?
 
-             complex<double> sum;
-             for (unsigned int n = 0; n < bins; ++n)
-               sum += twiddle[(k * bins) + n] *
-                      complex<double>(samples.at(n), 0);
+        complex<double> sum;
+        for (unsigned int n = 0; n < bins; ++n)
+          sum += twiddle[(k * bins) + n] * complex<double>(samples.at(n), 0);
 
-             ++k;
-             return abs(sum);
-           });
+        ++k;
+        return abs(sum);
+      });
 
   const auto ts_dot_product = chrono::steady_clock::now();
   cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;

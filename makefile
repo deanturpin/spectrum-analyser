@@ -1,6 +1,6 @@
 CC=clang++
 STANDARD=c++14
-FLAGS=-Wall -O0 -Wpedantic -pedantic-errors -std=$(STANDARD) -I lib
+FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -I lib
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -23,7 +23,7 @@ clean:
 
 # Wait for a cpp to be updated and build
 wait:
-	while :; do inotifywait -qe modify *.cpp; make; done
+	while :; do inotifywait -qe modify */*.cpp; make; done
 
 # Demos using generated tones
 demo: bin/tony bin/chord bin/spectrum
@@ -32,7 +32,7 @@ demo: bin/tony bin/chord bin/spectrum
 
 # Demos using mix input
 live-chord: bin/chord
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/chord"
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 4000 | bin/chord"
 
 live-spectrum: bin/spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | bin/spectrum"

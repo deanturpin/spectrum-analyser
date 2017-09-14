@@ -3,8 +3,8 @@
 #include "riff.h"
 #include <algorithm>
 #include <bitset>
-#include <iomanip>
 #include <chrono>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
