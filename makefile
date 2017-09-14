@@ -31,16 +31,16 @@ demo: bin/tony bin/chord bin/spectrum
 	bin/tony 11.5 21 32 | bin/spectrum | head -40
 
 # Demos using mix input
-live-chord: chord
+live-chord: bin/chord
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/chord"
 
-live-spectrum: spectrum
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 22050 | bin/spectrum"
+live-spectrum: bin/spectrum
+	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | bin/spectrum"
 
 static:
-	watch -c -t -n .01 "./spectrum < train_2000.wav"
+	watch -c -t -n .01 "bin/spectrum < train_2000.wav"
 
-live-tempo: tempo
+live-tempo: bin/tempo
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/tempo"
 
 # Lint
