@@ -61,7 +61,7 @@ void chord() try {
 
     // Store this bin if its value is over the threshold
     const auto max_bin = *max_element(fou.cbegin(), fou.cend());
-    const double threshold = max_bin / 5;
+    const auto threshold = max_bin / 5;
 
     if (current > 0 && (current - previous) > threshold &&
         (current - next) > threshold) {
