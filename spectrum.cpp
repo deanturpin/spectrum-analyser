@@ -13,7 +13,7 @@ void spectrum() try {
 
   using namespace std;
 
-  const unsigned long bins = 0b0000'1000'0000'0000;
+  const unsigned long bins = 0b0000'0111'0000'0000;
 
   // Read some samples
   const auto ts_start = chrono::steady_clock::now();
@@ -55,7 +55,7 @@ void spectrum() try {
     const double full_bar = 75.0;
     const auto bar_length =
         max_bin > 0
-            ? static_cast<unsigned long>(round(full_bar * current / max_bin))
+            ? static_cast<unsigned long>(floor(full_bar * current / max_bin))
             : 0;
 
     // Print the bar and make it colourful

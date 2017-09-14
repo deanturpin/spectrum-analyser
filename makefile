@@ -1,6 +1,6 @@
 CC=clang++
 STANDARD=c++14
-FLAGS=-Wall -O0 -Wpedantic -pedantic-errors -std=$(STANDARD)
+FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD)
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -29,6 +29,9 @@ live-chord: chord
 
 live-spectrum: spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 22050 | ./spectrum"
+
+static:
+	watch -c -t -n .01 "./spectrum < train_2000.wav"
 
 live-tempo: tempo
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | ./tempo"

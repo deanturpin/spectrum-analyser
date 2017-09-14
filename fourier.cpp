@@ -15,28 +15,33 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // Initialise twiddle matrix
   auto *twiddle = new complex<double>[bins * bins]();
 
-  // Populate twiddle matrix. The "exp" is the important bit.
-  for (unsigned int k = 0; k < bins; ++k)
-    for (unsigned int n = 0; n < bins; ++n)
-      twiddle[(k * bins) + n] =
-        exp(2i * M_PI * static_cast<double>(k) * static_cast<double>(n) /
-            static_cast<double>(bins));
+  // Populate twiddle matrix
+  for (unsigned int k = 0; k < bins / 2; ++k)
+    for (unsigned int n = 0; n < bins; ++n) {
+
+      const double _k = k;
+      const double _n = n;
+      const double _bins = bins;
+
+      // Euler's magic
+      twiddle[(k * bins) + n] = exp(2i * M_PI * _k * _n / _bins);
+    }
 
   const auto ts_twiddle = chrono::steady_clock::now();
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
   // half is a mirror image.
-  vector<double> fou(bins);
+  vector<double> fou(bins / 2);
   generate(fou.begin(), fou.end(),
            [&samples, &bins, &twiddle, k = 0ul]() mutable {
 
              // Use transform/accumulate here?
 
-             std::complex<double> sum;
+             complex<double> sum;
              for (unsigned int n = 0; n < bins; ++n)
                sum += twiddle[(k * bins) + n] *
-                      std::complex<double>(samples.at(n), 0);
+                      complex<double>(samples.at(n), 0);
 
              ++k;
              return abs(sum);
