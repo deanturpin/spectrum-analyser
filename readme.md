@@ -68,7 +68,7 @@ Bin resolution 2 Hz
 ```
 
 # Three tones interacting
-![](fourier.gif)
+![](gif/fourier.gif)
 
 # Analyse mic
 ```bash
