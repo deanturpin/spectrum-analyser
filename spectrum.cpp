@@ -13,7 +13,7 @@ void spectrum() try {
 
   using namespace std;
 
-  const unsigned long bins = 0b0000'0111'0000'0000;
+  const unsigned long bins = 0b0000'0111'1101'0000;
 
   // Read some samples
   const auto ts_start = chrono::steady_clock::now();

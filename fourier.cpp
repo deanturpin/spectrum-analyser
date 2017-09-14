@@ -13,7 +13,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   const auto bins = samples.size();
 
   // Initialise twiddle matrix
-  auto *twiddle = new complex<double>[bins * bins]();
+  vector<complex<double>> twiddle;
+  twiddle.reserve(bins * bins);
 
   // Populate twiddle matrix
   for (unsigned int k = 0; k < bins / 2; ++k)
@@ -46,8 +47,6 @@ std::vector<double> fourier(const std::vector<short> &samples) {
              ++k;
              return abs(sum);
            });
-
-  delete[] twiddle;
 
   const auto ts_dot_product = chrono::steady_clock::now();
   cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;
