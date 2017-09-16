@@ -25,7 +25,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
       const double _bins = bins;
 
       // Euler's magic
-      twiddle[(k * bins) + n] = exp(2i * M_PI * _k * _n / _bins);
+      twiddle.push_back(exp(2i * M_PI * _k * _n / _bins));
     }
 
   const auto ts_twiddle = chrono::steady_clock::now();

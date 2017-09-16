@@ -1,6 +1,6 @@
 CC=clang++
 STANDARD=c++14
-FLAGS=-Wall -O3 -Wpedantic -pedantic-errors -std=$(STANDARD) -I lib
+FLAGS=-Wall -O0 -Wpedantic -pedantic-errors -std=$(STANDARD) -I lib
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
