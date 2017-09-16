@@ -27,8 +27,7 @@ void spectrum() try {
   cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 
   // Bin resolution
-  const double bin_resolution =
-      rif::header.sample_rate / static_cast<double>(bins);
+  const double bin_resolution = 1.0 * rif::header.sample_rate / bins;
 
   cout << "Bins " << bins << " ";
   cout << quoted(bitset<16>(bins).to_string()) << endl;
@@ -54,9 +53,7 @@ void spectrum() try {
     // calculate the bar length.
     const double full_bar = 75.0;
     const auto bar_length =
-        max_bin > 0
-            ? static_cast<unsigned long>(floor(full_bar * current / max_bin))
-            : 0;
+        max_bin > 0 ? (floor(full_bar * current / max_bin)) : 0;
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";

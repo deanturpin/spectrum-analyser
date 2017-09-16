@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
       const double full_scale = 0xffff;
 
       // Samples per complete cycle
-      const double interval = static_cast<double>(wav.sample_rate) / f;
+      const double interval = 1.0 * wav.sample_rate / f;
 
       if (f > 0)
         sample += static_cast<unsigned short>(sin(phase / interval) *

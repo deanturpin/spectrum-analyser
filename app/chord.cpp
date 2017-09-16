@@ -23,8 +23,7 @@ void chord() try {
   cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 
   // Bin resolution
-  const double bin_resolution =
-      rif::header.sample_rate / static_cast<double>(samples.size());
+  const double bin_resolution = 1.0 * rif::header.sample_rate / samples.size();
 
   cout << "Bins " << bins << endl;
   cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
