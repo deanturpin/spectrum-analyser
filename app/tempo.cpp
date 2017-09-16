@@ -1,5 +1,4 @@
 #include "notes.h"
-#include "riff.h"
 #include <algorithm>
 #include <iostream>
 

@@ -13,7 +13,7 @@ void chord() try {
   const size_t bins = 2000;
 
   const auto ts_start = chrono::steady_clock::now();
-  const auto samples = rif::read_samples(bins);
+  const auto samples = read_samples(bins);
   const auto ts_read = chrono::steady_clock::now();
   cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
 
@@ -23,10 +23,10 @@ void chord() try {
   cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 
   // Bin resolution
-  const double bin_resolution = 1.0 * rif::header.sample_rate / samples.size();
+  const double bin_resolution = 1.0 * header.sample_rate / samples.size();
 
   cout << "Bins " << bins << endl;
-  cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
+  cout << "Sample rate " << header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   // Length of the complete keyboard
@@ -75,9 +75,9 @@ void chord() try {
         (current - next) > threshold) {
 
       // Find insertion point and key index for this note
-      const auto note = riff::notes.lower_bound(bin_freq);
+      const auto note = notes.lower_bound(bin_freq);
       const unsigned long key =
-          distance(riff::notes.cbegin(), note) % key_count;
+          distance(notes.cbegin(), note) % key_count;
 
       key_strikes.at(key) = '^';
     }

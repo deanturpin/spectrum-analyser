@@ -5,8 +5,6 @@
 #include <vector>
 
 // The WAV format
-namespace rif {
-
 struct _header {
 
   unsigned int riff_id;
@@ -39,7 +37,6 @@ std::vector<short> read_samples(const unsigned int size) {
     i = ~(i - 1);
 
   return samples;
-}
 }
 
 #endif

@@ -17,7 +17,7 @@ void spectrum() try {
 
   // Read some samples
   const auto ts_start = chrono::steady_clock::now();
-  const auto samples = rif::read_samples(bins);
+  const auto samples = read_samples(bins);
   const auto ts_read = chrono::steady_clock::now();
   cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
 
@@ -27,15 +27,15 @@ void spectrum() try {
   cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 
   // Bin resolution
-  const double bin_resolution = 1.0 * rif::header.sample_rate / bins;
+  const double bin_resolution = 1.0 * header.sample_rate / bins;
 
   cout << "Bins " << bins << " ";
   cout << quoted(bitset<16>(bins).to_string()) << endl;
-  cout << "Sample rate " << rif::header.sample_rate << " Hz" << endl;
+  cout << "Sample rate " << header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   // Find the max element so we know how much to scale the results
-  const auto max_bin = *max_element(fou.cbegin(), fou.cend());
+  const double max_bin = *max_element(fou.cbegin(), fou.cend());
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
@@ -52,8 +52,7 @@ void spectrum() try {
     // terminal. The absolute value of the (complex) Fourier result is used to
     // calculate the bar length.
     const double full_bar = 75.0;
-    const auto bar_length =
-        max_bin > 0 ? (floor(full_bar * current / max_bin)) : 0;
+    const auto bar_length = static_cast<unsigned long>(floor(full_bar * current / max_bin));
 
     // Print the bar and make it colourful
     const auto red = "\033[41m";
@@ -62,7 +61,7 @@ void spectrum() try {
     cout << yellow << string(bar_length, '-') << white << "| ";
 
     // Add a marker if the current bin has strong reponse
-    const unsigned long threshold = max_bin / 5;
+    const double threshold = max_bin / 5;
     if ((current - previous) > threshold && (current - next) > threshold) {
 
       // Calculate the note of this bin by searching for the current bin
@@ -70,7 +69,7 @@ void spectrum() try {
       // point returned by lower bound. Also nudge the bin frequency a
       // microtone, otherwise exact frequencies will be mapped to the previous
       // note.
-      const auto note = --riff::notes.lower_bound(bin_freq);
+      const auto note = --notes.lower_bound(bin_freq);
       cout << red << bin_freq << white << " " << note->second;
     }
 
