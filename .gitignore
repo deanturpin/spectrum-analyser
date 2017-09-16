@@ -1,6 +1,2 @@
 *.o
-spectrum
-tony
-chord
-fourier
-tempo
+bin/*

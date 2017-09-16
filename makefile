@@ -4,12 +4,15 @@ FLAGS=-std=c++14 -O -Weverything -I lib -Wno-c++98-compat -Wno-c++98-c++11-compa
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
 
-all: bin/chord bin/spectrum bin/tony
+all: bin/chord bin/spectrum bin/tony bin/histogram
 
 bin/chord: app/chord.o lib/fourier.o
 	$(CC) -o $@ $^
 
 bin/spectrum: app/spectrum.o lib/fourier.o
+	$(CC) -o $@ $^
+
+bin/histogram: app/histogram.o lib/fourier.o
 	$(CC) -o $@ $^
 
 bin/tony: app/tony.o
@@ -31,16 +34,19 @@ demo: bin/tony bin/chord bin/spectrum
 
 # Demos using mix input
 live-chord: bin/chord
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 4000 | bin/chord"
+	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 4000 | bin/chord"
 
 live-spectrum: bin/spectrum
 	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | bin/spectrum"
+
+live-histogram: bin/histogram
+	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | bin/histogram"
 
 static:
 	watch -c -t -n .01 "bin/spectrum < wav/train_2000.wav"
 
 live-tempo: bin/tempo
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/tempo"
+	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/tempo"
 
 # Lint
 cppcheck:
