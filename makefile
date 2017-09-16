@@ -1,5 +1,5 @@
 CC=clang++
-FLAGS=-std=c++14 -O0 -Weverything -I lib -Wno-c++98-compat -Wno-c++98-c++11-compat-pedantic
+FLAGS=-std=c++14 -O -Weverything -I lib -Wno-c++98-compat -Wno-c++98-c++11-compat-pedantic
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<

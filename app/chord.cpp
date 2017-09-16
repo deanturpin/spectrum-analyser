@@ -76,8 +76,8 @@ void chord() try {
 
       // Find insertion point and key index for this note
       const auto note = notes.lower_bound(bin_freq);
-      const unsigned long key =
-          distance(notes.cbegin(), note) % key_count;
+      const auto key =
+          static_cast<unsigned long>(distance(notes.cbegin(), note)) % key_count;
 
       key_strikes.at(key) = '^';
     }
