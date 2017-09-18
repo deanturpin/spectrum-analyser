@@ -37,16 +37,17 @@ void chord() try {
   // hasn't been declared beforehand. I've also used decltype instead of the
   // much simpler auto.
   string keyboard(key_count, '*');
-  for_each(keyboard.begin(), keyboard.end(),
-           [_x = 0ul](decltype(*keyboard.begin()) &key) mutable {
+  for_each(
+      keyboard.begin(),
+      keyboard.end(), [_x = 0ul](decltype(*keyboard.begin()) &key) mutable {
 
-             // ASCII representation of a piano octave. Note that it starts on
-             // a B because notes.h does.
-             const string octave{"  | |  | | |"};
+        // ASCII representation of a piano octave. Note that it starts on
+        // a B because notes.h does.
+        const string octave{"  | |  | | |"};
 
-             // Write the current key character
-             key = octave.at(_x++ % octave.size());
-           });
+        // Write the current key character
+        key = octave.at(_x++ % octave.size());
+      });
 
   // Display the keyboard
   const auto hrule = string(key_count, '_');

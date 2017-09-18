@@ -37,10 +37,10 @@ void spectrum() try {
   // Find the max element so we know how much to scale the results
   const double max_bin = *max_element(fou.cbegin(), fou.cend());
 
-  // for_each (notes.begin(), --notes.end(),
-  //           [](const auto &n){
+  // for_each_n (notes.begin(), 10,
+  //             [](const auto &n){
   //             cout << n.first << endl;
-  //           });
+  //             });
 
   for (auto i = notes.cbegin(); i != --notes.cend(); ++i) {
 
@@ -51,7 +51,6 @@ void spectrum() try {
 
     cout << i->second << "\t" << next - now << endl;
   }
-
 
   // Print the Fourier transform as an ASCII art histogram. Each bin is
   // converted into a bar.
