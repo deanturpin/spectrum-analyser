@@ -36,14 +36,18 @@ void spectrum() try {
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
   map<string, unsigned long> hist;
-  for (auto &f : fou) {
+  for (const auto &f : fou) {
 
     const auto bin = &f - fou.data();
-
     const double bin_freq = bin * bin_resolution;
     const auto note = notes.lower_bound(bin_freq);
 
-    hist[note->second] += f;
+    // Calculate the note/octave and drop the octave. All the octaves should
+    // end up in the same bin.
+    string key = note->second;
+    key.pop_back();
+
+    hist[key] += f;
   }
 
   // Find the max element so we know how much to scale the results
