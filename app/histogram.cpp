@@ -8,13 +8,12 @@
 #include <iostream>
 #include <vector>
 
-void spectrum();
-void spectrum() try {
+void histogram();
+void histogram() try {
 
   using namespace std;
 
-  // const unsigned long bins = 0b0000'0111'1101'0000;
-  const unsigned long bins = 2000;
+  const unsigned long bins = 1000;
 
   // Read some samples
   const auto ts_start = chrono::steady_clock::now();
@@ -60,18 +59,18 @@ void spectrum() try {
   // Sort the result and display it backwards. The for_each is just to make use
   // of the reverse iterators.
   sort(ordered.begin(), ordered.end());
-  for_each(ordered.crbegin(), ordered.crend(), [&hist](const auto &h) {
+  reverse(ordered.begin(), ordered.end());
 
-    // Find the max element so we know how much to scale the results
-    const double max_bin =
-        max_element(hist.cbegin(), hist.cend(), [](const auto &a,
-                                                   const auto &b) {
-          return a.second < b.second;
-        })->second;
+  // Find the max element so we know how much to scale the results
+  const double max_bin =
+    max_element(hist.cbegin(), hist.cend(), [](const auto &a,
+                                               const auto &b) {
+                return a.second < b.second;
+                })->second;
 
-    const unsigned long bar_length = 75 * h.first / max_bin;
-    cout << h.second << "\t" << string(bar_length, '-') << endl;
-  });
+  // Print a bar for each note
+  for (const auto &i : ordered)
+    cout << i.second << "\t" << string(75 * i.first / max_bin, '-') << endl;
 
 } catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;
@@ -79,6 +78,6 @@ void spectrum() try {
 
 int main() {
 
-  spectrum();
+  histogram();
   return 0;
 }

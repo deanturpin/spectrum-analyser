@@ -52,6 +52,9 @@ live-histogram: bin/histogram
 static:
 	watch -c -t -n .01 "bin/spectrum < wav/train_2000.wav"
 
+static-histogram:
+	watch -c -t -n .01 "bin/tony 440 550 660 | bin/histogram"
+
 live-tempo: bin/tempo
 	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/tempo"
 
