@@ -35,6 +35,8 @@ void spectrum() try {
   cout << "Sample rate " << header.sample_rate << " Hz" << endl;
   cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 
+  // Create a histogram from the Fouerier results. Consolidate all bins into
+  // frequencies that map onto a piano keyboard.
   map<string, unsigned long> hist;
   for (const auto &f : fou) {
 
@@ -56,23 +58,14 @@ void spectrum() try {
         return a.second < b.second;
       })->second;
 
-  vector<pair<unsigned long, string>> sorted_hist;
-  sorted_hist.reserve(hist.size());
+  // Copy histogram into a new container so we can sort it
+  vector<pair<unsigned long, string>> ordered;
+  for (const auto h : hist)
+    ordered.push_back(make_pair(h.second, h.first));
 
-  for (const auto h : hist) {
+  sort(ordered.begin(), ordered.end());
 
-  //   const unsigned long bar_length = 75 * h.second / max_bin;
-  //   cout << h.first << "\t" << string(bar_length, '-') << endl;
-
-    sorted_hist.push_back(make_pair(h.second, h.first));
-  }
-
-  // Use ortder list
-
-  sort(sorted_hist.begin(), sorted_hist.end());
-
-  for (const auto h : sorted_hist) {
-    // cout << h.second << "\t" << h.first << endl;
+  for (const auto h : ordered) {
     const unsigned long bar_length = 75 * h.first / max_bin;
     cout << h.second << "\t" << string(bar_length, '-') << endl;
   }
