@@ -52,23 +52,26 @@ void spectrum() try {
     hist[key] += f;
   }
 
-  // Find the max element so we know how much to scale the results
-  const double max_bin =
-      max_element(hist.cbegin(), hist.cend(), [](const auto &a, const auto &b) {
-        return a.second < b.second;
-      })->second;
-
   // Copy histogram into a new container so we can sort it
   vector<pair<unsigned long, string>> ordered;
   for (const auto h : hist)
     ordered.push_back(make_pair(h.second, h.first));
 
+  // Sort the result and display it backwards. The for_each is just to make use
+  // of the reverse iterators.
   sort(ordered.begin(), ordered.end());
+  for_each(ordered.crbegin(), ordered.crend(), [&hist](const auto &h) {
 
-  for (const auto h : ordered) {
+    // Find the max element so we know how much to scale the results
+    const double max_bin =
+        max_element(hist.cbegin(), hist.cend(), [](const auto &a,
+                                                   const auto &b) {
+          return a.second < b.second;
+        })->second;
+
     const unsigned long bar_length = 75 * h.first / max_bin;
     cout << h.second << "\t" << string(bar_length, '-') << endl;
-  }
+  });
 
 } catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;
