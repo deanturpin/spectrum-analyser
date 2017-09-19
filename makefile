@@ -31,9 +31,13 @@ wait:
 	while :; do inotifywait -qe modify */*.cpp; make; done
 
 # Demos using generated tones
-demo: bin/tony bin/chord bin/spectrum
+demo: bin/tony bin/chord bin/spectrum bin/histogram
 	bin/tony 220 276 330 | bin/chord
 	bin/tony 10 21 32 | bin/spectrum | head -40
+
+demo-histogram:
+	bin/tony 100 105 110 120 130 140 150 151 160 160  276 330 | bin/histogram
+	# bin/tony 220 276 330 | bin/histogram
 
 # Demos using mix input
 live-chord: bin/chord

@@ -56,10 +56,25 @@ void spectrum() try {
         return a.second < b.second;
       })->second;
 
+  vector<pair<unsigned long, string>> sorted_hist;
+  sorted_hist.reserve(hist.size());
+
   for (const auto h : hist) {
 
-    const unsigned long bar_length = 75 * h.second / max_bin;
-    cout << h.first << "\t" << string(bar_length, '-') << endl;
+  //   const unsigned long bar_length = 75 * h.second / max_bin;
+  //   cout << h.first << "\t" << string(bar_length, '-') << endl;
+
+    sorted_hist.push_back(make_pair(h.second, h.first));
+  }
+
+  // Use ortder list
+
+  sort(sorted_hist.begin(), sorted_hist.end());
+
+  for (const auto h : sorted_hist) {
+    // cout << h.second << "\t" << h.first << endl;
+    const unsigned long bar_length = 75 * h.first / max_bin;
+    cout << h.second << "\t" << string(bar_length, '-') << endl;
   }
 
 } catch (const std::exception &e) {
