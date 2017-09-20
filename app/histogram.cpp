@@ -76,6 +76,34 @@ void histogram() try {
     cout << i.second << "\t" << yellow << string(75 * i.first / max_bin, '-')
       << white << endl;
 
+  // Calulate the intervals
+  const vector<string> octave = {
+
+      "C",
+      "C#",
+      "D",
+      "D#",
+      "E",
+      "F",
+      "F#",
+      "G",
+      "G#",
+      "A",
+      "A#",
+      "B"
+  };
+
+  cout << "--" << endl;
+
+  for (const auto &i : ordered) {
+
+    const auto note = i.second;
+    const auto dist =
+      distance(octave.cbegin(), find(octave.cbegin(), octave.cend(), note));
+
+    cout << i.second << "\t" << boolalpha << dist << endl;
+  }
+
 } catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;
 }
