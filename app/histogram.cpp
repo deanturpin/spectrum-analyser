@@ -44,64 +44,28 @@ void histogram() try {
     const auto note = notes.lower_bound(bin_freq);
 
     // Calculate the note/octave and drop the octave. All the octaves should
-    // end up in the same bin.
+    // end up in the same bin. We're even not bothered about sharps at the
+    // moment.
     string key = note->second;
-    key.pop_back();
-
-    hist[key] += f;
+    hist[key.erase(1, -1)] += f;
   }
-
-  // Copy histogram into a new container so we can sort it
-  vector<pair<unsigned long, string>> ordered;
-  for (const auto h : hist)
-    ordered.push_back(make_pair(h.second, h.first));
-
-  // Sort the result and display it backwards. The for_each is just to make use
-  // of the reverse iterators.
-  sort(ordered.begin(), ordered.end());
-  reverse(ordered.begin(), ordered.end());
 
   // Find the max element so we know how much to scale the results
   const double max_bin =
-    max_element(hist.cbegin(), hist.cend(), [](const auto &a,
-                                               const auto &b) {
-                return a.second < b.second;
-                })->second;
+      max_element(hist.cbegin(), hist.cend(), [](const auto &a, const auto &b) {
+        return a.second < b.second;
+      })->second;
 
   const auto white = "\033[0m";
   const auto yellow = "\033[33m";
 
   // Print a bar for each note
-  for (const auto &i : ordered)
-    cout << i.second << "\t" << yellow << string(75 * i.first / max_bin, '-')
-      << white << endl;
+  for (auto i = hist.crbegin(); i != hist.crend(); ++i) {
 
-  // Calulate the intervals
-  const vector<string> octave = {
+    const auto ledger = distance(hist.crbegin(), i) % 2 == 1 ? "-" : " ";
 
-      "C",
-      "C#",
-      "D",
-      "D#",
-      "E",
-      "F",
-      "F#",
-      "G",
-      "G#",
-      "A",
-      "A#",
-      "B"
-  };
-
-  cout << "--" << endl;
-
-  for (const auto &i : ordered) {
-
-    const auto note = i.second;
-    const auto dist =
-      distance(octave.cbegin(), find(octave.cbegin(), octave.cend(), note));
-
-    cout << i.second << "\t" << boolalpha << dist << endl;
+    cout << ledger << " " << i->first << " " << yellow
+         << string(80 * i->second / max_bin, '-') << white << endl;
   }
 
 } catch (const std::exception &e) {
