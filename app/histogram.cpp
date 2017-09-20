@@ -13,7 +13,7 @@ void histogram() try {
 
   using namespace std;
 
-  const unsigned long bins = 1000;
+  const unsigned long bins = 2000;
 
   // Read some samples
   const auto ts_start = chrono::steady_clock::now();
@@ -68,9 +68,13 @@ void histogram() try {
                 return a.second < b.second;
                 })->second;
 
+  const auto white = "\033[0m";
+  const auto yellow = "\033[33m";
+
   // Print a bar for each note
   for (const auto &i : ordered)
-    cout << i.second << "\t" << string(75 * i.first / max_bin, '-') << endl;
+    cout << i.second << "\t" << yellow << string(75 * i.first / max_bin, '-')
+      << white << endl;
 
 } catch (const std::exception &e) {
   std::cout << "Caught " << e.what() << std::endl;

@@ -60,7 +60,7 @@ void spectrum() try {
     const auto red = "\033[41m";
     const auto white = "\033[0m";
     const auto yellow = "\033[33m";
-    cout << yellow << string(bar_length, '-') << white << "| ";
+    cout << yellow << string(bar_length, '-') << white;
 
     // Add a marker if the current bin has strong reponse
     const double threshold = max_bin / 5;
@@ -72,7 +72,7 @@ void spectrum() try {
       // microtone, otherwise exact frequencies will be mapped to the previous
       // note.
       const auto note = --notes.lower_bound(bin_freq);
-      cout << red << bin_freq << white << " " << note->second;
+      cout << " " << red << bin_freq << white << " " << note->second;
     }
 
     cout << endl;

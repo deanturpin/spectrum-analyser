@@ -35,28 +35,23 @@ demo: bin/tony bin/chord bin/spectrum bin/histogram
 	bin/tony 220 276 330 | bin/chord
 	bin/tony 10 21 32 | bin/spectrum | head -40
 
-demo-histogram:
-	bin/tony 100 105 110 120 130 140 150 151 160 160  276 330 | bin/histogram
-	# bin/tony 220 276 330 | bin/histogram
+watch = watch -c -t -n .01
 
 # Demos using mix input
 live-chord: bin/chord
-	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 4000 | bin/chord"
+	$(watch) "arecord -q -f S16_LE -c1 -r 4000 | bin/chord"
 
 live-spectrum: bin/spectrum
-	watch -c -t -n .01 "arecord -q -f S16_LE -c1 -r 8000 | bin/spectrum"
+	$(watch) "arecord -q -f S16_LE -c1 -r 8000 | bin/spectrum"
 
 live-histogram: bin/histogram
-	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/histogram"
+	$(watch) "arecord -q -f S16_LE -c1 -r 4000 | bin/histogram"
 
 static:
-	watch -c -t -n .01 "bin/spectrum < wav/train_2000.wav"
+	$(watch) "bin/spectrum < wav/train_2000.wav"
 
 static-histogram:
-	watch -c -t -n .01 "bin/tony 440 550 660 | bin/histogram"
-
-live-tempo: bin/tempo
-	watch -t -n .01 "arecord -q -f S16_LE -c1 -r 2000 | bin/tempo"
+	$(watch) "bin/tony 440 550 660 | bin/histogram"
 
 # Lint
 cppcheck:
