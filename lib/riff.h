@@ -1,6 +1,7 @@
 #ifndef RIFF_H
 #define RIFF_H
 
+#include "fourier.h"
 #include <iostream>
 #include <vector>
 
@@ -22,15 +23,15 @@ struct _header {
   unsigned int data_size;
 } header;
 
-std::vector<short> read_samples(const unsigned int);
-std::vector<short> read_samples(const unsigned int size) {
+std::vector<short> read_samples() {
 
   // Read the WAV header
   std::cin.read(reinterpret_cast<char *>(&header), sizeof header);
 
   // Read a batch of samples
-  std::vector<short> samples(size);
-  std::cin.read(reinterpret_cast<char *>(samples.data()), size * sizeof(short));
+  std::vector<short> samples(fourier_bins);
+  std::cin.read(reinterpret_cast<char *>(samples.data()),
+                fourier_bins * sizeof(short));
 
   // Convert to decimal
   for (auto &i : samples)

@@ -10,7 +10,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   using namespace std;
 
   const auto ts_start = chrono::steady_clock::now();
-  const auto bins = 1000; // samples.size();
+
+  const auto bins = fourier_bins;
 
   // Initialise twiddle matrix
   vector<complex<double>> twiddle;
