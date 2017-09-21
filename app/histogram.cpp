@@ -2,7 +2,6 @@
 #include "notes.h"
 #include "riff.h"
 #include <algorithm>
-#include <bitset>
 #include <chrono>
 #include <iomanip>
 #include <iostream>
@@ -28,9 +27,6 @@ int main() {
 
     // Bin resolution
     double bin_resolution = 1.0 * header.sample_rate / bins;
-
-    cout << "Bins " << bins << " ";
-    cout << quoted(bitset<16>(bins).to_string()) << endl;
     cout << "Sample rate " << header.sample_rate << " Hz" << endl;
     cout << "Bin resolution " << bin_resolution << " Hz" << endl;
 

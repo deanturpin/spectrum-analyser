@@ -4,6 +4,6 @@
 #include <vector>
 
 std::vector<double> fourier(const std::vector<short> &);
-const unsigned long fourier_bins = 1000;
+const unsigned long fourier_bins = 1500;
 
 #endif
