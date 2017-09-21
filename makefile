@@ -2,7 +2,7 @@
 # FLAGS=-std=c++1z -O -Weverything -I lib -Wno-c++98-compat -Wno-c++98-c++11-compat-pedantic
 
 CC=g++
-FLAGS=-std=c++17 -O -Wall --pedantic -I lib
+FLAGS=-std=c++17 -O3 -Wall --pedantic -I lib
 
 %.o:%.cpp
 	$(CC) $(FLAGS) -o $@ -c $<

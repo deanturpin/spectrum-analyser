@@ -13,11 +13,10 @@ void histogram() try {
 
   using namespace std;
 
-  const unsigned long bins = 2000;
-
   // Read some samples
   const auto ts_start = chrono::steady_clock::now();
-  const auto samples = read_samples(bins);
+  const auto samples = read_samples(1000);
+  const unsigned long bins = samples.size();
   const auto ts_read = chrono::steady_clock::now();
   cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
 
@@ -58,6 +57,9 @@ void histogram() try {
 
   const auto white = "\033[0m";
   const auto yellow = "\033[33m";
+
+  // Push some ledger lines at each end
+  // Consider dropping some of the lowest frequencies
 
   // Print a bar for each note
   for (auto i = hist.crbegin(); i != hist.crend(); ++i) {

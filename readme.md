@@ -144,6 +144,9 @@ Creating the array offline results in a very quick twiddle calculation but it
 takes a long time to compile and both clang and gcc cough for large arrays. The
 build procedure is also becoming very complicated.
 
+Hardcoding the bin count halves the twiddle calculation before compiler
+optimisation.
+
 # Command line examples
 ```bash
 # Analyse a series of frequencies
