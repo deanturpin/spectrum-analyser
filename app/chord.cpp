@@ -13,7 +13,10 @@ int main() {
 
     const auto ts_start = chrono::steady_clock::now();
     const auto header = read_header();
-    const auto samples = read_samples();
+
+    vector<short> samples;
+    read_samples(samples);
+
     const auto ts_read = chrono::steady_clock::now();
     cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
 

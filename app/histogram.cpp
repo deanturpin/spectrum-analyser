@@ -15,13 +15,15 @@ int main() {
     // Read some samples
     const auto ts_start = chrono::steady_clock::now();
     const auto header = read_header();
-    const auto samples = read_samples();
+
+    vector<short> samples;
+    read_samples(samples);
     const unsigned long bins = samples.size();
     const auto ts_read = chrono::steady_clock::now();
     cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
 
     // Fourier analysis
-    const auto fou = fourier(samples);
+    const vector<double> fou = fourier(samples);
     const auto ts_fou = chrono::steady_clock::now();
     cout << "Tout " << (ts_fou - ts_start).count() / 1e9 << endl;
 

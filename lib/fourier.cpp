@@ -5,7 +5,9 @@
 #include <iostream>
 #include <vector>
 
-std::vector<double> fourier(const std::vector<short> &samples) {
+std::vector<std::complex<double>> twiddle;
+
+void fourier_init() {
 
   using namespace std;
 
@@ -14,7 +16,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   const auto bins = fourier_bins;
 
   // Initialise twiddle matrix
-  vector<complex<double>> twiddle;
+  // vector<complex<double>> twiddle;
   twiddle.reserve(bins * bins);
 
   // Populate twiddle matrix
@@ -30,6 +32,14 @@ std::vector<double> fourier(const std::vector<short> &samples) {
     }
 
   const auto ts_twiddle = chrono::steady_clock::now();
+
+}
+
+std::vector<double> fourier(const std::vector<short> &samples) {
+
+  using namespace std;
+
+  const auto bins = fourier_bins;
 
   // The Fourier transform is the dot product of the twiddle matrix and the
   // original samples. Only run over the first half of the matrix as the other
@@ -49,8 +59,8 @@ std::vector<double> fourier(const std::vector<short> &samples) {
       });
 
   const auto ts_dot_product = chrono::steady_clock::now();
-  cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;
-  cout << "Proc " << (ts_dot_product - ts_twiddle).count() / 1e9 << endl;
+  // cout << "Twid " << (ts_twiddle - ts_start).count() / 1e9 << endl;
+  // cout << "Proc " << (ts_dot_product - ts_twiddle).count() / 1e9 << endl;
 
   return fou;
 }
