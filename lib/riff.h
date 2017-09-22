@@ -6,7 +6,7 @@
 #include <vector>
 
 // The WAV format
-struct _header {
+struct wav_header {
 
   unsigned int riff_id;
   unsigned int riff_size;
@@ -21,12 +21,17 @@ struct _header {
   unsigned int bit_depth : 16;
   unsigned int data_id;
   unsigned int data_size;
-} header;
+};
+
+struct wav_header read_header() {
+
+  wav_header h;
+  std::cin.read(reinterpret_cast<char *>(&h), sizeof h);
+
+  return h;
+}
 
 std::vector<short> read_samples() {
-
-  // Read the WAV header
-  std::cin.read(reinterpret_cast<char *>(&header), sizeof header);
 
   // Read a batch of samples
   std::vector<short> samples(fourier_bins);

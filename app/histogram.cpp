@@ -3,7 +3,6 @@
 #include "riff.h"
 #include <algorithm>
 #include <chrono>
-#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -15,6 +14,7 @@ int main() {
 
     // Read some samples
     const auto ts_start = chrono::steady_clock::now();
+    const auto header = read_header();
     const auto samples = read_samples();
     const unsigned long bins = samples.size();
     const auto ts_read = chrono::steady_clock::now();

@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
   using namespace std;
 
   // Populate the WAV header
-  _header wav;
+  wav_header wav;
 
   wav.riff_id = 1179011410;
   wav.riff_size = 2147483684;
