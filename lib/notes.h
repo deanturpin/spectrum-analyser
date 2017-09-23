@@ -6,8 +6,8 @@ const std::map<double, std::string> notes = {
     {0.0, "Bx"},
 
     // All the notes we're interested in. At the low end a single Fourier bin
-    // will map to multiple notes. And further up multiple bins will be
-    // assigned the same note.
+    // will map to multiple notes. Further up multiple bins will be assigned
+    // the same note.
     {16.35, "C0"},
     {17.32, "C#0"},
     {18.35, "D0"},

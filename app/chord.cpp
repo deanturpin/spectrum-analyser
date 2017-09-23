@@ -15,7 +15,7 @@ int main() {
     const auto header = read_wav_header();
 
     vector<short> samples;
-    read_samples(samples);
+    while (read_samples(samples)) {
 
     const auto ts_read = chrono::steady_clock::now();
     cout << "Read " << (ts_read - ts_start).count() / 1e9 << endl;
@@ -90,6 +90,8 @@ int main() {
 
     cout << hrule << endl;
     cout << key_strikes << endl;
+
+    }
 
   } catch (const std::exception &e) {
     std::cout << "Caught " << e.what() << std::endl;

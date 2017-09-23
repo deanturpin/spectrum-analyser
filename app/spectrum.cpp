@@ -17,6 +17,15 @@ int main() {
     const auto header = read_wav_header();
     fourier_init();
 
+    // Calculate note window
+    std::map<double, std::string> notes_window;
+    auto n = notes.begin();
+    // advance(n, 1);
+    for (; n != notes.end(); ++n) {
+
+      notes_window[n->first] = n->second;
+    }
+
     vector<short> samples;
     while (read_samples(samples) > 0) {
 
@@ -26,6 +35,9 @@ int main() {
       // Find the max element so we know how much to scale the results
       // const double max_bin = *max_element(display.cbegin(), display.cend());
       const double max_bin = *max_element(fou.cbegin(), fou.cend());
+
+      // Create a histogram of notes
+      // map<string, unsigned long> fou_hist;
 
       // Print the Fourier transform as an ASCII art histogram. Each bin is
       // converted into a bar.
@@ -42,18 +54,18 @@ int main() {
         // Display the largest value and decay
         display.at(i) = max(display.at(i), bar_length);
 
-        const auto decay = 2ul;
+        const auto decay = 1ul;
         display.at(i) = display.at(i) > decay ? display.at(i) - decay : 0;
       }
 
       const double bin_resolution = 1.0 * header.sample_rate / fourier_bins;
       for_each(display.crbegin(), display.crend(),
-               [&bin_resolution](const auto &i) {
+               [&bin_resolution, &notes_window](const auto &i) {
 
                  const auto red = "\033[41m";
                  const auto white = "\033[0m";
                  const auto bin_freq = bin_resolution * (&i - display.data());
-                 const auto note = notes.lower_bound(bin_freq);
+                 const auto note = notes_window.lower_bound(bin_freq);
 
                  cout << note->second << "\t" << string(i, '-') << red << "|"
                       << white << endl;

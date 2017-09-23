@@ -42,7 +42,7 @@ live-chord: bin/chord
 	$(watch) "arecord -q -f S16_LE -c1 -r 4000 | bin/chord"
 
 live-spectrum: bin/spectrum
-	$(watch) "arecord -q -f S16_LE -c1 -r 8000 | bin/spectrum"
+	arecord -q -f S16_LE -c1 -r 2000 | bin/spectrum
 
 live-histogram: bin/histogram
 	$(watch) "arecord -q -f S16_LE -c1 -r 4000 | bin/histogram"
