@@ -46,7 +46,7 @@ size_t read_samples(std::vector<short> &s) {
 
   // Convert to decimal
   // for (auto &i : s)
-    // i = ~(i - 1);
+  // i = ~(i - 1);
 
   return s.size();
 }

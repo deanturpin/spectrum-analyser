@@ -32,7 +32,6 @@ void fourier_init() {
     }
 
   const auto ts_twiddle = chrono::steady_clock::now();
-
 }
 
 std::vector<double> fourier(const std::vector<short> &samples) {
