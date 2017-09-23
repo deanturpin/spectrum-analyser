@@ -14,7 +14,7 @@ int main() {
 
     // Read some samples
     const auto ts_start = chrono::steady_clock::now();
-    const auto header = read_header();
+    const auto header = read_wav_header();
 
     vector<short> samples;
     read_samples(samples);

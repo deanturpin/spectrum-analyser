@@ -23,7 +23,7 @@ struct wav_header {
   unsigned int data_size;
 };
 
-struct wav_header read_header() {
+struct wav_header read_wav_header() {
 
   wav_header h;
   std::cin.read(reinterpret_cast<char *>(&h), sizeof h);

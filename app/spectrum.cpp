@@ -14,9 +14,7 @@ int main() {
 
     using namespace std;
 
-    // Read some samples
-    const auto header = read_header();
-
+    const auto header = read_wav_header();
     fourier_init();
 
     vector<short> samples;
@@ -45,24 +43,22 @@ int main() {
         display.at(i) = max(display.at(i), bar_length);
 
         const auto decay = 5ul;
-        if (display.at(i) > decay)
-          display.at(i) -= decay;
-        else
-          display.at(i) = 0;
+        display.at(i) = display.at(i) > decay ? display.at(i) - decay : 0;
       }
 
-      for_each(display.crbegin(), display.crend(), [](const auto &i) {
-
-        const auto red = "\033[41m";
-        const auto white = "\033[0m";
-        cout << string(i + 1, '#') << red << "0" << white << endl;
-      });
-
-      // Bin resolution
       const double bin_resolution = 1.0 * header.sample_rate / fourier_bins;
+      for_each(display.crbegin(), display.crend(),
+               [&bin_resolution](const auto &i) {
 
-      cout << "Fou bins " << fou.size() << endl;
-      cout << "Bin resolution " << bin_resolution << " Hz" << endl;
+                 const auto red = "\033[41m";
+                 const auto white = "\033[0m";
+                 const auto freq = bin_resolution * (&i - display.data());
+                 cout << freq << "\t" << string(i, '-') << red << "|" << white
+                      << endl;
+               });
+
+      cout << "Bins " << fou.size() << endl;
+      cout << "Resolution " << bin_resolution << endl;
       cout << "Sample rate " << header.sample_rate << " Hz" << endl;
     }
 
