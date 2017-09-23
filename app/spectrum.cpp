@@ -42,7 +42,7 @@ int main() {
         // Display the largest value and decay
         display.at(i) = max(display.at(i), bar_length);
 
-        const auto decay = 5ul;
+        const auto decay = 2ul;
         display.at(i) = display.at(i) > decay ? display.at(i) - decay : 0;
       }
 
@@ -52,9 +52,11 @@ int main() {
 
                  const auto red = "\033[41m";
                  const auto white = "\033[0m";
-                 const auto freq = bin_resolution * (&i - display.data());
-                 cout << freq << "\t" << string(i, '-') << red << "|" << white
-                      << endl;
+                 const auto bin_freq = bin_resolution * (&i - display.data());
+                 const auto note = notes.lower_bound(bin_freq);
+
+                 cout << note->second << "\t" << string(i, '-') << red << "|"
+                      << white << endl;
                });
 
       cout << "Bins " << fou.size() << endl;
