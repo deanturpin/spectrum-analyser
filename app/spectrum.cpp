@@ -34,8 +34,7 @@ int main() {
 
       const auto clear_and_move_to_top = "\033[0;0H";
       const auto erase_rest_of_line = "\033[K";
-      cout << clear_and_move_to_top;
-      cout << "Bin resolution " << bin_resolution << " Hz" << endl;
+      // cout << clear_and_move_to_top;
 
       // Fourier analysis
       const auto fou = fourier(samples);
@@ -49,14 +48,13 @@ int main() {
       // converted into a bar.
       // const auto window = 1ul;
       // for (unsigned long bin = 0; bin < 100 && bin < fou.size() - window; ++bin) {
-      cout << "Fou bins " << fou.size() << endl;
+      // unsigned long increment = 0;
 
-      unsigned long increment = 0;
+      // for (const auto &f : fou) {
+      for (auto f = fou.crbegin(); f != fou.crend(); ++f) {
 
-      for (const auto &f : fou) {
-
-        if (increment++ > 70)
-          break;
+        // if (increment++ > 70)
+          // break;
 
         // const double bin_freq = bin * bin_resolution;
 
@@ -69,7 +67,7 @@ int main() {
         // calculate the bar length.
         const double full_bar = 75.0;
         const auto bar_length =
-          static_cast<unsigned long>(floor(full_bar * f / max_bin));
+          static_cast<unsigned long>(floor(full_bar * *f / max_bin));
 
         // Print the bar and make it colourful
         // const auto red = "\033[41m";
@@ -97,7 +95,10 @@ int main() {
 
       // cout << "loop2" << endl;
       // break;
+      cout << "Fou bins " << fou.size() << endl;
+      cout << "Bin resolution " << bin_resolution << " Hz" << endl;
     }
+
   } catch (const std::exception &e) {
     std::cout << "Caught " << e.what() << std::endl;
   }
