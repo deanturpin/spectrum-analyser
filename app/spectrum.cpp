@@ -16,21 +16,11 @@ int main() {
     const auto header = read_wav_header();
     fourier_init();
 
-    // Calculate note window
-    std::map<double, std::string> notes_window;
-    auto n = notes.begin();
-    // advance(n, 1);
-    for (; n != notes.end(); ++n) {
-
-      notes_window[n->first] = n->second;
-    }
-
     vector<short> samples;
     while (read_samples(samples) > 0) {
 
       // Do fourier analysis and create a copy of the results to display them
       auto fou = fourier(samples);
-
       // Find the max element so we know how much to scale the results
       // const double max_bin = *max_element(display.cbegin(), display.cend());
       const double max_bin = *max_element(fou.cbegin(), fou.cend());
@@ -56,12 +46,12 @@ int main() {
 
       const double bin_resolution = 1.0 * header.sample_rate / fourier_bins;
       for_each(display.crbegin(), display.crend(),
-               [&bin_resolution, &notes_window](const auto &i) {
+               [&bin_resolution, &notes](const auto &i) {
 
                const auto red = "\033[41m";
                const auto white = "\033[0m";
                const auto bin_freq = bin_resolution * (&i - display.data());
-               const auto note = notes_window.lower_bound(bin_freq);
+               const auto note = notes.lower_bound(bin_freq);
 
                cout << note->second << "\t" << string(i, '-') << red << "|"
                << white << endl;
