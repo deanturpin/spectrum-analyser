@@ -31,16 +31,14 @@ int main() {
       for (unsigned long i = 0; i < fou.size(); ++i) {
 
         // Normalise the results and scale to make the graph fit nicely into
-        // the terminal. The absolute value of the (complex) Fourier result is
-        // used to calculate the bar length.
+        // the terminal
         const auto full_bar = 130.0;
         const auto bar_length =
           static_cast<unsigned long>(floor(full_bar * fou.at(i) / max_bin));
 
-        // Display the largest value and decay
+        // Display the largest value and decay if necessary
+        const auto decay = 5ul;
         display.at(i) = max(display.at(i), bar_length);
-
-        const auto decay = 20ul;
         display.at(i) = display.at(i) > decay ? display.at(i) - decay : 0;
       }
 
