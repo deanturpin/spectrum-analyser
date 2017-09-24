@@ -2,7 +2,6 @@
 #include "notes.h"
 #include "riff.h"
 #include <algorithm>
-#include <chrono>
 #include <cmath>
 #include <iostream>
 #include <unistd.h>
@@ -36,9 +35,6 @@ int main() {
       // const double max_bin = *max_element(display.cbegin(), display.cend());
       const double max_bin = *max_element(fou.cbegin(), fou.cend());
 
-      // Create a histogram of notes
-      // map<string, unsigned long> fou_hist;
-
       // Print the Fourier transform as an ASCII art histogram. Each bin is
       // converted into a bar.
       static vector<unsigned long> display(fou.size());
@@ -47,14 +43,14 @@ int main() {
         // Normalise the results and scale to make the graph fit nicely into
         // the terminal. The absolute value of the (complex) Fourier result is
         // used to calculate the bar length.
-        const auto full_bar = 150.0;
+        const auto full_bar = 130.0;
         const auto bar_length =
-            static_cast<unsigned long>(floor(full_bar * fou.at(i) / max_bin));
+          static_cast<unsigned long>(floor(full_bar * fou.at(i) / max_bin));
 
         // Display the largest value and decay
         display.at(i) = max(display.at(i), bar_length);
 
-        const auto decay = 1ul;
+        const auto decay = 20ul;
         display.at(i) = display.at(i) > decay ? display.at(i) - decay : 0;
       }
 
@@ -62,20 +58,19 @@ int main() {
       for_each(display.crbegin(), display.crend(),
                [&bin_resolution, &notes_window](const auto &i) {
 
-                 const auto red = "\033[41m";
-                 const auto white = "\033[0m";
-                 const auto bin_freq = bin_resolution * (&i - display.data());
-                 const auto note = notes_window.lower_bound(bin_freq);
+               const auto red = "\033[41m";
+               const auto white = "\033[0m";
+               const auto bin_freq = bin_resolution * (&i - display.data());
+               const auto note = notes_window.lower_bound(bin_freq);
 
-                 cout << note->second << "\t" << string(i, '-') << red << "|"
-                      << white << endl;
+               cout << note->second << "\t" << string(i, '-') << red << "|"
+               << white << endl;
                });
 
       cout << "Bins " << fou.size() << endl;
       cout << "Resolution " << bin_resolution << endl;
       cout << "Sample rate " << header.sample_rate << " Hz" << endl;
     }
-
   } catch (const std::exception &e) {
     std::cout << "Caught " << e.what() << std::endl;
   }
