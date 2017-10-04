@@ -53,6 +53,9 @@ static:
 static-histogram:
 	$(watch) "bin/tony 440 550 660 | bin/histogram"
 
+tones: bin/tony
+	$(watch) "bin/tony 20 | bin/tony"
+
 # Lint
 cppcheck:
 	cppcheck --enable=all .
