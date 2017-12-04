@@ -1,4 +1,5 @@
-Command line spectrum analyser.
+Command line spectrum analyser. See [Fourier transform on
+Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example).
 
 # Build and run
 ```bash
@@ -41,10 +42,3 @@ build procedure is also becoming very complicated.
 
 Hardcoding the bin count halves the twiddle calculation before compiler
 optimisation.
-
-# See also
-* [Fourier transform on Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example)
-* [ANSI control codes](http://misc.flogisoft.com/bash/tip_colors_and_formatting)
-* [Piano frequencies](https://en.wikipedia.org/wiki/Piano_key_frequencies)
-* [Just intonation](https://en.wikipedia.org/wiki/Just_intonation)
-* [Stringed instrument tuning](https://en.wikipedia.org/wiki/Stringed_instrument_tunings)
