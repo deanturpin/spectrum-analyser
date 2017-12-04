@@ -34,7 +34,7 @@ int main() {
         // the terminal
         const auto full_bar = 130.0;
         const auto bar_length =
-          static_cast<unsigned long>(floor(full_bar * fou.at(i) / max_bin));
+            static_cast<unsigned long>(floor(full_bar * fou.at(i) / max_bin));
 
         // Display the largest value and decay if necessary
         const auto decay = 5ul;
@@ -46,13 +46,13 @@ int main() {
       for_each(display.crbegin(), display.crend(),
                [&bin_resolution, &notes](const auto &i) {
 
-               const auto red = "\033[41m";
-               const auto white = "\033[0m";
-               const auto bin_freq = bin_resolution * (&i - display.data());
-               const auto note = notes.lower_bound(bin_freq);
+                 const auto red = "\033[41m";
+                 const auto white = "\033[0m";
+                 const auto bin_freq = bin_resolution * (&i - display.data());
+                 const auto note = notes.lower_bound(bin_freq);
 
-               cout << note->second << "\t" << string(i, '-') << red << "|"
-               << white << endl;
+                 cout << note->second << "\t" << string(i, '-') << red << "|"
+                      << white << " " << bin_freq << endl;
                });
 
       cout << "Bins " << fou.size() << endl;
