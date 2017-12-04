@@ -51,8 +51,8 @@ int main() {
                  const auto bin_freq = bin_resolution * (&i - display.data());
                  const auto note = notes.lower_bound(bin_freq);
 
-                 cout << note->second << "\t" << string(i, '-') << red << "|"
-                      << white << " " << bin_freq << endl;
+                 cout << bin_freq << "\t" << string(i, '-') << red << "|" <<
+                   white << " " << note->second << endl;
                });
 
       cout << "Bins " << fou.size() << endl;
