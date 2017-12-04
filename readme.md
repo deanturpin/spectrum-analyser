@@ -1,4 +1,5 @@
-Command line spectrum analyser. See [Fourier transform on
+Command line Fourier analysis and spectrum analyser written in C++ with no
+third-party libraries. See [Fourier transform on
 Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Example).
 
 # Build and run
