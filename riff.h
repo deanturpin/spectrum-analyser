@@ -23,7 +23,7 @@ struct wav_header {
   unsigned int data_size;
 };
 
-struct wav_header read_header() {
+struct wav_header read_wav_header() {
 
   wav_header h;
   std::cin.read(reinterpret_cast<char *>(&h), sizeof h);
@@ -31,18 +31,24 @@ struct wav_header read_header() {
   return h;
 }
 
-std::vector<short> read_samples() {
+size_t read_samples(std::vector<short> &s) {
 
   // Read a batch of samples
-  std::vector<short> samples(fourier_bins);
-  std::cin.read(reinterpret_cast<char *>(samples.data()),
+  // std::vector<short> samples(fourier_bins);
+  // std::vector<short> samples(fourier_bins);
+
+  s.clear();
+  s.reserve(fourier_bins);
+  s.resize(fourier_bins);
+
+  std::cin.read(reinterpret_cast<char *>(s.data()),
                 fourier_bins * sizeof(short));
 
   // Convert to decimal
-  for (auto &i : samples)
-    i = ~(i - 1);
+  // for (auto &i : s)
+  // i = ~(i - 1);
 
-  return samples;
+  return s.size();
 }
 
 #endif
