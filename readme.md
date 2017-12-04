@@ -43,3 +43,8 @@ build procedure is also becoming very complicated.
 
 Hardcoding the bin count halves the twiddle calculation before compiler
 optimisation.
+
+# Animation
+Rather than introduce the complication of ncurses for animation the results are
+simply printed to the screen. But it happens quickly enough to make it appear
+smooth like a zoetrope.
