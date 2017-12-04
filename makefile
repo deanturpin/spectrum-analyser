@@ -1,10 +1,8 @@
 CC=g++
-FLAGS=-std=c++17 -O3 -Wall --pedantic -I lib
+FLAGS=-std=c++17 -O3 -Wall --pedantic
 
 %.o: %.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
-
-# all: bin/spectrum
 
 spectrum: spectrum.o fourier.o
 	$(CC) -o $@ $^
