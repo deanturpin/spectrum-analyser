@@ -33,10 +33,6 @@ struct wav_header read_wav_header() {
 
 size_t read_samples(std::vector<short> &s) {
 
-  // Read a batch of samples
-  // std::vector<short> samples(fourier_bins);
-  // std::vector<short> samples(fourier_bins);
-
   s.clear();
   s.reserve(fourier_bins);
   s.resize(fourier_bins);
@@ -45,8 +41,8 @@ size_t read_samples(std::vector<short> &s) {
                 fourier_bins * sizeof(short));
 
   // Convert to decimal
-  // for (auto &i : s)
-  // i = ~(i - 1);
+  for (auto &i : s)
+    i = ~(i - 1);
 
   return s.size();
 }
