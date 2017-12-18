@@ -1,5 +1,5 @@
 CC=g++
-FLAGS=-std=c++17 -O3 -Wall --pedantic
+FLAGS=-std=c++17 -O3 -Wall --pedantic -g
 
 %.o: %.cpp
 	$(CC) $(FLAGS) -o $@ -c $<
