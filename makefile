@@ -1,8 +1,8 @@
-CC=g++
-FLAGS=-std=c++17 -O3 -Wall --pedantic -g
+CXX=g++-6
+FLAGS=-std=c++17 -Wall --pedantic -g
 
 %.o: %.cpp
-	$(CC) $(FLAGS) -o $@ -c $<
+	$(CXX) $(FLAGS) -o $@ -c $<
 
 spectrum: spectrum.o fourier.o
 	$(CC) -o $@ $^
@@ -11,7 +11,7 @@ clean:
 	rm -f *.o spectrum
 
 noise: spectrum
-	arecord -q -f S16_LE -c1 -r 4000 | ./spectrum
+	arecord -q -f S16_LE -c1 -r 8000 | ./spectrum
 
 # Lint
 cppcheck:
