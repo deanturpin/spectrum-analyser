@@ -1,5 +1,5 @@
-CXX=g++
-FLAGS=-std=c++17 -Wall --pedantic -g
+CXX=g++-6
+FLAGS=-std=c++1z -Wall --pedantic -g
 
 %.o: %.cpp
 	$(CXX) $(FLAGS) -o $@ -c $<
