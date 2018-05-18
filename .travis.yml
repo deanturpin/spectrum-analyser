@@ -2,7 +2,7 @@ language: cpp
 
 script:
   - make
-  - which cppcheck && cppcheck -j 2 --enable=all . || true
+  - which cppcheck && cppcheck --enable=all . || true
 
 git:
   depth: false
