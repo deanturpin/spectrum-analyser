@@ -1,4 +1,4 @@
-CXX=g++-6
+CXX=g++
 FLAGS=-std=c++17 -Wall --pedantic -g
 
 %.o: %.cpp
