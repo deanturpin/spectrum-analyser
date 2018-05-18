@@ -1,3 +1,5 @@
+language: cpp
+
 compiler:
   - clang
   - gcc
@@ -7,12 +9,16 @@ matrix:
     - os: linux
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-4.0
-          packages:
-            - clang-4.0
-            - g++-6
+          sources: ubuntu-toolchain-r-test
+          packages: g++-6
+      env:
+        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+
+    - os: linux
+      addons:
+        apt:
+          sources: llvm-toolchain-trusty-4.0
+          packages: clang-4.0
       env:
         - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
 
