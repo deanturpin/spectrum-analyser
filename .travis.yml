@@ -1,9 +1,5 @@
 language: cpp
 
-compiler:
-  - clang
-  - gcc
-
 matrix:
   include:
     - os: linux
@@ -12,7 +8,7 @@ matrix:
           sources: ubuntu-toolchain-r-test
           packages: g++-6
       env:
-        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+        - MATRIX_EVAL="CXX=g++-6"
 
     - os: linux
       addons:
@@ -20,7 +16,7 @@ matrix:
           sources: llvm-toolchain-trusty-4.0
           packages: clang-4.0
       env:
-        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+        - MATRIX_EVAL="CXX=clang++-4.0"
 
 before_install:
     - eval "${MATRIX_EVAL}"
