@@ -1,7 +1,7 @@
 language: cpp
 
 script:
-  - make fourier.o spectrum.o
+  - make
   - which cppcheck && cppcheck -j 2 --enable=all . || true
 
 git:

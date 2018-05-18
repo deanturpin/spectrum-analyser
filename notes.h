@@ -1,6 +1,6 @@
 #include <map>
 
-const std::map<double, std::string> notes = {
+const std::map<double, std::string> notes {
 
     // Catch all for lower bound search
     {0.0, "Bx"},

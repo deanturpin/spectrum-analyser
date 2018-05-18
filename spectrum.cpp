@@ -44,15 +44,15 @@ int main() {
 
       const double bin_resolution = 1.0 * header.sample_rate / fourier_bins;
       for_each(display.crbegin(), display.crend(),
-               [&bin_resolution, &notes](const auto &i) {
+               [&bin_resolution](const auto &i) {
 
                  const auto red = "\033[41m";
                  const auto white = "\033[0m";
                  const auto bin_freq = bin_resolution * (&i - display.data());
                  const auto note = notes.lower_bound(bin_freq);
 
-                 cout << bin_freq << "\t" << string(i, '-') << red << "|" <<
-                   white << " " << note->second << endl;
+                 cout << bin_freq << "\t" << string(i, '-') << red << "|"
+                      << white << " " << note->second << endl;
                });
 
       cout << "Bins " << fou.size() << endl;

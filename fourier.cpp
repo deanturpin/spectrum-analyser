@@ -13,13 +13,10 @@ void fourier_init() {
   const auto bins = fourier_bins;
   twiddle.reserve(bins * bins);
 
-  // Populate twiddle matrix
+  // Populate twiddle matrix - Euler's magic
   for (unsigned int k = 0; k < bins / 2; ++k)
-    for (unsigned int n = 0; n < bins; ++n) {
-
-      // Euler's magic
+    for (unsigned int n = 0; n < bins; ++n)
       twiddle.push_back(exp(2i * M_PI * double(k) * double(n) / double(bins)));
-    }
 }
 
 std::vector<double> fourier(const std::vector<short> &samples) {
@@ -33,7 +30,7 @@ std::vector<double> fourier(const std::vector<short> &samples) {
   // half is a mirror image.
   vector<double> fou(bins / 2);
   generate(
-      fou.begin(), fou.end(), [&samples, &bins, &twiddle, k = 0ul ]() mutable {
+      fou.begin(), fou.end(), [&samples, &bins, k = 0ul ]() mutable {
 
         complex<double> sum;
         for (unsigned int n = 0; n < bins; ++n)

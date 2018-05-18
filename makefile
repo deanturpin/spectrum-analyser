@@ -1,11 +1,11 @@
 CXX=g++-6
-FLAGS=-std=c++1z -Wall --pedantic -g
+FLAGS=-g --coverage -std=c++14 -Wall --pedantic -pedantic-errors
 
 %.o: %.cpp
 	$(CXX) $(FLAGS) -o $@ -c $<
 
 spectrum: spectrum.o fourier.o
-	$(CC) -o $@ $^
+	$(CXX) -o $@ $^
 
 clean:
 	rm -f *.o spectrum
@@ -13,11 +13,5 @@ clean:
 noise: spectrum
 	arecord -q -f S16_LE -c1 -r 8000 | ./spectrum
 
-# Lint
-cppcheck:
-	cppcheck --enable=all .
-
-# In place format
 format:
-	$(foreach file, $(wildcard *.cpp), clang-format -i $(file) || true;)
-	$(foreach file, $(wildcard *.h), clang-format -i $(file) || true;)
+	clang-format -i *.h *.cpp
