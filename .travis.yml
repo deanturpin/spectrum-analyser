@@ -2,10 +2,7 @@ language: cpp
 
 addons:
   apt:
-    update: true
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6
+    sources: ubuntu-toolchain-r-test
+    packages: g++-6
 
 script: make fourier.o spectrum.o
