@@ -5,7 +5,7 @@ FLAGS=-g --coverage -std=c++14 -Wall --pedantic -pedantic-errors
 	$(CXX) $(FLAGS) -o $@ -c $<
 
 spectrum: spectrum.o fourier.o
-	$(CXX) -o $@ $^
+	$(CXX) -o $@ $^ -lgcov
 
 clean:
 	rm -f *.o spectrum
