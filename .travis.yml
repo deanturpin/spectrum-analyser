@@ -3,6 +3,10 @@ language: cpp
 git:
   depth: false
 
+addons:
+  apt:
+    update: true
+
 matrix:
   include:
     - os: linux
