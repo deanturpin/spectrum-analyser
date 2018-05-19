@@ -1,4 +1,4 @@
-CXX=g++-6
+CXX=g++
 FLAGS=-g --coverage -std=c++14 -Wall --pedantic -pedantic-errors
 
 %.o: %.cpp
