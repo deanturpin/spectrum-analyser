@@ -1,5 +1,8 @@
-CXX=g++
+#
 FLAGS=-g --coverage -std=c++14 -Wall --pedantic -pedantic-errors
+
+#
+CXX=g++
 
 %.o: %.cpp
 	$(CXX) $(FLAGS) -o $@ -c $<
