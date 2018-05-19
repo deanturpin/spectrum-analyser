@@ -3,10 +3,6 @@ language: cpp
 git:
   depth: false
 
-addons:
-  apt:
-    update: true
-
 matrix:
   include:
     - os: linux
@@ -36,5 +32,5 @@ before_install:
     - eval "${MATRIX_EVAL}"
 
 script:
-  - make
+  - make fourier.o spectrum.o
   - which cppcheck && cppcheck --enable=all . || true
