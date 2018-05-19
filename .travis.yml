@@ -1,9 +1,5 @@
 language: cpp
 
-script:
-  - make
-  - which cppcheck && cppcheck --enable=all . || true
-
 git:
   depth: false
 
@@ -34,3 +30,7 @@ matrix:
 
 before_install:
     - eval "${MATRIX_EVAL}"
+
+script:
+  - make
+  - which cppcheck && cppcheck --enable=all . || true
