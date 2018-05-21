@@ -1,10 +1,7 @@
 language: cpp
 
-git:
-  depth: false
-
 script:
-  - make JOBS=2 --jobs=2
+  - make CXX=$CXX --jobs=2
   - which cppcheck && cppcheck --enable=all . || true
 
 matrix:
