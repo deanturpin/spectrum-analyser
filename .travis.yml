@@ -1,8 +1,11 @@
 language: cpp
-sudo: required
 
 git:
   depth: false
+
+script:
+  - make JOBS=2 --jobs=2
+  - which cppcheck && cppcheck --enable=all . || true
 
 matrix:
   include:
@@ -13,7 +16,7 @@ matrix:
           packages:
             - g++-6
             - cppcheck
-      env: CXX=g++-6
+      env: MATRIX_EVAL="CXX=g++-6"
 
     - os: linux
       addons:
@@ -25,17 +28,11 @@ matrix:
             - clang-4.0
             - g++-6 # installing clang alone doesn't pull in all the libraries
             - cppcheck
-      env: CXX=clang++-4.0
+      env: MATRIX_EVAL="CXX=clang++-4.0"
 
     - os: osx
       osx_image: xcode8
-      env:
-        - CXX=g++-7
-        - BREW="brew update && brew install"
+      env: MATRIX_EVAL="CXX=g++-7"
 
 before_install:
-    - [ -z $BREW ] && eval $BREW
-
-script:
-  - make $CXX
-  - which cppcheck && cppcheck --enable=all . || true
+    - eval "${MATRIX_EVAL}"
