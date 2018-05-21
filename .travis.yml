@@ -33,7 +33,7 @@ matrix:
     - os: osx
       osx_image: xcode8
       env:
-        - MATRIX_EVAL="brew update && brew install gcc && CXX=g++-7"
+        - MATRIX_EVAL="brew update && brew install gcc6 && CXX=g++-6"
 
 before_install:
     - eval "${MATRIX_EVAL}"
