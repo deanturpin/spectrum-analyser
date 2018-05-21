@@ -8,7 +8,7 @@ CXX=clang++
 	$(CXX) $(FLAGS) -o $@ -c $<
 
 spectrum: spectrum.o fourier.o
-	$(CXX) -o $@ $^ -lgcov --coverage
+	$(CXX) -o $@ $^ --coverage
 
 clean:
 	rm -f *.o spectrum
