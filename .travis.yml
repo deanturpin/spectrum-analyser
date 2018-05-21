@@ -13,7 +13,8 @@ matrix:
           packages:
             - g++-6
             - cppcheck
-      env: MATRIX_EVAL="CXX=g++-6"
+      env: CXX=g++-6
+
     - os: linux
       addons:
         apt:
@@ -24,15 +25,17 @@ matrix:
             - clang-4.0
             - g++-6 # installing clang alone doesn't pull in all the libraries
             - cppcheck
-      env: MATRIX_EVAL="CXX=clang++-4.0"
+      env: CXX=clang++-4.0
+
     - os: osx
       osx_image: xcode8
       env:
-        - MATRIX_EVAL="brew install gcc && CXX=g++-7"
+        - CXX=g++-7
+        - BREW="brew update && brew install"
 
 before_install:
-    - eval "${MATRIX_EVAL}"
+    - [ -z $BREW ] && eval $BREW
 
 script:
-  - make ${MATRIX_EVAL}
+  - make $CXX
   - which cppcheck && cppcheck --enable=all . || true
