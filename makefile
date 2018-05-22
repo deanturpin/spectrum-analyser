@@ -12,6 +12,3 @@ clean:
 
 noise: spectrum
 	arecord -q -f S16_LE -c1 -r 8000 | ./spectrum
-
-format:
-	clang-format -i *.h *.cpp
