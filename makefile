@@ -1,11 +1,13 @@
-FLAGS=-g --coverage -std=c++14 -Wall --pedantic -pedantic-errors
-CXX=clang++
+FLAGS=--std=c++2a -Wall --pedantic -pedantic-errors -O1
+CXX=g++
 
 %.o: %.cpp
 	$(CXX) $(FLAGS) -o $@ -c $<
 
+all: noise
+
 spectrum: spectrum.o fourier.o
-	$(CXX) -o $@ $^ --coverage
+	$(CXX) -o $@ $^
 
 clean:
 	rm -f *.o spectrum
