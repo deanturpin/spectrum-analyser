@@ -4,7 +4,7 @@ CXX=g++
 %.o: %.cpp
 	$(CXX) $(FLAGS) -o $@ -c $<
 
-all: noise
+all: spectrum
 
 spectrum: spectrum.o fourier.o
 	$(CXX) -o $@ $^
