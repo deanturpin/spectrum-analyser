@@ -1,8 +1,8 @@
-FLAGS=--std=c++2a -Wall --pedantic -pedantic-errors -O1
-CXX=g++
+CXX ?= g++-9
+CXXFLAGS ?= --std=c++2a -Wall --pedantic -pedantic-errors -O1
 
 %.o: %.cpp
-	$(CXX) $(FLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 all: spectrum
 
