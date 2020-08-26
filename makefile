@@ -6,6 +6,10 @@ CXXFLAGS ?= --std=c++2a -Wall --pedantic -pedantic-errors -O1
 
 all: spectrum
 
+apt:
+	apt update
+	apt install --yes gnuplot
+
 spectrum: spectrum.o fourier.o
 	$(CXX) -o $@ $^
 
