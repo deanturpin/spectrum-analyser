@@ -1,4 +1,5 @@
 #include <map>
+#include <string>
 
 const std::map<double, std::string> notes {
 
